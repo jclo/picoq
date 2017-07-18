@@ -1,0 +1,61 @@
+/* eslint */
+
+'use strict';
+
+module.exports = {
+  dist: './_dist',
+  libdir: './lib',
+  libname: 'PicoQ',
+  // These are the Javascript files required to build the library.
+  src: {
+    standard: [
+      './src/_header',
+      './src/picoQ.js',
+      './src/utilities.js',
+      './src/dom.js',
+      './src/css.js',
+      './src/class.js',
+      './src/attr.js',
+      './src/events.js',
+      './src/animate.js',
+      './src/_footer',
+    ],
+    easing: [
+      './src/_header',
+      './src/picoQ.js',
+      './src/utilities.js',
+      './src/dom.js',
+      './src/css.js',
+      './src/class.js',
+      './src/attr.js',
+      './src/events.js',
+      './src/easing.js',
+      './src/animate.js',
+      './src/_footer',
+    ],
+  },
+  license: {
+    standard: ['/**',
+      ' * {{lib:name}} v{{lib:version}}',
+      ' *',
+      ' * A tiny Javascript library to interact with the DOM',
+      ' * Copyright (c) 2017 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).',
+      ' * Released under the MIT license. You may obtain a copy of the License',
+      ' * at: http://www.opensource.org/licenses/mit-license.php).',
+      ' */',
+      ''].join('\n'),
+    easing: ['/**',
+      ' * {{lib:name}} v{{lib:version}}',
+      ' *',
+      ' * A tiny Javascript library to interact with the DOM',
+      ' * Copyright (c) 2017 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).',
+      ' * Released under the MIT license. You may obtain a copy of the License',
+      ' * at: http://www.opensource.org/licenses/mit-license.php).',
+      ' *',
+      ' * {{lib:name}}-easing includes portions of code for easing equations.',
+      ' * Open source under the BSD License.',
+      ' * Copyright (c) 2001 Robert Penner',
+      ' */',
+      ''].join('\n'),
+  },
+};

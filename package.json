@@ -1,0 +1,63 @@
+{
+  "name": "picoq",
+  "version": "0.0.0",
+  "description": "A tiny Javascript library to interact with the DOM",
+  "main": "./_dist/PicoQ.min.js",
+  "scripts": {
+    "build": "gulp build",
+    "watch": "gulp watch",
+    "makedist": "gulp",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov _mocha ./test/main.js",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 85 --functions 100 --lines 100",
+    "display-coverage": "opener ./coverage/lcov-report/index.html",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "report": "nyc report",
+    "precommit": "npm run makedist && npm run test && npm run check-coverage && npm run report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jclo/picoq.git"
+  },
+  "keywords": [
+    "Javascript",
+    "DOM",
+    "jQuery"
+  ],
+  "author": {
+    "name": "jclo",
+    "email": "jclo@mobilabs.fr",
+    "url": "http://www.mobilabs.fr/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jclo/picoq/issues"
+  },
+  "homepage": "https://github.com/jclo/picoq",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "chai": "4.0.2",
+    "coveralls": "2.13.1",
+    "cross-env": "5.0.1",
+    "del": "3.0.0",
+    "eslint": "3.19.0",
+    "eslint-config-airbnb-base": "11.2.0",
+    "eslint-plugin-import": "2.7.0",
+    "gulp": "3.9.1",
+    "gulp-concat": "2.6.1",
+    "gulp-header": "1.8.8",
+    "gulp-replace": "0.6.1",
+    "gulp-uglify": "3.0.0",
+    "husky": "0.14.2",
+    "jsdom": "11.1.0",
+    "mocha": "3.4.2",
+    "nyc": "10.3.0",
+    "opener": "1.4.3",
+    "require-dir": "0.3.2",
+    "run-sequence": "2.0.0"
+  },
+  "engine": {
+    "node": ">= 0.10"
+  },
+  "private": true
+}
