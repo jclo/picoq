@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.0.x (July 25, 2017)
+
+  * Updated the README.md file,
+  * ...,
+
+
 ### 0.0.1 (July 25, 2017)
 
   * Added the methods prepend(), before() and after(),
