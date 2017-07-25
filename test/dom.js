@@ -18,7 +18,7 @@ const PicoQ = require('../index.js')
 
 
 // -- Main
-module.exports = function() {
+module.exports = function(dom) {
   describe('Test DOM insertion:', () => {
     // PicoQ().html():
     describe('Test PicoQ().html():', () => {
@@ -107,6 +107,21 @@ module.exports = function() {
     describe('Test PicoQ().before():', () => {
       it('Expects PicoQ("#app6").before("<div><p>Previous</p><div>")[0].previousElementSibling.textContent to return the string "Previous".', () => {
         expect(PicoQ('#app6').before('<div><p>Previous</p><div>')[0].previousElementSibling.textContent).to.be.a('string').that.is.equal('Previous');
+      });
+    });
+
+    // PicoQ().replaceWith():
+    describe('Test PicoQ().replaceWith():', () => {
+      it('Expects PicoQ("#app7")[0].children[1].textContent to return the string "Second Child".', () => {
+        expect(PicoQ('#app7')[0].children[1].textContent).to.be.a('string').that.is.equal('Second Child');
+      });
+
+      it('Expects PicoQ("#app7 .two").replaceWith("<p>New Second Child</p>") to replace the second child node.', () => {
+        expect(PicoQ('#app7 .two').replaceWith('<p>New Second Child</p>', dom)).to.be.an('object');
+      });
+
+      it('Expects the second child text to be "New Second Child".', () => {
+        expect(PicoQ('#app7')[0].children[1].textContent).to.be.a('string').that.is.equal('New Second Child');
       });
     });
 

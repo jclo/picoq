@@ -1,5 +1,5 @@
 /**
- * PicoQ-easing v0.0.1
+ * PicoQ-easing v0.0.2
  *
  * A tiny Javascript library to interact with the DOM
  * Copyright (c) 2017 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).
@@ -130,9 +130,9 @@
      * @returns {Object}  returns this or the HTML contents,
      * @since 0.0.0
      */
-    html: function(htmlstring) {
-      if (htmlstring) {
-        this[0].innerHTML = htmlstring;
+    html: function(xmlString) {
+      if (xmlString) {
+        this[0].innerHTML = xmlString;
         return this;
       }
       if (this[0]) {
@@ -167,8 +167,8 @@
      * @returns {Object}  returns this,
      * @since 0.0.0
      */
-    append: function(htmlstring) {
-      this[0].insertAdjacentHTML('beforeend', htmlstring);
+    append: function(xmlString) {
+      this[0].insertAdjacentHTML('beforeend', xmlString);
       return this;
     },
 
@@ -181,8 +181,8 @@
      * @returns {Object}  returns this,
      * @since 0.0.1
      */
-    prepend: function(htmlstring) {
-      this[0].insertAdjacentHTML('afterbegin', htmlstring);
+    prepend: function(xmlString) {
+      this[0].insertAdjacentHTML('afterbegin', xmlString);
       return this;
     },
 
@@ -195,8 +195,8 @@
      * @returns {Object}  returns this,
      * @since 0.0.1
      */
-    after: function(htmlstring) {
-      this[0].insertAdjacentHTML('afterend', htmlstring);
+    after: function(xmlString) {
+      this[0].insertAdjacentHTML('afterend', xmlString);
       return this;
     },
 
@@ -209,8 +209,37 @@
      * @returns {Object}  returns this,
      * @since 0.0.1
      */
-    before: function(htmlstring) {
-      this[0].insertAdjacentHTML('beforebegin', htmlstring);
+    before: function(xmlString) {
+      this[0].insertAdjacentHTML('beforebegin', xmlString);
+      return this;
+    },
+
+    /**
+     * Replaces the current node with the given DOMString.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {String}    an HTML string,
+     * @param {Object}    the virtual DOM root (for testing purpose only),
+     * @returns {Object}  returns this,
+     * @since 0.0.2
+     */
+    replaceWith: function(xmlString, dom) {
+      var oldChild = this[0]
+        , parent = this[0].parentNode
+        , index =  Array.prototype.indexOf.call(parent.children, oldChild)
+        // , parser = new DOMParser()
+        // , newchild = parser.parseFromString(xmlString, 'text/xml').firstChild
+        , wrapper = dom ? dom.window.document.createElement('div') : document.createElement('div')
+        , newChild
+        ;
+
+      // Replace the old child by new one:
+      wrapper.innerHTML = xmlString;
+      newChild = wrapper.firstChild;
+      parent.replaceChild(newChild, oldChild);
+      this[0] = parent.children[index];
+
       return this;
     },
 
@@ -859,7 +888,7 @@
   });
 
 // Current version of the library.
-  PicoQ.VERSION = '0.0.1';
+  PicoQ.VERSION = '0.0.2';
 
   // Returns the library name:
   return PicoQ;

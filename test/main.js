@@ -33,7 +33,7 @@ const HTML = `
       <div id="app4"><h1>Hi!</h1></div>
       <div id="app5"><h1>Hi!</h1></div>
       <div id="app6"><h1>Hi!</h1></div>
-      <div id="app7"><h1>Hi!</h1></div>
+      <div id="app7"><p>First Child></p><p class="two">Second Child</p><p>Third Child</p></div>
       <div id="app8"><h1>Hi!</h1></div>
       <div id="app9"><h1>Hi!</h1></div>
       <div id="app10"></div>
@@ -66,7 +66,7 @@ PicoQ.VDOM = dom;
 
 describe('PicoQ', () => {
   fncore();
-  fndom();
+  fndom(dom);
   fncss();
   fnclass();
   fnattr();
