@@ -53,6 +53,48 @@
     },
 
     /**
+     * Appends an HTML string before the first child of the current node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    an HTML string,
+     * @returns {Object}  returns this,
+     * @since 0.0.1
+     */
+    prepend: function(htmlstring) {
+      this[0].insertAdjacentHTML('afterbegin', htmlstring);
+      return this;
+    },
+
+    /**
+     * Appends an HTML string after the current node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    an HTML string,
+     * @returns {Object}  returns this,
+     * @since 0.0.1
+     */
+    after: function(htmlstring) {
+      this[0].insertAdjacentHTML('afterend', htmlstring);
+      return this;
+    },
+
+    /**
+     * Appends an HTML string before the current node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    an HTML string,
+     * @returns {Object}  returns this,
+     * @since 0.0.1
+     */
+    before: function(htmlstring) {
+      this[0].insertAdjacentHTML('beforebegin', htmlstring);
+      return this;
+    },
+
+    /**
      * Gets/Sets the text contents of the element,
      *
      * @method (arg1)

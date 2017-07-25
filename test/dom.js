@@ -77,14 +77,47 @@ module.exports = function() {
       });
     });
 
-    // PicoQ().text():
-    describe('Test PicoQ().text():', () => {
-      it('Expects PicoQ("#app6 h1").text() to return the string "Hi!".', () => {
-        expect(PicoQ('#app6 h1').text()).to.be.a('string').that.is.equal('Hi!');
+    // PicoQ().prepend():
+    describe('Test PicoQ().prepend():', () => {
+      it('Expects PicoQ("#app6")[0].childElementCount to return the number "1".', () => {
+        expect(PicoQ('#app6')[0].childElementCount).to.be.a('number').that.is.equal(1);
       });
 
-      it('Expects PicoQ("#app6 h1").text("Hello").text() to return the text "Hello!".', () => {
-        expect(PicoQ('#app6 h1').text('Hello!').text()).to.be.a('string').that.is.equal('Hello!');
+      it('Expects PicoQ("#app6")[0].firstChild.outerHTML to return the string "<h1>Hi!</h1>".', () => {
+        expect(PicoQ('#app6')[0].firstChild.outerHTML).to.be.a('string').that.is.equal('<h1>Hi!</h1>');
+      });
+
+      it('Expects PicoQ("#app6").prepend("<h2>Hello!</h2>")[0].childElementCount to return the number "2".', () => {
+        expect(PicoQ('#app6').prepend('<h2>Hello!</h2>')[0].childElementCount).to.be.a('number').that.is.equal(2);
+      });
+
+      it('Expects PicoQ("#app6")[0].firstChild.outerHTML to return the string "<h2>Hello!</h2>".', () => {
+        expect(PicoQ('#app6')[0].firstChild.outerHTML).to.be.a('string').that.is.equal('<h2>Hello!</h2>');
+      });
+    });
+
+    // PicoQ().after():
+    describe('Test PicoQ().after():', () => {
+      it('Expects PicoQ("#app6").after("<div><p>Next</p><div>")[0].nextElementSibling.textContent to return the string "Next".', () => {
+        expect(PicoQ('#app6').after('<div><p>Next</p><div>')[0].nextElementSibling.textContent).to.be.a('string').that.is.equal('Next');
+      });
+    });
+
+    // PicoQ().before():
+    describe('Test PicoQ().before():', () => {
+      it('Expects PicoQ("#app6").before("<div><p>Previous</p><div>")[0].previousElementSibling.textContent to return the string "Previous".', () => {
+        expect(PicoQ('#app6').before('<div><p>Previous</p><div>')[0].previousElementSibling.textContent).to.be.a('string').that.is.equal('Previous');
+      });
+    });
+
+    // PicoQ().text():
+    describe('Test PicoQ().text():', () => {
+      it('Expects PicoQ("#app9 h1").text() to return the string "Hi!".', () => {
+        expect(PicoQ('#app9 h1').text()).to.be.a('string').that.is.equal('Hi!');
+      });
+
+      it('Expects PicoQ("#app9 h1").text("Hello").text() to return the text "Hello!".', () => {
+        expect(PicoQ('#app9 h1').text('Hello!').text()).to.be.a('string').that.is.equal('Hello!');
       });
     });
   });

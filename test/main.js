@@ -33,6 +33,9 @@ const HTML = `
       <div id="app4"><h1>Hi!</h1></div>
       <div id="app5"><h1>Hi!</h1></div>
       <div id="app6"><h1>Hi!</h1></div>
+      <div id="app7"><h1>Hi!</h1></div>
+      <div id="app8"><h1>Hi!</h1></div>
+      <div id="app9"><h1>Hi!</h1></div>
       <div id="app10"></div>
       <div id="app20"></div>
       <div id="app21" class="aaa"></div>
