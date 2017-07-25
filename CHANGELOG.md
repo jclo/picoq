@@ -3,7 +3,7 @@
 ### 0.0.1 (July 25, 2017)
 
   * Added the methods prepend(), before() and after(),
-  * ...,
+  * Release.
 
 
 ### 0.0.0 (July 18, 2017)
