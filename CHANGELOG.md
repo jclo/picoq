@@ -5,7 +5,7 @@
   * Added a subset of the Overslash library,
   * Added the Ajax methods ajax(), get(), getJSON(), post() and load(),
   * Made the server script non-blocking,
-  * ...,
+  * Release.
 
 
 ### 0.0.2 (July 25, 2017)
