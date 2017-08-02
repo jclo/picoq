@@ -1,14 +1,15 @@
 {
   "name": "picoq",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A tiny Javascript library to interact with the DOM",
   "main": "./_dist/PicoQ.min.js",
   "scripts": {
     "build": "gulp build",
     "watch": "gulp watch",
     "makedist": "gulp",
+    "server": "node test/server.js",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov _mocha ./test/main.js",
-    "check-coverage": "nyc check-coverage --statements 100 --branches 84 --functions 100 --lines 100",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 90 --functions 100 --lines 100",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "report": "nyc report",
@@ -33,8 +34,7 @@
     "url": "https://github.com/jclo/picoq/issues"
   },
   "homepage": "https://github.com/jclo/picoq",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "4.1.0",
     "coveralls": "2.13.1",
@@ -54,7 +54,8 @@
     "nyc": "10.3.0",
     "opener": "1.4.3",
     "require-dir": "0.3.2",
-    "run-sequence": "2.0.0"
+    "run-sequence": "2.0.0",
+    "xmlhttprequest": "1.8.0"
   },
   "engine": {
     "node": ">= 0.10"

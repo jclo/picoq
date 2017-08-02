@@ -1,6 +1,7 @@
 // ESLint declarations
 /* global define */
-/* eslint strict: ["error", "function"], one-var: 0, no-param-reassign: 0 */
+/* eslint strict: ["error", "function"], one-var: 0, no-param-reassign: 0,
+  no-underscore-dangle: 0 */
 (function(root, factory) {
   'use strict';
 
@@ -23,4 +24,5 @@
   var PicoQ
     , docu
     , _
+    , _u
     ;

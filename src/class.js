@@ -1,6 +1,6 @@
 
   // -- Public Methods to manage the classes ---------------------------------------
-  PicoQ._.extend({
+  PicoQ._.extend(PicoQ.prototype, {
     /**
      * Returns the DOMTokenList collection of the class attributes of the element.
      *

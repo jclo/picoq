@@ -39,39 +39,39 @@
           break;
 
         case 1:
-          if (typeof op1 === 'number' || op1 === 'fast' || op1 === 'slow') {
+          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
-          } else if (typeof op1 === 'string') {
+          } else if (_.isString(op1)) {
             easing = op1;
-          } else if (Object.prototype.toString.call(op1) === '[object Function]') {
+          } else if (_.isFunction(op1)) {
             callback = op1;
           }
           break;
 
         case 2:
-          if (typeof op1 === 'number' || op1 === 'fast' || op1 === 'slow') {
+          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
-            if (typeof op2 === 'string') {
+            if (_.isString(op2)) {
               easing = op2;
-            } else if (Object.prototype.toString.call(op2) === '[object Function]') {
+            } else if (_.isFunction(op2)) {
               callback = op2;
             }
-          } else if (typeof op1 === 'string') {
+          } else if (_.isString(op1)) {
             easing = op1;
-            if (Object.prototype.toString.call(op2) === '[object Function]') {
+            if (_.isFunction(op2)) {
               callback = op2;
             }
           }
           break;
 
         case 3:
-          if (typeof op1 === 'number' || op1 === 'fast' || op1 === 'slow') {
+          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
           }
-          if (typeof op2 === 'string') {
+          if (_.isString(op2)) {
             easing = op2;
           }
-          if (Object.prototype.toString.call(op3) === '[object Function]') {
+          if (_.isFunction(op3)) {
             callback = op3;
           }
           break;
@@ -109,7 +109,7 @@
       // Parse the properties:
       for (i = 0; i < keys.length; i++) {
         // Normalize the name of the property:
-        name = _.normalizeCssPropertyName(keys[i]);
+        name = _u.normalizeCssPropertyName(keys[i]);
         // Check it is a valid CSS property:
         if (el.style[name]) {
           names.push(name);
@@ -172,20 +172,31 @@
      * @param {Number}    the initial CSS property value,
      * @param {Number}    the difference between the final and the initial value,
      * @param {Number}    the animation duration,
-    * @returns {Number}   the value of the CSS property at the current lapse time,
+     * @returns {Number}  returns the value of the CSS property at the current lapse time,
      * @since 0.0.0
      */
     /* eslint-disable no-mixed-operators */
     swing: function(t, b, c, d) {
       return c * (0.5 - Math.cos(t / d * Math.PI) / 2) + b;
-    }
-    /* eslint-enable no-mixed-operators */
+    } /* eslint-enable no-mixed-operators */
   };
   /* eslint-enable no-underscore-dangle */
 
 
-  // -- Public Methods to animate the CSS properties -------------------------------
-  PicoQ._.extend({
+  // -- Public Methods to animate the CSS properties ---------------------------
+  PicoQ._.extend(PicoQ.prototype, {
+    /**
+     * Performs a custom animation of a set of CSS properties.
+     *
+     * @method (properties [, duration ] [, easing ] [, complete ])
+     * @public
+     * @param {Object}    An object of CSS properties,
+     * @param {Number}    define how long the animation run,
+     * @param {Easing}    the easing animation method,
+     * @param {Function}  the function to call at completion,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
     animate: function(properties, arg2, arg3, arg4) {
       var DTIME = 400
         , FAST  = 200
@@ -200,7 +211,7 @@
         ;
 
       // Is the argument properties an object?
-      if (Object.prototype.toString.call(properties) !== '[object Object]') {
+      if (!_.isLiteralObject(properties)) {
         return this;
       }
 
@@ -208,7 +219,7 @@
       args = PicoQ._anim.extractArgs(arg2, arg3, arg4);
 
       // Set the duration:
-      duration = typeof args.duration === 'number'
+      duration = _.isNumber(args.duration)
         ? args.duration
         : (function(arg) {
           if (arg === 'fast') return FAST;

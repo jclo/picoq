@@ -1,6 +1,6 @@
 
   // -- Public Methods to manage the css properties --------------------------------
-  PicoQ._.extend({
+  PicoQ._.extend(PicoQ.prototype, {
     /**
      * Gets/Sets the style attribute of the element,
      *
@@ -12,7 +12,7 @@
      * @since 0.0.0
      */
     css: function(styleAttr, value) {
-      var attr = _.normalizeCssPropertyName(styleAttr);
+      var attr = _u.normalizeCssPropertyName(styleAttr);
 
       if (!value) {
         // Get attribute:

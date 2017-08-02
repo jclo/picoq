@@ -1,6 +1,6 @@
 
   // -- Public Methods to manage the events ----------------------------------------
-  PicoQ._.extend({
+  PicoQ._.extend(PicoQ.prototype, {
 
     /**
      * Adds an event listener to the selected node.

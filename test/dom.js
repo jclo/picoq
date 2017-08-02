@@ -18,7 +18,7 @@ const PicoQ = require('../index.js')
 
 
 // -- Main
-module.exports = function(dom) {
+module.exports = function() {
   describe('Test DOM insertion:', () => {
     // PicoQ().html():
     describe('Test PicoQ().html():', () => {
@@ -117,7 +117,7 @@ module.exports = function(dom) {
       });
 
       it('Expects PicoQ("#app7 .two").replaceWith("<p>New Second Child</p>") to replace the second child node.', () => {
-        expect(PicoQ('#app7 .two').replaceWith('<p>New Second Child</p>', dom)).to.be.an('object');
+        expect(PicoQ('#app7 .two').replaceWith('<p>New Second Child</p>')).to.be.an('object');
       });
 
       it('Expects the second child text to be "New Second Child".', () => {

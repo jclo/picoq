@@ -4,19 +4,23 @@
 'use strict';
 
 // -- Node modules
-const JSDOM     = require('jsdom').JSDOM
+const JSDOM          = require('jsdom').JSDOM
+    , XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
     ;
 
-
 // -- Local modules
-const PicoQ     = require('../index.js')
-    , fncore    = require('./core.js')
-    , fndom     = require('./dom.js')
-    , fncss     = require('./css.js')
-    , fnclass   = require('./class.js')
-    , fnattr    = require('./attr.js')
-    , fnevents  = require('./events.js')
-    , fnanimate = require('./animate.js')
+const PicoQ       = require('../index.js')
+    , fnoverslash = require('./overslash.js')
+    , fnutilities = require('./utilities.js')
+    , fncore      = require('./core.js')
+    , fndom       = require('./dom.js')
+    , fncss       = require('./css.js')
+    , fnclass     = require('./class.js')
+    , fnattr      = require('./attr.js')
+    , fnevents    = require('./events.js')
+    , fnanimate   = require('./animate.js')
+    , fnajax      = require('./ajax.js')
+    , fnajax2     = require('./ajax2.js')
     ;
 
 
@@ -51,6 +55,7 @@ const HTML = `
         <div id="app52" style="position: absolute; top: 0"></div>
         <div id="app53" style="position: absolute; top: 10px"></div>
       </div>
+      <div id="app60"></div>
     </body>
   </html>
 `;
@@ -61,15 +66,21 @@ const dom = new JSDOM(HTML);
 
 // -- Main
 
+// Attach node XMLHttpRequest to JSDOM:
+dom.window.XMLHttpRequest = XMLHttpRequest;
 // Set Virtual DOM:
 PicoQ.VDOM = dom;
 
 describe('PicoQ', () => {
+  fnoverslash();
+  fnutilities();
   fncore();
-  fndom(dom);
+  fndom();
   fncss();
   fnclass();
   fnattr();
   fnevents();
   fnanimate();
+  fnajax();
+  fnajax2();
 });

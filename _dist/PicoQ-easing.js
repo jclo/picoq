@@ -1,5 +1,5 @@
 /**
- * PicoQ-easing v0.0.2
+ * PicoQ-easing v0.0.3
  *
  * A tiny Javascript library to interact with the DOM
  * Copyright (c) 2017 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).
@@ -12,7 +12,8 @@
  */
 // ESLint declarations
 /* global define */
-/* eslint strict: ["error", "function"], one-var: 0, no-param-reassign: 0 */
+/* eslint strict: ["error", "function"], one-var: 0, no-param-reassign: 0,
+  no-underscore-dangle: 0 */
 (function(root, factory) {
   'use strict';
 
@@ -35,6 +36,7 @@
   var PicoQ
     , docu
     , _
+    , _u
     ;
 
 
@@ -66,25 +68,197 @@
   PicoQ._ = {
 
     /**
-     * Extends PicoQ prototype with the given object.
-     *
-     * Nota: mutates PicoQ
+     * Is a given variable undefined?
      *
      * @function (arg1)
      * @private
-     * @param {Object}    the methods to add to PicoQ.prototype,
-     * @returns {}        -,
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true or false,
      * @since 0.0.0
      */
+    isUndefined: function(obj) {
+      return obj === undefined;
+    },
+
+    /**
+     * Is a given value null?
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true or false,
+     * @since 0.0.0
+     */
+    isNull: function(obj) {
+      return obj === null;
+    },
+
+    /**
+     * Is a given value a boolean?
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true or false,
+     * @since 0.0.0
+     */
+    isBoolean: function(obj) {
+      return obj === true || obj === false || Object.prototype.toString.call(obj) === '[object Boolean]';
+    },
+
+    /**
+     * Is a given value a string?
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true or false,
+     * @since 0.0.0
+     */
+    isString: function(obj) {
+      return Object.prototype.toString.call(obj) === '[object String]';
+    },
+
+    /**
+     * Is a given value a number?
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true or false,
+     * @since 0.0.0
+     */
+    isNumber: function(obj) {
+      return Object.prototype.toString.call(obj) === '[object Number]';
+    },
+
+    /**
+     * Is a given value NaN?
+     * (NaN is the only number which does not equal itself)
+     * (copied from: http://underscorejs.org)
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true or false,
+     * @since 0.0.0
+     */
+    isNaN: function(obj) {
+      return PicoQ._.isNumber(obj) && obj !== +obj;
+    },
+
+    /**
+     * Is a given value an odd number?
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true (odd), false (even) or undefined (not a number),
+     * @since 0.0.0
+     */
+    /* eslint-disable no-void */
+    isOdd: function(obj) {
+      var n = obj % 2;
+      return obj === parseFloat(obj) ? !!n : void 0;
+    },
+    /* eslint-enable no-void */
+
+    /**
+     * Is a given variable an object?
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}    the object to test,
+     * @returns {Boolean} returns true or false,
+     * @since 0.0.3
+     */
+    isObject: function(obj) {
+      var type = typeof obj;
+      return (type === 'function' || type === 'object') && !!obj;
+    },
+
+    /**
+     * Is a given variable a literal object?
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}    the object to test,
+     * @returns {Boolean} returns true or false,
+     * @since 0.0.3
+     */
+    isLiteralObject: function(obj) {
+      return Object.prototype.toString.call(obj) === '[object Object]';
+    },
+
+    /**
+     * Is a given variable a function?
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}    the object to test,
+     * @returns {Boolean} returns true or false,
+     * @since 0.0.3
+     */
+    isFunction: function(obj) {
+      return Object.prototype.toString.call(obj) === '[object Function]';
+    },
+
+    /**
+     * Is a given value an array?
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}    the object to test,
+     * @returns {Boolean} returns true or false,
+     * @since 0.0.3
+     */
+    isArray: Array.isArray || /* istanbul ignore next */ function(obj) {
+      return Object.prototype.toString.call(obj) === '[object Array]';
+    },
+
+    /**
+     * Extends a given object with all the properties in passed-in object(s).
+     *
+     * Nota: mutates obj
+     *       The passed-in objects must be literal objects. The method extends
+     *       the first object with the properties/values of the n + 1 objects.
+     *       If the property values are objects, the method passes their reference.
+     *       This method doesn't perform a deep extend.
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}    the objects to merge,
+     * @returns {Object}  the resulting object,
+     * @since 0.0.0
+     */
+    /* eslint-disable no-restricted-syntax, no-param-reassign */
     extend: function(obj) {
-      var keys = Object.keys(obj)
+      var source
+        , prop
         , i
         ;
 
-      for (i = 0; i < keys.length; i++) {
-        PicoQ.prototype[keys[i]] = obj[keys[i]];
+      for (i = 1; i < arguments.length; i++) {
+        source = arguments[i];
+        for (prop in source) {
+          if (hasOwnProperty.call(source, prop)) {
+            obj[prop] = source[prop];
+          }
+        }
       }
-    },
+      return obj;
+    }
+    /* eslint-enable no-restricted-syntax, no-param-reassign */
+  };
+
+  // Assign PicoQ.overslash to _:
+  _ = PicoQ._;
+
+
+  // -- Private functions ------------------------------------------------------
+  /* eslint-disable no-underscore-dangle */
+
+  PicoQ.utilities = {
 
     /**
      * Normalizes the CSS properties.
@@ -98,7 +272,7 @@
      * @since 0.0.0
      */
     normalizeCssPropertyName: function(name) {
-      var arr = typeof name === 'string' ? name.split('-') : []
+      var arr = _.isString(name) ? name.split('-') : []
         , normalized = ''
         , i
         ;
@@ -115,12 +289,12 @@
     }
   };
 
-  // Assign PicoQ._ to _:
-  _ = PicoQ._;
+  // Assign PicoQ._u to _u:
+  _u = PicoQ.utilities;
 
 
   // -- Public Methods to insert/remove nodes to/from the DOM ------------------
-  PicoQ._.extend({
+  PicoQ._.extend(PicoQ.prototype, {
     /**
      * Gets/Sets the HTML contents of the element,
      *
@@ -219,18 +393,17 @@
      *
      * @method (arg1, arg2)
      * @public
-     * @param {String}    an HTML string,
-     * @param {Object}    the virtual DOM root (for testing purpose only),
+     * @param {String}    an HTML string
      * @returns {Object}  returns this,
      * @since 0.0.2
      */
-    replaceWith: function(xmlString, dom) {
+    replaceWith: function(xmlString) {
       var oldChild = this[0]
         , parent = this[0].parentNode
         , index =  Array.prototype.indexOf.call(parent.children, oldChild)
         // , parser = new DOMParser()
         // , newchild = parser.parseFromString(xmlString, 'text/xml').firstChild
-        , wrapper = dom ? dom.window.document.createElement('div') : document.createElement('div')
+        , wrapper = docu.createElement('div')
         , newChild
         ;
 
@@ -263,7 +436,7 @@
 
 
   // -- Public Methods to manage the css properties --------------------------------
-  PicoQ._.extend({
+  PicoQ._.extend(PicoQ.prototype, {
     /**
      * Gets/Sets the style attribute of the element,
      *
@@ -275,7 +448,7 @@
      * @since 0.0.0
      */
     css: function(styleAttr, value) {
-      var attr = _.normalizeCssPropertyName(styleAttr);
+      var attr = _u.normalizeCssPropertyName(styleAttr);
 
       if (!value) {
         // Get attribute:
@@ -290,7 +463,7 @@
 
 
   // -- Public Methods to manage the classes ---------------------------------------
-  PicoQ._.extend({
+  PicoQ._.extend(PicoQ.prototype, {
     /**
      * Returns the DOMTokenList collection of the class attributes of the element.
      *
@@ -349,7 +522,7 @@
 
 
   // -- Public Methods to manage the node attributes -------------------------------
-  PicoQ._.extend({
+  PicoQ._.extend(PicoQ.prototype, {
 
     /**
      * Sets or Gets the specified attribute.
@@ -386,7 +559,7 @@
 
 
   // -- Public Methods to manage the events ----------------------------------------
-  PicoQ._.extend({
+  PicoQ._.extend(PicoQ.prototype, {
 
     /**
      * Adds an event listener to the selected node.
@@ -686,39 +859,39 @@
           break;
 
         case 1:
-          if (typeof op1 === 'number' || op1 === 'fast' || op1 === 'slow') {
+          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
-          } else if (typeof op1 === 'string') {
+          } else if (_.isString(op1)) {
             easing = op1;
-          } else if (Object.prototype.toString.call(op1) === '[object Function]') {
+          } else if (_.isFunction(op1)) {
             callback = op1;
           }
           break;
 
         case 2:
-          if (typeof op1 === 'number' || op1 === 'fast' || op1 === 'slow') {
+          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
-            if (typeof op2 === 'string') {
+            if (_.isString(op2)) {
               easing = op2;
-            } else if (Object.prototype.toString.call(op2) === '[object Function]') {
+            } else if (_.isFunction(op2)) {
               callback = op2;
             }
-          } else if (typeof op1 === 'string') {
+          } else if (_.isString(op1)) {
             easing = op1;
-            if (Object.prototype.toString.call(op2) === '[object Function]') {
+            if (_.isFunction(op2)) {
               callback = op2;
             }
           }
           break;
 
         case 3:
-          if (typeof op1 === 'number' || op1 === 'fast' || op1 === 'slow') {
+          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
           }
-          if (typeof op2 === 'string') {
+          if (_.isString(op2)) {
             easing = op2;
           }
-          if (Object.prototype.toString.call(op3) === '[object Function]') {
+          if (_.isFunction(op3)) {
             callback = op3;
           }
           break;
@@ -756,7 +929,7 @@
       // Parse the properties:
       for (i = 0; i < keys.length; i++) {
         // Normalize the name of the property:
-        name = _.normalizeCssPropertyName(keys[i]);
+        name = _u.normalizeCssPropertyName(keys[i]);
         // Check it is a valid CSS property:
         if (el.style[name]) {
           names.push(name);
@@ -819,20 +992,31 @@
      * @param {Number}    the initial CSS property value,
      * @param {Number}    the difference between the final and the initial value,
      * @param {Number}    the animation duration,
-    * @returns {Number}   the value of the CSS property at the current lapse time,
+     * @returns {Number}  returns the value of the CSS property at the current lapse time,
      * @since 0.0.0
      */
     /* eslint-disable no-mixed-operators */
     swing: function(t, b, c, d) {
       return c * (0.5 - Math.cos(t / d * Math.PI) / 2) + b;
-    }
-    /* eslint-enable no-mixed-operators */
+    } /* eslint-enable no-mixed-operators */
   };
   /* eslint-enable no-underscore-dangle */
 
 
-  // -- Public Methods to animate the CSS properties -------------------------------
-  PicoQ._.extend({
+  // -- Public Methods to animate the CSS properties ---------------------------
+  PicoQ._.extend(PicoQ.prototype, {
+    /**
+     * Performs a custom animation of a set of CSS properties.
+     *
+     * @method (properties [, duration ] [, easing ] [, complete ])
+     * @public
+     * @param {Object}    An object of CSS properties,
+     * @param {Number}    define how long the animation run,
+     * @param {Easing}    the easing animation method,
+     * @param {Function}  the function to call at completion,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
     animate: function(properties, arg2, arg3, arg4) {
       var DTIME = 400
         , FAST  = 200
@@ -847,7 +1031,7 @@
         ;
 
       // Is the argument properties an object?
-      if (Object.prototype.toString.call(properties) !== '[object Object]') {
+      if (!_.isLiteralObject(properties)) {
         return this;
       }
 
@@ -855,7 +1039,7 @@
       args = PicoQ._anim.extractArgs(arg2, arg3, arg4);
 
       // Set the duration:
-      duration = typeof args.duration === 'number'
+      duration = _.isNumber(args.duration)
         ? args.duration
         : (function(arg) {
           if (arg === 'fast') return FAST;
@@ -887,8 +1071,437 @@
     }
   });
 
+
+  // -- Private Ajax functions -------------------------------------------------
+  PicoQ._ajax = {
+
+    /**
+     * Returns the default settings for an ajax call.
+     *
+     * @function ()
+     * @private
+     * @param {}          -,
+     * @returns {Object}  returns the default settings,
+     * @since 0.0.3
+     */
+    getDefaultSettings: function() {
+      return {
+        url: '',
+        method: 'GET',
+        dataType: 'text',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+      };
+    },
+
+    /**
+     * Returns the url and the settings for an ajax call merged with the default
+     * settings.
+     *
+     * @function (arg1, arg2)
+     * @private
+     * @param {String|Object} the url or the ajax settings,
+     * @param {Object}        the ajax settings,
+     * @returns {Object}      returns the url and the extended settings,
+     * @since 0.0.3
+     */
+    getArguments: function(args) {
+      var defaultSettings = PicoQ._ajax.getDefaultSettings()
+        , url
+        , settings
+        ;
+
+      // Extract url and settings from arguments:
+      switch (args.length) {
+
+        case 0:
+          url = '';
+          settings = _.extend(defaultSettings);
+          break;
+
+        case 1:
+          if (_.isString(args[0])) {
+            url = args[0];
+            settings = _.extend(defaultSettings);
+          } else if (_.isLiteralObject(args[0])) {
+            url = _.isString(args[0].url) ? args[0].url : '';
+            settings = _.extend(defaultSettings, args[0]);
+          } else {
+            url = '';
+            settings = _.extend(defaultSettings);
+          }
+          break;
+
+        case 2:
+        default:
+          url = _.isString(args[0]) ? args[0] : '';
+          settings = _.isLiteralObject(args[1])
+            ? _.extend(defaultSettings, args[1])
+            : _.extend(defaultSettings);
+          break;
+      }
+      return { url: url, settings: settings };
+    },
+
+    /**
+     * Returns the settings for the ajax shorthand functions (get, post, load, getJSON).
+     *
+     * @function (arg1, [arg2], [arg3], [arg4])
+     * @private
+     * @param {String|Object} the url or the settings,
+     * @param ...             ...,
+     * @returns {Object}      returns the formatted setting,
+     * @since 0.0.3
+     */
+    getSettings: function(args) {
+      var settings = { url: null, data: null, success: null, dataType: null }
+        ;
+
+      switch (args.length) {
+
+        case 0:
+          break;
+
+        // fn(url) or fn([settings])
+        case 1:
+          if (_.isString(args[0])) {
+            settings.url = args[0];
+            break;
+          }
+          if (_.isLiteralObject(args[0])) {
+            settings = args[0];
+          }
+          break;
+
+        // fn(url, data) or fn(url, success) or fn(url, dataType)
+        case 2:
+          if (!_.isString(args[0])) {
+            break;
+          }
+          settings.url = args[0];
+
+          if (_.isLiteralObject(args[1])) {
+            settings.data = args[1];
+            break;
+          }
+          if (_.isFunction(args[1])) {
+            settings.success = args[1];
+            break;
+          }
+          if (_.isString(args[1])) {
+            settings.dataType = args[1];
+          }
+          break;
+
+        // fn(url [, data ] [, success / dataType ]) or fn(url, success, dataType)
+        case 3:
+          if (!_.isString(args[0])) {
+            break;
+          }
+          settings.url = args[0];
+
+          if (_.isLiteralObject(args[1])) {
+            settings.data = args[1];
+            if (_.isFunction(args[2])) {
+              settings.success = args[2];
+              break;
+            }
+            if (_.isString(args[2])) {
+              settings.dataType = args[2];
+            }
+            break;
+          }
+
+          if (_.isFunction(args[1])) {
+            settings.success = args[1];
+          }
+          if (_.isString(args[2])) {
+            settings.dataType = args[2];
+          }
+          break;
+
+        // fn(url, data, success, dataType)
+        case 4:
+        default:
+          if (!_.isString(args[0])) {
+            break;
+          }
+          settings.url = args[0];
+          if (_.isLiteralObject(args[1])) {
+            settings.data = args[1];
+          }
+          if (_.isFunction(args[2])) {
+            settings.success = args[2];
+          }
+          if (_.isString(args[3])) {
+            settings.dataType = args[3];
+          }
+          break;
+      }
+      return settings;
+    },
+
+    /**
+     * Returns the encoded url params ('param1=value1&param2=vlaue2').
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}    the url params,
+     * @returns {String}  returns the url encoded params,
+     * @since 0.0.3
+     */
+    encodeParams: function(params) {
+      var s = ''
+        , keys
+        , i
+        ;
+
+      if (!_.isLiteralObject(params)) {
+        return null;
+      }
+
+      keys = Object.keys(params);
+      for (i = 0; i < keys.length; i++) {
+        if (i === 0) {
+          s += keys[i] + '=' + encodeURIComponent(params[keys[i]]);
+        } else {
+          s += '&' + keys[i] + '=' + encodeURIComponent(params[keys[i]]);
+        }
+      }
+      return s;
+    },
+
+   /**
+    * Returns the deferred function done, fail or always.
+    *
+    * Nota: Mutates the array callbacks.
+    *
+    * @function (arg1, arg2, arg3)
+    * @private
+    * @param {Object}     the xhr ajax object,
+    * @param {Array}      an array of callback functions associated with done, fail, always,
+    * @param {String}     the name of the deferred function (done, fail, always),
+    * @returns {Function} returns the deferred function (done, fail or always),
+    * @since 0.0.3
+    */
+    register: function(xhr, callbacks, cbname) {
+      return function(cb) {
+        var obj = {};
+        if (cb) {
+          obj[cbname] = cb;
+          callbacks.push(obj);
+        } else {
+          obj[cbname] = null;
+          callbacks.push(obj);
+        }
+        return xhr;
+      };
+    },
+
+   /**
+    * Fires the callback functions associated with done, fail or always.
+    *
+    * @function (arg1, arg2, arg3)
+    * @private
+    * @param {Array}      the array of callbacks,
+    * @param {Object}     the xhr ajax object,
+    * @returns {}         -,
+    * @since 0.0.3
+    */
+    fire: function(callbacks, xhr, result) {
+      var cname
+        , fn
+        , i
+        ;
+
+      switch (result) {
+        case 'success':
+          for (i = 0; i < callbacks.length; i++) {
+            cname = Object.keys(callbacks[i])[0];
+            fn = callbacks[i][cname];
+            if (_.isFunction(fn) && (cname === 'done' || cname === 'always' || cname === 'success')) {
+              fn(xhr.responseText, xhr.statusText, xhr);
+            }
+          }
+          break;
+
+        case 'error':
+          for (i = 0; i < callbacks.length; i++) {
+            cname = Object.keys(callbacks[i])[0];
+            fn = callbacks[i][cname];
+            if (typeof fn === 'function' && (cname === 'fail' || cname === 'always')) {
+              fn(xhr, xhr.statusText);
+            }
+          }
+          break;
+
+        /* istanbul ignore next */
+        default:
+          throw new Error('PicoQ._ajax.fire: this case must never happen!');
+      }
+    }
+  };
+
+
+  // -- Public Ajax functions --------------------------------------------------
+  /**
+   * Performs an asynchronous HTTP Ajax request.
+   *
+   * @function (arg1, arg2)
+   * @public
+   * @param {String|Object}  the url or the object settings,
+   * @param {Object}         the object settings or undefined,
+   * @returns {Object}       returns a superset of the xhr object,
+   * @since 0.0.3
+   */
+  PicoQ.ajax = function() {
+    var _a             = PicoQ._ajax
+      , o              = _a.getArguments(arguments)
+      , XMLHttpRequest = PicoQ.VDOM ? PicoQ.VDOM.window.XMLHttpRequest : window.XMLHttpRequest
+      , xhr            = new XMLHttpRequest()
+      , callbacks      = []
+      , url            = o.url
+      , settings       = o.settings
+      ;
+
+    // Register the deferred functions:
+    xhr.done = _a.register(xhr, callbacks, 'done');
+    xhr.fail = _a.register(xhr, callbacks, 'fail');
+    xhr.always = _a.register(xhr, callbacks, 'always');
+
+    // Retrieve the data from the server:
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200 || xhr.status === 0) {
+          _a.fire(callbacks, xhr, 'success');
+          if (settings.success) {
+            // Fire the callback 'success':
+            if (settings.dataType === 'json') {
+              settings.success(JSON.parse(xhr.responseText), xhr.statusText, xhr);
+            } else {
+              settings.success(xhr.responseText, xhr.statusText, xhr);
+            }
+          }
+        } else {
+          _a.fire(callbacks, xhr, 'error');
+        }
+      }
+    };
+
+    // Send:
+    if (settings.method === 'GET') {
+      /* method is GET */
+      if (settings.data) {
+        url += '?' + _a.encodeParams(settings.data);
+      }
+      xhr.open('GET', url, true);
+      xhr.send(null);
+    } else {
+      /* method is POST */
+      xhr.open('POST', url, true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send(_a.encodeParams(settings.data));
+    }
+    return xhr;
+  };
+
+  /**
+   * Loads data from the server using a HTTP GET request.
+   *
+   * @function (arg1...)
+   * @public
+   * @param {String|Object}  url [, data ] [, success ] [, dataType ] or [ settings ]
+   * @param ...              ...,
+   * @returns {Object}       returns a superset of the xhr object,
+   * @since 0.0.3
+   */
+  PicoQ.get = function() {
+    var settings = PicoQ._ajax.getSettings(arguments)
+      ;
+
+    settings.method = 'GET';
+    return PicoQ.ajax(settings);
+  };
+
+  /**
+   * Loads JSON-encoded data from the server using a HTTP GET request.
+   *
+   * @function (arg1...)
+   * @public
+   * @param {String|Object}  url [, data ] [, success ] or [ settings ]
+   * @param ...              ...,
+   * @returns {Object}       returns a superset of the xhr object,
+   * @since 0.0.3
+   */
+  PicoQ.getJSON = function() {
+    var settings = PicoQ._ajax.getSettings(arguments)
+      ;
+
+    settings.method = 'GET';
+    settings.dataType = 'json';
+    return PicoQ.ajax(settings);
+  };
+
+  /**
+   * Loads data from the server using a HTTP POST request.
+   *
+   * @function (arg1...)
+   * @public
+   * @param {String|Object}  url [, data ] [, success ] [, dataType ] or [ settings ]
+   * @param ...              ...,
+   * @returns {Object}       returns a superset of the xhr object,
+   * @since 0.0.3
+   */
+  PicoQ.post = function() {
+    var settings = PicoQ._ajax.getSettings(arguments)
+      ;
+
+    settings.method = 'POST';
+    return PicoQ.ajax(settings);
+  };
+
+
+  // -- Public Ajax methods ----------------------------------------------------
+  PicoQ._.extend(PicoQ.prototype, {
+
+    /**
+     * Load data from the server and places the returned HTML into the matched element.
+     *
+     * @method (url [, data ] [, complete ])
+     * @public
+     * @param {String}      the url string,
+     * @param {Object}      the params to be sent to the server,
+     * @param {Function}    the function to call at the completion,
+     * @returns {Object}    returns this,
+     * @since 0.0.3
+     */
+    load: function() {
+      var that     = this
+        , settings = PicoQ._ajax.getSettings(arguments)
+        , cb
+        ;
+
+      // Do not perform an Ajax request if the 'selector' doesn't match:
+      if (!this[0]) {
+        return this;
+      }
+
+      cb = settings.success;
+      settings.success = undefined;
+      settings.method = settings.data ? 'POST' : 'GET';
+
+      PicoQ.ajax(settings)
+        .done(function(xmlString) {
+          that.html(xmlString);
+          if (_.isFunction(cb)) {
+            cb();
+          }
+        });
+      return this;
+    }
+  });
+
 // Current version of the library.
-  PicoQ.VERSION = '0.0.2';
+  PicoQ.VERSION = '0.0.3';
 
   // Returns the library name:
   return PicoQ;

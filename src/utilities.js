@@ -2,28 +2,7 @@
   // -- Private functions ------------------------------------------------------
   /* eslint-disable no-underscore-dangle */
 
-  PicoQ._ = {
-
-    /**
-     * Extends PicoQ prototype with the given object.
-     *
-     * Nota: mutates PicoQ
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}    the methods to add to PicoQ.prototype,
-     * @returns {}        -,
-     * @since 0.0.0
-     */
-    extend: function(obj) {
-      var keys = Object.keys(obj)
-        , i
-        ;
-
-      for (i = 0; i < keys.length; i++) {
-        PicoQ.prototype[keys[i]] = obj[keys[i]];
-      }
-    },
+  PicoQ.utilities = {
 
     /**
      * Normalizes the CSS properties.
@@ -37,7 +16,7 @@
      * @since 0.0.0
      */
     normalizeCssPropertyName: function(name) {
-      var arr = typeof name === 'string' ? name.split('-') : []
+      var arr = _.isString(name) ? name.split('-') : []
         , normalized = ''
         , i
         ;
@@ -54,5 +33,5 @@
     }
   };
 
-  // Assign PicoQ._ to _:
-  _ = PicoQ._;
+  // Assign PicoQ._u to _u:
+  _u = PicoQ.utilities;

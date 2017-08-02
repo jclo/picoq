@@ -1,6 +1,6 @@
 
   // -- Public Methods to manage the node attributes -------------------------------
-  PicoQ._.extend({
+  PicoQ._.extend(PicoQ.prototype, {
 
     /**
      * Sets or Gets the specified attribute.
