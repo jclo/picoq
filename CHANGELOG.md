@@ -4,6 +4,7 @@
 
   * Added a subset of the Overslash library,
   * Added the Ajax methods ajax(), get(), getJSON(), post() and load(),
+  * Made the server script non-blocking,
   * ...,
 
 
