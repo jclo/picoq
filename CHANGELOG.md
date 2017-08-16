@@ -3,7 +3,7 @@
 ### 0.0.4 (August 16, 2017)
 
   * Fixed an issue with the method animate(),
-  * ...,
+  * Release.
 
 
 ### 0.0.3 (August 2, 2017)
