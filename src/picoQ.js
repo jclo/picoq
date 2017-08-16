@@ -8,8 +8,10 @@
       }
       return null;
     }
-    // Initialize docu to DOM or VDOM (for testing purpose):
+    // Initialize windo and docu to DOM or VDOM (for testing purpose):
+    windo = PicoQ.VDOM ? PicoQ.VDOM.window : window;
     docu = PicoQ.VDOM ? PicoQ.VDOM.window.document : window.document;
+
     return new PicoQ(selector);
   };
 

@@ -22,6 +22,7 @@
   'use strict';
 
   var PicoQ
+    , windo
     , docu
     , _
     , _u

@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.0.4 (August 16, 2017)
+
+  * Fixed an issue with the method animate(),
+  * ...,
+
+
 ### 0.0.3 (August 2, 2017)
 
   * Added a subset of the Overslash library,

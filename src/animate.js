@@ -99,10 +99,12 @@
      * @since 0.0.0
      */
     getProps: function(el, properties) {
-      var keys = Object.keys(properties)
+      var keys  = Object.keys(properties)
+        , style = windo.getComputedStyle(el)
         , props = {}
         , names = []
         , name
+        , cssValue
         , i
         ;
 
@@ -111,12 +113,13 @@
         // Normalize the name of the property:
         name = _u.normalizeCssPropertyName(keys[i]);
         // Check it is a valid CSS property:
-        if (el.style[name]) {
+        cssValue = style.getPropertyValue(name);
+        if (cssValue) {
           names.push(name);
           props[name] = {
-            initial: parseFloat(el.style[name], 10),
-            change: parseFloat(properties[keys[i]]) - parseFloat(el.style[name]),
-            suffix: el.style[name].replace(/[0-9.]/g, '')
+            initial: parseFloat(cssValue, 10),
+            change: parseFloat(properties[keys[i]]) - parseFloat(cssValue),
+            suffix: cssValue.replace(/[0-9.]/g, '')
           };
         }
       }
@@ -143,22 +146,25 @@
         , elem = el
         , lapseOfTime = 0
         , timer
+        , value
         , i
         ;
 
       timer = setInterval(function() {
+        // easing:
+        for (i = 0; i < props.name.length; i++) {
+          value = easing(
+            lapseOfTime,
+            props[props.name[i]].initial,
+            props[props.name[i]].change,
+            duration);
+
+          elem.style[props.name[i]] = value + props[props.name[i]].suffix;
+        }
         lapseOfTime += delay;
         if (lapseOfTime > duration) {
           clearInterval(timer);
           if (callback) callback();
-        }
-        // easing:
-        for (i = 0; i < props.name.length; i++) {
-          elem.style[props.name[i]] = easing(
-            lapseOfTime,
-            props[props.name[i]].initial,
-            props[props.name[i]].change,
-            duration) + props[props.name[i]].suffix;
         }
       }, delay);
     },
@@ -227,7 +233,7 @@
           return DTIME;
         }(args.duration));
 
-      // Set the easing (linear only for the time being):
+      // Set the easing (swing only for the time being):
       easing = (PicoQ._easing && PicoQ._easing[args.easing])
         ? PicoQ._easing[args.easing]
         : PicoQ._anim.swing;
