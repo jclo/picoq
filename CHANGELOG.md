@@ -5,7 +5,7 @@
   * Forced the library file name to always be in lowercase characters,
   * Removed the libraries PicoQ.js, etc. from Git,
   * Rebuilt to get the libraries with names in lowercase chars,
-  * ...,
+  * Release.
 
 
 ### 0.0.4 (August 16, 2017)
