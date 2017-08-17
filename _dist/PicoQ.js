@@ -1,16 +1,16 @@
-/**
- * PicoQ v0.0.4
+/** ****************************************************************************
+ * PicoQ v0.0.5
  *
  * A tiny Javascript library to interact with the DOM.
- * (you can download it from npm or github repositories.)
+ * (you can download it from npm or github repositories)
  * Copyright (c) 2017 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).
  * Released under the MIT license. You may obtain a copy of the License
  * at: http://www.opensource.org/licenses/mit-license.php).
- */
+ * ****************************************************************************/
 // ESLint declarations
 /* global define */
-/* eslint strict: ["error", "function"], one-var: 0, no-param-reassign: 0,
-  no-underscore-dangle: 0 */
+/* eslint strict: ["error", "function"], one-var: 0 */
+/* eslint-disable no-param-reassign, no-underscore-dangle */
 (function(root, factory) {
   'use strict';
 
@@ -24,18 +24,39 @@
     // like Node.
     module.exports = factory(root);
   } else {
-    // Browser globals.
+    // Browser globals:
     root.PicoQ = factory(root);
   }
-}(this, function() {
+}(this, function(root) {
   'use strict';
 
   var PicoQ
+    , previousPicoQ
     , windo
     , docu
     , _
     , _u
     ;
+
+  // Saves the previous value of the library variable, so that it can be
+  // restored later on, if noConflict is used.
+  previousPicoQ = root.PicoQ;
+
+  // Initializes the library:
+  /* istanbul ignore next */
+  PicoQ = {};
+
+  // Runs PicoQ in noConflict mode, returning the PicoQ variable to its
+  // previous owner. Returns a reference to this PicoQ object.
+  /* istanbul ignore next */
+  PicoQ.noConflict = function() {
+    root.PicoQ = previousPicoQ;
+    return this;
+  };
+
+  // Current version of the library:
+  PicoQ.VERSION = '0.0.5';
+  /* eslint-enable no-param-reassign, no-underscore-dangle */
 
 
   // -- PicoQ Public Methods ---------------------------------------------------
@@ -1307,9 +1328,6 @@
       return this;
     }
   });
-
-// Current version of the library.
-  PicoQ.VERSION = '0.0.4';
 
   // Returns the library name:
   return PicoQ;

@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.0.5 (August 17, 2017)
+
+  * Forced the library file name to always be in lowercase characters,
+  * ...,
+
+
 ### 0.0.4 (August 16, 2017)
 
   * Fixed an issue with the method animate(),

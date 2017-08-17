@@ -16,7 +16,7 @@ const del         = require('del')
 const config  = require('./config')
     ;
 
-// -- Release and copyright to include
+// -- Release version:
 const release   = require('../package.json').version
     ;
 
@@ -45,47 +45,48 @@ gulp.task('skeleton', function() {
 
 // Copy the development version:
 gulp.task('copydev', function() {
-  return gulp.src(`${libdir}/${libname}.js`)
+  return gulp.src(`${libdir}/${libname.toLowerCase()}.js`)
     .pipe(header(license.standard))
-    .pipe(replace('{{lib:name}}', libname))
-    .pipe(replace('{{lib:version}}', release))
-    .pipe(gulp.dest(dist));
-});
-
-// Copy the development version with easing:
-gulp.task('copydeveasing', function() {
-  return gulp.src(`${libdir}/${libname}-easing.js`)
-    .pipe(header(license.easing))
-    .pipe(replace('{{lib:name}}', `${libname}-easing`))
+    .pipe(replace('{{lib:name}}', `${libname}`))
     .pipe(replace('{{lib:version}}', release))
     .pipe(gulp.dest(dist));
 });
 
 // Create the minified version:
 gulp.task('makeminified', function() {
-  return gulp.src(`${libdir}/${libname}.js`)
+  return gulp.src(`${libdir}/${libname.toLowerCase()}.js`)
     .pipe(uglify())
     .pipe(header(license.standard))
-    .pipe(replace('{{lib:name}}', libname))
+    .pipe(replace('{{lib:name}}', `${libname}`))
     .pipe(replace('{{lib:version}}', release))
-    .pipe(concat(`${libname}.min.js`))
+    .pipe(concat(`${libname.toLowerCase()}.min.js`))
     .pipe(gulp.dest(dist));
 });
 
-// Create the minified easing version:
+// Copy the easing development version:
+gulp.task('copydeveasing', function() {
+  return gulp.src(`${libdir}/${libname.toLowerCase()}-easing.js`)
+    .pipe(header(license.easing))
+    .pipe(replace('{{lib:name}}', `${libname}-easing`))
+    .pipe(replace('{{lib:version}}', release))
+    .pipe(gulp.dest(dist));
+});
+
+// Create the easing minified version:
 gulp.task('makeminifiedeasing', function() {
-  return gulp.src(`${libdir}/${libname}-easing.js`)
+  return gulp.src(`${libdir}/${libname.toLowerCase()}-easing.js`)
     .pipe(uglify())
     .pipe(header(license.easing))
     .pipe(replace('{{lib:name}}', `${libname}-easing`))
     .pipe(replace('{{lib:version}}', release))
-    .pipe(concat(`${libname}-easing.min.js`))
+    .pipe(concat(`${libname.toLowerCase()}-easing.min.js`))
     .pipe(gulp.dest(dist));
 });
+
 
 // -- Gulp Main Task:
 gulp.task('makedist', function(callback) {
   runSequence('deldist',
-    ['skeleton', 'copydev', 'copydeveasing', 'makeminified', 'makeminifiedeasing'],
+    ['skeleton', 'copydev', 'makeminified', 'copydeveasing', 'makeminifiedeasing'],
     callback);
 });
