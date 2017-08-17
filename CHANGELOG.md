@@ -3,6 +3,7 @@
 ### 0.0.5 (August 17, 2017)
 
   * Forced the library file name to always be in lowercase characters,
+  * Removed the libraries PicoQ.js, etc. from Git,
   * ...,
 
 

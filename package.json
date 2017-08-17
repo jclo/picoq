@@ -15,7 +15,7 @@
     "display-coverage": "opener ./coverage/lcov-report/index.html",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "report": "nyc report",
-    "precommit": "npm run makedist && npm run test && npm run check-coverage && npm run report"
+    "ppprecommit": "npm run makedist && npm run test && npm run check-coverage && npm run report"
   },
   "repository": {
     "type": "git",
