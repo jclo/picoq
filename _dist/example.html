@@ -1,0 +1,27 @@
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="">
+    <script src="./picoq.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <button type="button" class="button1">Click Me!</button>
+    </div>
+    <div id="app2"></div>
+
+    <script>
+      window.onload = function() {
+
+        // Assign PicoQ to $:
+        var $ = PicoQ;
+
+        // Listen for a click event:
+        $('#app').on('click', function() {
+          $('#app2').append('<p>Hello!</p>');
+        });
+      };
+    </script>
+  </body>
+</html>
