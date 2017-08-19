@@ -1,5 +1,5 @@
 /** ****************************************************************************
- * PicoQ v0.0.5
+ * PicoQ v0.0.6
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -38,28 +38,21 @@
     , _u
     ;
 
-  // Saves the previous value of the library variable, so that it can be
-  // restored later on, if noConflict is used.
-  previousPicoQ = root.PicoQ;
-
-  // Initializes the library:
-  /* istanbul ignore next */
-  PicoQ = {};
-
-  // Runs PicoQ in noConflict mode, returning the PicoQ variable to its
-  // previous owner. Returns a reference to this PicoQ object.
-  /* istanbul ignore next */
-  PicoQ.noConflict = function() {
-    root.PicoQ = previousPicoQ;
-    return this;
-  };
-
-  // Current version of the library:
-  PicoQ.VERSION = '0.0.5';
   /* eslint-enable no-param-reassign, no-underscore-dangle */
 
 
-  // -- PicoQ Public Methods ---------------------------------------------------
+  // -- PicoQ Public -----------------------------------------------------------
+
+  /**
+   * PicoQ constructor.
+   *
+   * @constructor (arg1)
+   * @public
+   * @param {String}    CSS selector,
+   * @returns {Object}  returns PicoQ object,
+   * @since 0.0.0
+   */
+  /* eslint-disable no-param-reassign */
   PicoQ = function(selector) {
     if (this instanceof PicoQ) {
       if (selector) {
@@ -72,10 +65,29 @@
     windo = PicoQ.VDOM ? PicoQ.VDOM.window : window;
     docu = PicoQ.VDOM ? PicoQ.VDOM.window.document : window.document;
 
+    // PicoQ instantiate itself. So, there is no need of using new:
     return new PicoQ(selector);
   };
 
-  // Define prototype functions.
+  // Saves the previous value of the library variable, so that it can be
+  // restored later on, if noConflict is used.
+  previousPicoQ = root.PicoQ;
+
+  // Runs PicoQ in noConflict mode, returning the PicoQ variable to its
+  // previous owner. Returns a reference to this PicoQ object.
+  /* istanbul ignore next */
+  PicoQ.noConflict = function() {
+    root.PicoQ = previousPicoQ;
+    return this;
+  };
+
+  // The current version of the library:
+  PicoQ.VERSION = '0.0.6';
+
+  /* eslint-disable no-param-reassign */
+
+
+  // -- PicoQ Public Methods ---------------------------------------------------
   // Prototype functions are attached to PicoQ.prototype by the function
   // PicoQ._extend()
   PicoQ.prototype = {

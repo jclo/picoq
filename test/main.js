@@ -10,6 +10,7 @@ const JSDOM          = require('jsdom').JSDOM
 
 // -- Local modules
 const PicoQ       = require('../index.js')
+    , fnpicoq     = require('./picoq.js')
     , fnoverslash = require('./overslash.js')
     , fnutilities = require('./utilities.js')
     , fncore      = require('./core.js')
@@ -72,6 +73,7 @@ dom.window.XMLHttpRequest = XMLHttpRequest;
 PicoQ.VDOM = dom;
 
 describe('PicoQ', () => {
+  fnpicoq();
   fnoverslash();
   fnutilities();
   fncore();

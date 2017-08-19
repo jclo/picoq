@@ -29,22 +29,4 @@
     , _u
     ;
 
-  // Saves the previous value of the library variable, so that it can be
-  // restored later on, if noConflict is used.
-  previousPicoQ = root.PicoQ;
-
-  // Initializes the library:
-  /* istanbul ignore next */
-  PicoQ = {};
-
-  // Runs PicoQ in noConflict mode, returning the PicoQ variable to its
-  // previous owner. Returns a reference to this PicoQ object.
-  /* istanbul ignore next */
-  PicoQ.noConflict = function() {
-    root.PicoQ = previousPicoQ;
-    return this;
-  };
-
-  // Current version of the library:
-  PicoQ.VERSION = '{{lib:version}}';
   /* eslint-enable no-param-reassign, no-underscore-dangle */

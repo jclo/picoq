@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.0.6 (August 19, 2017)
+
+  * Fixed an issue with PicoQ.VERSION and PicoQ.noConflict,
+  * ...,
+
+
 ### 0.0.5 (August 17, 2017)
 
   * Forced the library file name to always be in lowercase characters,
