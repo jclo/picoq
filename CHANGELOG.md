@@ -3,7 +3,7 @@
 ### 0.0.6 (August 19, 2017)
 
   * Fixed an issue with PicoQ.VERSION and PicoQ.noConflict,
-  * ...,
+  * Release.
 
 
 ### 0.0.5 (August 17, 2017)
