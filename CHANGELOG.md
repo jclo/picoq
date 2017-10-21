@@ -7,7 +7,7 @@
   * Added the methods select, parent, firstParent,
   * Added the methods insertChildBefore, removeChild,
   * Added a hack to 'compile' with Browserify,
-  * ...,
+  * Release.
 
 
 ### 0.0.6 (August 19, 2017)
