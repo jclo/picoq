@@ -1,5 +1,5 @@
 /** ****************************************************************************
- * PicoQ v0.0.6
+ * PicoQ v0.0.7
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -7,10 +7,11 @@
  * Released under the MIT license. You may obtain a copy of the License
  * at: http://www.opensource.org/licenses/mit-license.php).
  * ****************************************************************************/
+// Based on UMD Lib template v0.5.3
 // ESLint declarations
 /* global define */
-/* eslint strict: ["error", "function"], one-var: 0 */
-/* eslint-disable no-param-reassign, no-underscore-dangle */
+/* eslint-disable one-var */
+/* eslint-disable strict, no-param-reassign */
 (function(root, factory) {
   'use strict';
 
@@ -23,6 +24,9 @@
     // only CommonJS-like environments that support module.exports,
     // like Node.
     module.exports = factory(root);
+    // This is a hack to attach the lib to the browser root when this lib is
+    // included inside another lib and the whole is browserifyied:
+    if (root.PicoQ === null) root.PicoQ = factory(root);
   } else {
     // Browser globals:
     root.PicoQ = factory(root);
@@ -30,15 +34,14 @@
 }(this, function(root) {
   'use strict';
 
+  // Defines the global variables in the scope of this module (only PicoQ is
+  // attached to the root object):
   var PicoQ
     , previousPicoQ
-    , windo
-    , docu
+    , Pic
     , _
-    , _u
     ;
-
-  /* eslint-enable no-param-reassign, no-underscore-dangle */
+  /* eslint-enable strict, no-param-reassign */
 
 
   // -- PicoQ Public -----------------------------------------------------------
@@ -56,14 +59,11 @@
   PicoQ = function(selector) {
     if (this instanceof PicoQ) {
       if (selector) {
-        this[0] = docu.querySelector(selector);
+        this[0] = document.querySelector(selector);
         return this;
       }
       return null;
     }
-    // Initialize windo and docu to DOM or VDOM (for testing purpose):
-    windo = PicoQ.VDOM ? PicoQ.VDOM.window : window;
-    docu = PicoQ.VDOM ? PicoQ.VDOM.window.document : window.document;
 
     // PicoQ instantiate itself. So, there is no need of using new:
     return new PicoQ(selector);
@@ -81,8 +81,20 @@
     return this;
   };
 
-  // The current version of the library:
-  PicoQ.VERSION = '0.0.6';
+  // Attaches a release number to the library:
+  PicoQ.VERSION = '0.0.7';
+
+  // Attaches all the private methods to this private Pix object:
+  Pic = {
+    u: null,                 // miscellaneous functions,
+    anim: null,              // private functions for animate method,
+    ajax: null               // private ajax functions,
+  };
+
+  // Gives an access to the private methods for testing purpose:
+  PicoQ.setTestMode = function() {
+    PicoQ.Pic = Pic;
+  };
 
   /* eslint-disable no-param-reassign */
 
@@ -98,8 +110,12 @@
   // -- Private functions ------------------------------------------------------
   /* eslint-disable no-underscore-dangle */
 
+  // This library of functions is attached to PicoQ because we want to be able
+  // to reuse them outside the scope of this module in some circonstances (for
+  // example when PicoQ is embedded inside another library).
   PicoQ._ = {
 
+    // -- Core -----------------------------------------------------------------
     /**
      * Is a given variable undefined?
      *
@@ -196,6 +212,8 @@
     },
     /* eslint-enable no-void */
 
+
+    // -- Object ---------------------------------------------------------------
     /**
      * Is a given variable an object?
      *
@@ -250,19 +268,94 @@
     },
 
     /**
-     * Extends a given object with all the properties in passed-in object(s).
-     *
-     * Nota: mutates obj
-     *       The passed-in objects must be literal objects. The method extends
-     *       the first object with the properties/values of the n + 1 objects.
-     *       If the property values are objects, the method passes their reference.
-     *       This method doesn't perform a deep extend.
+     * Is a given value a Math object?
      *
      * @function (arg1)
-     * @private
-     * @param {Object}    the objects to merge,
-     * @returns {Object}  the resulting object,
-     * @since 0.0.0
+     * @public
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true or false,
+     * @since 0.0.7
+     */
+    isMath: /* istanbul ignore next */ function(obj) {
+      return Object.prototype.toString.call(obj) === '[object Math]';
+    },
+
+    /**
+     * Is a given value a Date?
+     *
+     * @function (arg1)
+     * @public
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true or false,
+     * @since 0.0.7
+     */
+    isDate: function(obj) {
+      return Object.prototype.toString.call(obj) === '[object Date]';
+    },
+
+    /**
+     * Is a given array, string or object empty?
+     *
+     * @function (arg1)
+     * @public
+     * @param {Object}      the object to test,
+     * @returns {Boolean}   returns true or false,
+     * @since 0.0.7
+     */
+    /* eslint-disable no-restricted-syntax, no-prototype-builtins */
+    isEmpty: function(obj) {
+      var key;
+      if (obj === null) return true;
+      if (this.isArray(obj) || this.isString(obj)) return obj.length === 0;
+      // Check that the object has no enumerable own-properties.
+      // If ECMAScript 5 support only: 'return Object.keys(obj).length === 0;'
+      // Otherwise, parse all properties.
+      for (key in obj) if (obj.hasOwnProperty(key)) return false;
+      return true;
+    },
+    /* eslint-enable no-restricted-syntax, no-prototype-builtins */
+
+
+    // --- Operations on Objects -----------------------------------------------
+    /**
+     * Clones a literal object or an array.
+     *
+     * @function(arg1)
+     * @public
+     * @param {Object}    the object to clone,
+     * @returns {Object}  returns the cloned object,
+     * @since 0.0.7
+     */
+    /* eslint-disable no-void, no-restricted-syntax */
+    clone: /* istanbul ignore next */ function(obj) {
+      var clone = this.isArray(obj) ? [] : {}
+        , prop
+        ;
+
+      if (!this.isObject(obj)) return void 0;
+
+      for (prop in obj) {
+        if (this.isArray(obj[prop])) {
+          clone[prop] = this.clone(obj[prop]);
+        } else if (this.isObject(obj[prop])) {
+          clone[prop] = this.extend(obj[prop]);
+        } else {
+          clone[prop] = obj[prop];
+        }
+      }
+      return clone;
+    },
+    /* eslint-enable no-void, no-restricted-syntax */
+
+    /**
+     * Extends a given object with all the properties in passed-in object(s).
+     * (copied from: http://underscorejs.org and added recursivity)
+     *
+     * @function (arg1)
+     * @public
+     * @param {Object}      the objects to merge,
+     * @returns {Object}    the resulting object,
+     * @since 0.0.7
      */
     /* eslint-disable no-restricted-syntax, no-param-reassign */
     extend: function(obj) {
@@ -271,27 +364,110 @@
         , i
         ;
 
+      if (!this.isObject(obj)) return obj;
+
       for (i = 1; i < arguments.length; i++) {
         source = arguments[i];
         for (prop in source) {
-          if (hasOwnProperty.call(source, prop)) {
-            obj[prop] = source[prop];
+          // if (!this.isArray(arguments[i][prop]) && this.isObject(arguments[i][prop])) {
+          if (this.isLiteralObject(arguments[i][prop])) {
+            obj[prop] = obj[prop] !== undefined ? obj[prop] : {};
+            this.extend(obj[prop], arguments[i][prop]);
+          } else if (hasOwnProperty.call(source, prop)) {
+            obj[prop] = this.isArray(source[prop])
+              ? this.clone(source[prop])
+              : source[prop];
           }
         }
       }
       return obj;
-    }
+    },
     /* eslint-enable no-restricted-syntax, no-param-reassign */
+
+    /**
+     * Retrieves all the names of the object's own enumerable properties.
+     * (ECMAScript 5 only).
+     *
+     * @function (arg1)
+     * @public
+     * @param {Object}      the input object,
+     * @returns {Array}     returns the names of the keys,
+     * @since 0.0.7
+     */
+    keys: function(obj) {
+      return Object.keys(obj);
+    },
+
+    /**
+     * Parses all the names of the object's own enumerable properties
+     * (replace for...in statement).
+     * (ECMAScript 5 only).
+     *
+     * @function (arg1 arg2)
+     * @public
+     * @param {Object}      the input object,
+     * @returns {Array}     returns the names of the keys,
+     * @since 0.0.7
+     */
+    forPropIn: /* istanbul ignore next */ function(obj, callback) {
+      // var keys = overslash.keys(obj);
+      this.keys(obj).forEach(function(key) {
+        if ({}.hasOwnProperty.call(obj, key)) {
+          callback(key);
+        }
+      });
+    },
+
+    /**
+     * Extends source with target(s) while preserving the assessors.
+     *
+     * Nota:
+     * Clones a literal object at the first level while preserving the
+     * assessors (get and set). This should be the prefered method to Clones
+     * a literal object or a prototype that includes get and set assessors.
+     *
+     * Example:
+     * To clone a function prototype:
+     * var a = _.assign({}, fn.prototype);  // clone the original prototype,
+     * _.assign(fn2.prototype, a);          // assign it to fn2.prototype,
+     *
+     * @function (...arg1)
+     * @public
+     * @param {Object}      the objects to 'fusion',
+     * @returns {Object}    returns the reassigned object,
+     * @since 0.0.0
+     */
+    /* eslint-disable no-param-reassign, no-loop-func */
+    assign: function() {
+      var target = arguments[0]
+        , source
+        , descriptors
+        , i
+        ;
+
+      for (i = 1; i < arguments.length; i++) {
+        source = arguments[i];
+        descriptors = Object.keys(source).reduce(function(props, key) {
+          props[key] = Object.getOwnPropertyDescriptor(source, key);
+          return props;
+        }, {});
+      }
+      Object.defineProperties(target, descriptors);
+      return target;
+    }
+    /* eslint-enable no-param-reassign, no-loop-func */
   };
 
   // Assign PicoQ.overslash to _:
   _ = PicoQ._;
 
+  /* eslint-enable no-underscore-dangle */
+
 
   // -- Private functions ------------------------------------------------------
   /* eslint-disable no-underscore-dangle */
 
-  PicoQ.utilities = {
+  Pic.u = {
 
     /**
      * Normalizes the CSS properties.
@@ -321,15 +497,75 @@
       return normalized;
     }
   };
+  /* eslint-enable no-underscore-dangle */
 
-  // Assign PicoQ._u to _u:
-  _u = PicoQ.utilities;
+
+  // -- Public Methods to select nodes -----------------------------------------
+  PicoQ._.extend(PicoQ.prototype, {
+    /**
+     * Select a child element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    the selector,
+     * @returns {Object}  returns this,
+     * @since 0.0.7
+     */
+    select: /* istanbul ignore next */ function(selector) {
+      var child;
+
+      if (_.isString(selector)) {
+        child = this[0].querySelector(selector);
+        if (child) {
+          this[0] = child;
+        }
+      }
+      return this;
+    },
+
+    /**
+     * Returns to the parent element.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns this,
+     * @since 0.0.7
+     */
+    parent: /* istanbul ignore next */ function() {
+      if (this.root) {
+        // As a root parent is defined, we stop at it.
+        if (this[0] !== this.root) {
+          this[0] = this[0].parentNode;
+        }
+      } else {
+        this[0] = this[0].parentNode;
+      }
+      return this;
+    },
+
+    /**
+     * Returns to the root parent if defined.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns this,
+     * @since 0.0.7
+     */
+    firstParent: /* istanbul ignore next */ function() {
+      if (this.root) {
+        this[0] = this.root;
+      }
+      return this;
+    }
+  });
 
 
   // -- Public Methods to insert/remove nodes to/from the DOM ------------------
   PicoQ._.extend(PicoQ.prototype, {
     /**
-     * Gets/Sets the HTML contents of the element,
+     * Gets/Sets the HTML contents of the element.
      *
      * @method (arg1)
      * @public
@@ -436,7 +672,7 @@
         , index =  Array.prototype.indexOf.call(parent.children, oldChild)
         // , parser = new DOMParser()
         // , newchild = parser.parseFromString(xmlString, 'text/xml').firstChild
-        , wrapper = docu.createElement('div')
+        , wrapper = document.createElement('div')
         , newChild
         ;
 
@@ -450,7 +686,7 @@
     },
 
     /**
-     * Gets/Sets the text contents of the element,
+     * Gets/Sets the text contents of the element.
      *
      * @method (arg1)
      * @public
@@ -464,6 +700,39 @@
         return this;
       }
       return this[0].textContent;
+    },
+
+    /**
+     * Inserts a child element before another child element.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {Object}    the new node element,
+     * @param {Object}    the target node element,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
+    insertChildBefore: /* istanbul ignore next */ function(newChild, child) {
+      if (newChild) {
+        this[0].insertBefore(newChild, child);
+      }
+      return this;
+    },
+
+    /**
+     * Removed the passed-in child element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}    the child element to remove,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
+    removeChild: /* istanbul ignore next */ function(child) {
+      if (child) {
+        this[0].removeChild(child);
+      }
+      return this;
     }
   });
 
@@ -481,7 +750,7 @@
      * @since 0.0.0
      */
     css: function(styleAttr, value) {
-      var attr = _u.normalizeCssPropertyName(styleAttr);
+      var attr = Pic.u.normalizeCssPropertyName(styleAttr);
 
       if (!value) {
         // Get attribute:
@@ -646,7 +915,7 @@
         evt = new Event(event);
       } else {
         // Old browsers:
-        evt = docu.createEvent('Event');
+        evt = document.createEvent('Event');
         evt.initEvent(event, true, true);
       }
       return this[0].dispatchEvent(evt);
@@ -657,7 +926,7 @@
   // -- Private functions for animate ------------------------------------------
   /* eslint-disable no-underscore-dangle */
 
-  PicoQ._anim = {
+  Pic.anim = {
 
     /**
      * Extracts the optional argument of 'animate'.
@@ -753,28 +1022,38 @@
      *                    per animated property,
      * @since 0.0.0
      */
-    getProps: function(el, properties) {
+    getProps: /* istanbul ignore next */ function(el, properties) {
       var keys  = Object.keys(properties)
-        , style = windo.getComputedStyle(el)
+        , style = window.getComputedStyle(el)
         , props = {}
         , names = []
         , name
         , cssValue
+        , cssParent
+        , suffix
         , i
         ;
 
       // Parse the properties:
       for (i = 0; i < keys.length; i++) {
         // Normalize the name of the property:
-        name = _u.normalizeCssPropertyName(keys[i]);
+        name = Pic.u.normalizeCssPropertyName(keys[i]);
         // Check it is a valid CSS property:
         cssValue = style.getPropertyValue(name);
         if (cssValue) {
           names.push(name);
+          cssValue = parseFloat(cssValue, 10);
+          suffix = properties[keys[i]].replace(/[0-9.]/g, '');
+          // Absolute or relative?
+          if (suffix === '%') {
+            // Relative, convert pixel value returned by 'getComputedStyle' in %:
+            cssParent = parseFloat(window.getComputedStyle(el.parentNode).getPropertyValue(name));
+            cssValue = (cssValue / cssParent) * 100;
+          }
           props[name] = {
-            initial: parseFloat(cssValue, 10),
-            change: parseFloat(properties[keys[i]]) - parseFloat(cssValue),
-            suffix: cssValue.replace(/[0-9.]/g, '')
+            initial: cssValue,
+            change: parseFloat(properties[keys[i]]) - cssValue,
+            suffix: suffix
           };
         }
       }
@@ -797,7 +1076,7 @@
      * @since 0.0.0
      */
     run: function(el, properties, easing, duration, delay, callback) {
-      var props = PicoQ._anim.getProps(el, properties)
+      var props = Pic.anim.getProps(el, properties)
         , elem = el
         , lapseOfTime = 0
         , timer
@@ -858,6 +1137,7 @@
      * @returns {Object}  returns this,
      * @since 0.0.0
      */
+    /* eslint-disable no-underscore-dangle */
     animate: function(properties, arg2, arg3, arg4) {
       var DTIME = 400
         , FAST  = 200
@@ -877,7 +1157,7 @@
       }
 
       // Extract the optional arguments:
-      args = PicoQ._anim.extractArgs(arg2, arg3, arg4);
+      args = Pic.anim.extractArgs(arg2, arg3, arg4);
 
       // Set the duration:
       duration = _.isNumber(args.duration)
@@ -891,13 +1171,13 @@
       // Set the easing (swing only for the time being):
       easing = (PicoQ._easing && PicoQ._easing[args.easing])
         ? PicoQ._easing[args.easing]
-        : PicoQ._anim.swing;
+        : Pic.anim.swing;
 
       // Set the callback:
       callback = args.callback ? args.callback : null;
 
       // Run the animation:
-      PicoQ._anim.run(el, properties, easing, duration, delay, callback);
+      Pic.anim.run(el, properties, easing, duration, delay, callback);
 
       // Test Mode:
       if (PicoQ.VDOM) {
@@ -911,10 +1191,11 @@
       return this;
     }
   });
+  /* eslint-enable no-underscore-dangle */
 
 
   // -- Private Ajax functions -------------------------------------------------
-  PicoQ._ajax = {
+  Pic.ajax = {
 
     /**
      * Returns the default settings for an ajax call.
@@ -946,7 +1227,7 @@
      * @since 0.0.3
      */
     getArguments: function(args) {
-      var defaultSettings = PicoQ._ajax.getDefaultSettings()
+      var defaultSettings = this.getDefaultSettings()
         , url
         , settings
         ;
@@ -1177,7 +1458,7 @@
 
         /* istanbul ignore next */
         default:
-          throw new Error('PicoQ._ajax.fire: this case must never happen!');
+          throw new Error('Pic.ajax.fire: this case must never happen!');
       }
     }
   };
@@ -1194,11 +1475,11 @@
    * @returns {Object}       returns a superset of the xhr object,
    * @since 0.0.3
    */
+  /* eslint-disable no-underscore-dangle */
   PicoQ.ajax = function() {
-    var _a             = PicoQ._ajax
+    var _a             = Pic.ajax
       , o              = _a.getArguments(arguments)
-      , XMLHttpRequest = PicoQ.VDOM ? PicoQ.VDOM.window.XMLHttpRequest : window.XMLHttpRequest
-      , xhr            = new XMLHttpRequest()
+      , xhr            = new window.XMLHttpRequest()
       , callbacks      = []
       , url            = o.url
       , settings       = o.settings
@@ -1244,6 +1525,7 @@
     }
     return xhr;
   };
+  /* eslint-enable no-underscore-dangle */
 
   /**
    * Loads data from the server using a HTTP GET request.
@@ -1256,7 +1538,7 @@
    * @since 0.0.3
    */
   PicoQ.get = function() {
-    var settings = PicoQ._ajax.getSettings(arguments)
+    var settings = Pic.ajax.getSettings(arguments)
       ;
 
     settings.method = 'GET';
@@ -1274,7 +1556,7 @@
    * @since 0.0.3
    */
   PicoQ.getJSON = function() {
-    var settings = PicoQ._ajax.getSettings(arguments)
+    var settings = Pic.ajax.getSettings(arguments)
       ;
 
     settings.method = 'GET';
@@ -1293,7 +1575,7 @@
    * @since 0.0.3
    */
   PicoQ.post = function() {
-    var settings = PicoQ._ajax.getSettings(arguments)
+    var settings = Pic.ajax.getSettings(arguments)
       ;
 
     settings.method = 'POST';
@@ -1317,7 +1599,7 @@
      */
     load: function() {
       var that     = this
-        , settings = PicoQ._ajax.getSettings(arguments)
+        , settings = Pic.ajax.getSettings(arguments)
         , cb
         ;
 
@@ -1344,3 +1626,4 @@
   // Returns the library name:
   return PicoQ;
 }));
+/* eslint-enable one-var */

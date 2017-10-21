@@ -1,6 +1,6 @@
 
   // -- Private Ajax functions -------------------------------------------------
-  PicoQ._ajax = {
+  Pic.ajax = {
 
     /**
      * Returns the default settings for an ajax call.
@@ -32,7 +32,7 @@
      * @since 0.0.3
      */
     getArguments: function(args) {
-      var defaultSettings = PicoQ._ajax.getDefaultSettings()
+      var defaultSettings = this.getDefaultSettings()
         , url
         , settings
         ;
@@ -263,7 +263,7 @@
 
         /* istanbul ignore next */
         default:
-          throw new Error('PicoQ._ajax.fire: this case must never happen!');
+          throw new Error('Pic.ajax.fire: this case must never happen!');
       }
     }
   };
@@ -280,11 +280,11 @@
    * @returns {Object}       returns a superset of the xhr object,
    * @since 0.0.3
    */
+  /* eslint-disable no-underscore-dangle */
   PicoQ.ajax = function() {
-    var _a             = PicoQ._ajax
+    var _a             = Pic.ajax
       , o              = _a.getArguments(arguments)
-      , XMLHttpRequest = PicoQ.VDOM ? PicoQ.VDOM.window.XMLHttpRequest : window.XMLHttpRequest
-      , xhr            = new XMLHttpRequest()
+      , xhr            = new window.XMLHttpRequest()
       , callbacks      = []
       , url            = o.url
       , settings       = o.settings
@@ -330,6 +330,7 @@
     }
     return xhr;
   };
+  /* eslint-enable no-underscore-dangle */
 
   /**
    * Loads data from the server using a HTTP GET request.
@@ -342,7 +343,7 @@
    * @since 0.0.3
    */
   PicoQ.get = function() {
-    var settings = PicoQ._ajax.getSettings(arguments)
+    var settings = Pic.ajax.getSettings(arguments)
       ;
 
     settings.method = 'GET';
@@ -360,7 +361,7 @@
    * @since 0.0.3
    */
   PicoQ.getJSON = function() {
-    var settings = PicoQ._ajax.getSettings(arguments)
+    var settings = Pic.ajax.getSettings(arguments)
       ;
 
     settings.method = 'GET';
@@ -379,7 +380,7 @@
    * @since 0.0.3
    */
   PicoQ.post = function() {
-    var settings = PicoQ._ajax.getSettings(arguments)
+    var settings = Pic.ajax.getSettings(arguments)
       ;
 
     settings.method = 'POST';
@@ -403,7 +404,7 @@
      */
     load: function() {
       var that     = this
-        , settings = PicoQ._ajax.getSettings(arguments)
+        , settings = Pic.ajax.getSettings(arguments)
         , cb
         ;
 

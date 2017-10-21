@@ -1,8 +1,8 @@
 
   // -- Easing functions -------------------------------------------------------
   /* istanbul ignore next */
+  /* eslint-disable */
   PicoQ._easing = {
-    /* eslint-disable */
     linear: function(t, b, c, d) {
       return c * t / d + b;
     },
@@ -171,7 +171,7 @@
     },
 
     easeInBounce: function(t, b, c, d) {
-      return c - PicoQ._easing.easeOutBounce(d - t, 0, c, d) + b;
+      return c - this.easeOutBounce(d - t, 0, c, d) + b;
     },
 
     easeOutBounce: function(t, b, c, d) {
@@ -188,10 +188,10 @@
 
     easeInOutBounce: function(t, b, c, d) {
       if (t < d / 2) {
-        return PicoQ._easing.easeInBounce(t * 2, 0, c, d) * 0.5 + b;
+        return this.easeInBounce(t * 2, 0, c, d) * 0.5 + b;
       }
-      return PicoQ._easing.easeOutBounce(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b;
+      return this.easeOutBounce(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b;
     }
-    /* eslint-enable */
   };
   PicoQ._easing.VERSION = '0.0.1';
+  /* eslint-enable */

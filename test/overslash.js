@@ -132,7 +132,54 @@ module.exports = function() {
       });
     });
 
+    describe('Test _.isDate():', () => {
+      it('Expexts _.isDate() to return false.', () => {
+        expect(_.isDate()).to.be.false;
+      });
+      it('Expexts _.isDate(new Date()) to return true.', () => {
+        expect(_.isDate(new Date)).to.be.true;
+      });
+    });
+
+    describe('Test _.isEmpty():', () => {
+      it('Expexts _.isEmpty("aaa") to return false.', () => {
+        expect(_.isEmpty('aaa')).to.be.false;
+      });
+      it('Expexts _.isEmpty({ a: 1 }) to return false.', () => {
+        expect(_.isEmpty({ a: 1 })).to.be.false;
+      });
+      it('Expexts _.isEmpty([1, 2, 3]) to return false.', () => {
+        expect(_.isEmpty([1, 2, 3])).to.be.false;
+      });
+      it('Expexts _.isEmpty(null) to return true.', () => {
+        expect(_.isEmpty(null)).to.be.true;
+      });
+      it('Expexts _.isEmpty("") to return true.', () => {
+        expect(_.isEmpty('')).to.be.true;
+      });
+      it('Expexts _.isEmpty({}) to return true.', () => {
+        expect(_.isEmpty({})).to.be.true;
+      });
+      it('Expexts _.isEmpty([]) to return true.', () => {
+        expect(_.isEmpty([])).to.be.true;
+      });
+    });
+
+    describe('Test _.clone():', () => {
+      const o = _.clone({ a: { a: 1 }, b: [] });
+      it('Expexts _.clone({ a: { a: 1 }, b: []) to return {a: { a: 1}, b: []}.', () => {
+        expect(o).to.be.an('object');
+      });
+      it('Expexts this object to own the property "a" that is an object.', () => {
+        expect(o).to.own.property('a').that.is.an('object');
+      });
+    });
+
     describe('Test _.extend():', () => {
+      it('Expexts _.extend("aaa") to return "aaa".', () => {
+        expect(_.extend('aaa')).to.be.a('string').that.is.equal('aaa');
+      });
+
       it('Expexts _.extend({}) to return an empty object.', () => {
         expect(_.extend({})).to.be.an('object').that.is.empty;
       });
@@ -154,6 +201,50 @@ module.exports = function() {
       });
       it('Expexts this object to own the property "b" that is equal to 3.', () => {
         expect(_.extend({}, { a: 1 }, { a: 2, b: 3 })).to.have.property('b').that.is.equal(3);
+      });
+    });
+
+    describe('Test _.keys():', () => {
+      it('Expects _.keys({a: 1, b: 2, c: 3}) to return an array with 3 elements.', () => {
+        expect(_.keys({ a: 1, b: 2, c: 3 })).to.be.an('array').that.has.lengthOf(3);
+      });
+    });
+
+    describe('Test _.forPropIn():', () => {
+      it('Expects _.forPropIn to be a function.', () => {
+        expect(_.forPropIn).to.be.a('function');
+      });
+    });
+
+    describe('Test _.assign():', () => {
+      const a = {
+        get a() {
+          return 'a';
+        },
+        get b() {
+          return this.a;
+        },
+      };
+
+      const b = {
+        get a() {
+          return 'b';
+        },
+      };
+
+      const c = _.assign(a, b);
+
+      it('Expects _.assign(a, b) to return an object.', () => {
+        expect(c).to.be.an('object');
+      });
+      it('Expects this object to own the property "a".', () => {
+        expect(c).to.own.property('a');
+      });
+      it('Expects this object to own the property "b".', () => {
+        expect(c).to.own.property('b');
+      });
+      it('Expects c.a to return the string "b".', () => {
+        expect(c.a).to.be.a('string').that.is.equal('b');
       });
     });
   });

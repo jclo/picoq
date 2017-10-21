@@ -14,14 +14,11 @@
   PicoQ = function(selector) {
     if (this instanceof PicoQ) {
       if (selector) {
-        this[0] = docu.querySelector(selector);
+        this[0] = document.querySelector(selector);
         return this;
       }
       return null;
     }
-    // Initialize windo and docu to DOM or VDOM (for testing purpose):
-    windo = PicoQ.VDOM ? PicoQ.VDOM.window : window;
-    docu = PicoQ.VDOM ? PicoQ.VDOM.window.document : window.document;
 
     // PicoQ instantiate itself. So, there is no need of using new:
     return new PicoQ(selector);
@@ -39,8 +36,20 @@
     return this;
   };
 
-  // The current version of the library:
+  // Attaches a release number to the library:
   PicoQ.VERSION = '{{lib:version}}';
+
+  // Attaches all the private methods to this private Pix object:
+  Pic = {
+    u: null,                 // miscellaneous functions,
+    anim: null,              // private functions for animate method,
+    ajax: null               // private ajax functions,
+  };
+
+  // Gives an access to the private methods for testing purpose:
+  PicoQ.setTestMode = function() {
+    PicoQ.Pic = Pic;
+  };
 
   /* eslint-disable no-param-reassign */
 

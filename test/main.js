@@ -15,6 +15,7 @@ const PicoQ       = require('../index.js')
     , fnutilities = require('./utilities.js')
     , fncore      = require('./core.js')
     , fndom       = require('./dom.js')
+    , fnselect    = require('./select.js')
     , fncss       = require('./css.js')
     , fnclass     = require('./class.js')
     , fnattr      = require('./attr.js')
@@ -60,7 +61,10 @@ const HTML = `
     </body>
   </html>
 `;
-const dom = new JSDOM(HTML);
+const vdom = new JSDOM(HTML);
+global.window = vdom.window;
+global.document = vdom.window.document;
+global.navigator = { userAgent: 'node.js' };
 
 // -- Local variables
 
@@ -68,9 +72,9 @@ const dom = new JSDOM(HTML);
 // -- Main
 
 // Attach node XMLHttpRequest to JSDOM:
-dom.window.XMLHttpRequest = XMLHttpRequest;
+vdom.window.XMLHttpRequest = XMLHttpRequest;
 // Set Virtual DOM:
-PicoQ.VDOM = dom;
+PicoQ.VDOM = true;
 
 describe('PicoQ', () => {
   fnpicoq();
@@ -78,10 +82,11 @@ describe('PicoQ', () => {
   fnutilities();
   fncore();
   fndom();
+  fnselect();
   fncss();
   fnclass();
   fnattr();
-  fnevents();
+  fnevents(vdom);
   fnanimate();
   fnajax();
   fnajax2();

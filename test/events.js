@@ -21,11 +21,10 @@ const PicoQ = require('../index.js')
 /**
  * trigger event could not be test in jsdom as it uses the Event constructor.
  */
-module.exports = function() {
+module.exports = function(vdom) {
   describe('Test events functions:', () => {
-    const docu  = PicoQ.VDOM.window.document
-        , el    = docu.querySelector('#app40')
-        , event = docu.createEvent('Event')
+    const el    = vdom.window.document.querySelector('#app40')
+        , event = vdom.window.document.createEvent('Event')
         ;
 
     let fired = false

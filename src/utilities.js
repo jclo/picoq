@@ -2,7 +2,7 @@
   // -- Private functions ------------------------------------------------------
   /* eslint-disable no-underscore-dangle */
 
-  PicoQ.utilities = {
+  Pic.u = {
 
     /**
      * Normalizes the CSS properties.
@@ -32,6 +32,4 @@
       return normalized;
     }
   };
-
-  // Assign PicoQ._u to _u:
-  _u = PicoQ.utilities;
+  /* eslint-enable no-underscore-dangle */

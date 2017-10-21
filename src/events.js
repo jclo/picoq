@@ -54,7 +54,7 @@
         evt = new Event(event);
       } else {
         // Old browsers:
-        evt = docu.createEvent('Event');
+        evt = document.createEvent('Event');
         evt.initEvent(event, true, true);
       }
       return this[0].dispatchEvent(evt);

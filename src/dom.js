@@ -2,7 +2,7 @@
   // -- Public Methods to insert/remove nodes to/from the DOM ------------------
   PicoQ._.extend(PicoQ.prototype, {
     /**
-     * Gets/Sets the HTML contents of the element,
+     * Gets/Sets the HTML contents of the element.
      *
      * @method (arg1)
      * @public
@@ -109,7 +109,7 @@
         , index =  Array.prototype.indexOf.call(parent.children, oldChild)
         // , parser = new DOMParser()
         // , newchild = parser.parseFromString(xmlString, 'text/xml').firstChild
-        , wrapper = docu.createElement('div')
+        , wrapper = document.createElement('div')
         , newChild
         ;
 
@@ -123,7 +123,7 @@
     },
 
     /**
-     * Gets/Sets the text contents of the element,
+     * Gets/Sets the text contents of the element.
      *
      * @method (arg1)
      * @public
@@ -137,5 +137,38 @@
         return this;
       }
       return this[0].textContent;
+    },
+
+    /**
+     * Inserts a child element before another child element.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {Object}    the new node element,
+     * @param {Object}    the target node element,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
+    insertChildBefore: /* istanbul ignore next */ function(newChild, child) {
+      if (newChild) {
+        this[0].insertBefore(newChild, child);
+      }
+      return this;
+    },
+
+    /**
+     * Removed the passed-in child element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}    the child element to remove,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
+    removeChild: /* istanbul ignore next */ function(child) {
+      if (child) {
+        this[0].removeChild(child);
+      }
+      return this;
     }
   });

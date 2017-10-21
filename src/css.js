@@ -12,7 +12,7 @@
      * @since 0.0.0
      */
     css: function(styleAttr, value) {
-      var attr = _u.normalizeCssPropertyName(styleAttr);
+      var attr = Pic.u.normalizeCssPropertyName(styleAttr);
 
       if (!value) {
         // Get attribute:

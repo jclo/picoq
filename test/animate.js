@@ -164,7 +164,7 @@ module.exports = function() {
 
       // Test animate
       it('Expects PicoQ("#app52").animate({ top: "100px" }) to set top to 100px.', (done) => {
-        const o20 = PicoQ('#app52').animate({ top: '100px ' }, () => {
+        const o20 = PicoQ('#app52').animate({ top: '100px' }, () => {
           expect(o20[0].style.top).to.be.a('string').that.is.equal('100px');
           done();
         });
@@ -172,7 +172,7 @@ module.exports = function() {
 
       // Test animate
       it('Expects PicoQ("#app53").animate({ top: "100px" }) to set top to 100px.', (done) => {
-        const o21 = PicoQ('#app53').animate({ top: '100px ' }, () => {
+        const o21 = PicoQ('#app53').animate({ top: '100px' }, () => {
           expect(o21[0].style.top).to.be.a('string').that.is.equal('100px');
           done();
         });

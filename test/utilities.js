@@ -9,7 +9,6 @@ const expect    = require('chai').expect
 
 // -- Local modules
 const PicoQ = require('../index.js')
-    , _u    = PicoQ.utilities
     ;
 
 // -- Local constants
@@ -21,6 +20,10 @@ const PicoQ = require('../index.js')
 // -- Main
 module.exports = function() {
   describe('Test Utility functions:', () => {
+
+    // Makes the internal private functions accessible:
+    PicoQ.setTestMode();
+    const _u = PicoQ.Pic.u;
 
     describe('Test _u.normalizeCssPropertyName():', () => {
       it('Expects _u.normalizeCssPropertyName() to return en empty string.', () => {

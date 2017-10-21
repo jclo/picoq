@@ -2,7 +2,7 @@
   // -- Private functions for animate ------------------------------------------
   /* eslint-disable no-underscore-dangle */
 
-  PicoQ._anim = {
+  Pic.anim = {
 
     /**
      * Extracts the optional argument of 'animate'.
@@ -98,28 +98,38 @@
      *                    per animated property,
      * @since 0.0.0
      */
-    getProps: function(el, properties) {
+    getProps: /* istanbul ignore next */ function(el, properties) {
       var keys  = Object.keys(properties)
-        , style = windo.getComputedStyle(el)
+        , style = window.getComputedStyle(el)
         , props = {}
         , names = []
         , name
         , cssValue
+        , cssParent
+        , suffix
         , i
         ;
 
       // Parse the properties:
       for (i = 0; i < keys.length; i++) {
         // Normalize the name of the property:
-        name = _u.normalizeCssPropertyName(keys[i]);
+        name = Pic.u.normalizeCssPropertyName(keys[i]);
         // Check it is a valid CSS property:
         cssValue = style.getPropertyValue(name);
         if (cssValue) {
           names.push(name);
+          cssValue = parseFloat(cssValue, 10);
+          suffix = properties[keys[i]].replace(/[0-9.]/g, '');
+          // Absolute or relative?
+          if (suffix === '%') {
+            // Relative, convert pixel value returned by 'getComputedStyle' in %:
+            cssParent = parseFloat(window.getComputedStyle(el.parentNode).getPropertyValue(name));
+            cssValue = (cssValue / cssParent) * 100;
+          }
           props[name] = {
-            initial: parseFloat(cssValue, 10),
-            change: parseFloat(properties[keys[i]]) - parseFloat(cssValue),
-            suffix: cssValue.replace(/[0-9.]/g, '')
+            initial: cssValue,
+            change: parseFloat(properties[keys[i]]) - cssValue,
+            suffix: suffix
           };
         }
       }
@@ -142,7 +152,7 @@
      * @since 0.0.0
      */
     run: function(el, properties, easing, duration, delay, callback) {
-      var props = PicoQ._anim.getProps(el, properties)
+      var props = Pic.anim.getProps(el, properties)
         , elem = el
         , lapseOfTime = 0
         , timer
@@ -203,6 +213,7 @@
      * @returns {Object}  returns this,
      * @since 0.0.0
      */
+    /* eslint-disable no-underscore-dangle */
     animate: function(properties, arg2, arg3, arg4) {
       var DTIME = 400
         , FAST  = 200
@@ -222,7 +233,7 @@
       }
 
       // Extract the optional arguments:
-      args = PicoQ._anim.extractArgs(arg2, arg3, arg4);
+      args = Pic.anim.extractArgs(arg2, arg3, arg4);
 
       // Set the duration:
       duration = _.isNumber(args.duration)
@@ -236,13 +247,13 @@
       // Set the easing (swing only for the time being):
       easing = (PicoQ._easing && PicoQ._easing[args.easing])
         ? PicoQ._easing[args.easing]
-        : PicoQ._anim.swing;
+        : Pic.anim.swing;
 
       // Set the callback:
       callback = args.callback ? args.callback : null;
 
       // Run the animation:
-      PicoQ._anim.run(el, properties, easing, duration, delay, callback);
+      Pic.anim.run(el, properties, easing, duration, delay, callback);
 
       // Test Mode:
       if (PicoQ.VDOM) {
@@ -256,3 +267,4 @@
       return this;
     }
   });
+  /* eslint-enable no-underscore-dangle */

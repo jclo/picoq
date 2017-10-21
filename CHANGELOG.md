@@ -1,5 +1,15 @@
 ### HEAD
 
+### 0.0.7 (October 21, 2017)
+
+  * Hid private functions,
+  * Added the methods isMath, isDate, isEmpty, clone, keys, forPropIn, assign,
+  * Added the methods select, parent, firstParent,
+  * Added the methods insertChildBefore, removeChild,
+  * Added a hack to 'compile' with Browserify,
+  * ...,
+
+
 ### 0.0.6 (August 19, 2017)
 
   * Fixed an issue with PicoQ.VERSION and PicoQ.noConflict,
