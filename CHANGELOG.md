@@ -6,6 +6,8 @@
   * Added the methods children, selectChild, childIndex, getRect, hasClass and fire,
   * Added the methods replaceChild and clone,
   * Removed the subset of Overslash library,
+  * Forced Travis to use node 8.x,
+  * Added 'Untracked' files,
   * ...,
 
 
