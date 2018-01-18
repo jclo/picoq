@@ -8,7 +8,7 @@
   * Removed the subset of Overslash library,
   * Forced Travis to use node 8.x,
   * Added 'Untracked' files,
-  * ...,
+  * Release.
 
 
 ### 0.0.7 (October 21, 2017)
