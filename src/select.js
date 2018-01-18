@@ -13,11 +13,27 @@
     select: /* istanbul ignore next */ function(selector) {
       var child;
 
-      if (_.isString(selector)) {
+      if (Object.prototype.toString.call(selector) === '[object String]') {
         child = this[0].querySelector(selector);
         if (child) {
           this[0] = child;
         }
+      }
+      return this;
+    },
+
+    /**
+     * Selects the specified child if it exists.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Number}    the child index,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    selectChild: function(n) {
+      if (Object.prototype.toString.call(n) === '[object Number]') {
+        this[0] = this[0].children[n] ? this[0].children[n] : this[0];
       }
       return this;
     },

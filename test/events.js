@@ -23,7 +23,7 @@ const PicoQ = require('../index.js')
  */
 module.exports = function(vdom) {
   describe('Test events functions:', () => {
-    const el    = vdom.window.document.querySelector('#app40')
+    const el    = vdom.window.document.querySelector('#app50')
         , event = vdom.window.document.createEvent('Event')
         ;
 
@@ -41,29 +41,29 @@ module.exports = function(vdom) {
     // Attach an fire an event:
     describe('Test PicoQ().on():', () => {
       // Attach an handler to el:
-      PicoQ('#app40').on('click', handler);
+      PicoQ('#app50').on('click', handler);
       // Trigger this event:
       el.dispatchEvent(event);
 
-      it('Expects PicoQ("#app40").on("click", handler) to attach an event.', () => {
+      it('Expects PicoQ("#app50").on("click", handler) to attach an event.', () => {
         expect(fired).to.be.true;
       });
     });
 
     describe('Test PicoQ().off():', () => {
       // Remove the handler to el:
-      PicoQ('#app40').off('click', handler);
+      PicoQ('#app50').off('click', handler);
       // Trigger this event:
       el.dispatchEvent(event);
 
-      it('Expects PicoQ("#app40").off("click", handler) to to remove the attached event.', () => {
+      it('Expects PicoQ("#app50").off("click", handler) to to remove the attached event.', () => {
         expect(fired).to.be.true;
       });
     });
 
     describe('Test PicoQ().trigger():', () => {
-      // it('Expects PicoQ("#app40").trigger("click") to return an object.', () => {
-      //   expect(PicoQ('#app40').trigger('click')).to.be.an('object');
+      // it('Expects PicoQ("#app50").trigger("click") to return an object.', () => {
+      //   expect(PicoQ('#app50').trigger('click')).to.be.an('object');
       // });
     });
   });

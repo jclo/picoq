@@ -1,5 +1,14 @@
 ### HEAD
 
+### 0.0.8 (January 18, 2018)
+
+  * Added the methods addClasses and removeClasses,
+  * Added the methods children, selectChild, childIndex, getRect, hasClass and fire,
+  * Added the methods replaceChild and clone,
+  * Removed the subset of Overslash library,
+  * ...,
+
+
 ### 0.0.7 (October 21, 2017)
 
   * Hid private functions,

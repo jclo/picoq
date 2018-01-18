@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global describe, it, document */
 /* eslint  one-var: 0, import/no-extraneous-dependencies: 1, no-unused-expressions: 0 */
 
 'use strict';
@@ -133,6 +133,134 @@ module.exports = function() {
 
       it('Expects PicoQ("#app9 h1").text("Hello").text() to return the text "Hello!".', () => {
         expect(PicoQ('#app9 h1').text('Hello!').text()).to.be.a('string').that.is.equal('Hello!');
+      });
+    });
+
+    // PicoQ().clone()
+    describe('Test PicoQ().clone():', () => {
+      it('Expects PicoQ("#app0A").clone() to return a clone with one child.', () => {
+        expect(PicoQ('#app0A').clone().children.length).to.be.a('number').that.is.equal(1);
+      });
+
+      it('Expects PicoQ("#app0A").clone() to return a clone with one grandchild.', () => {
+        expect(PicoQ('#app0A').clone().children[0].children.length).to.be.a('number').that.is.equal(1);
+      });
+
+      it('Expects PicoQ("#app0A").clone("true") to return a clone with one child.', () => {
+        expect(PicoQ('#app0A').clone(true).children.length).to.be.a('number').that.is.equal(1);
+      });
+
+      it('Expects PicoQ("#app0A").clone("true") to return a clone with one grandchild.', () => {
+        expect(PicoQ('#app0A').clone(true).children[0].children.length).to.be.a('number').that.is.equal(1);
+      });
+
+      it('Expects PicoQ("#app0A").clone("false") to return a clone with no child.', () => {
+        expect(PicoQ('#app0A').clone(false).children.length).to.be.a('number').that.is.equal(0);
+      });
+    });
+
+    // PicoQ().insertChildBefore()
+    describe('Test PicoQ().insertChildBefore():', () => {
+      const newChild = document.createElement('div');
+      const child = PicoQ('#app0B2')[0].children[0];
+      const el = PicoQ('#app0B2').insertChildBefore(newChild, child)[0];
+      newChild.className = 'newchild';
+
+      it('Expects PicoQ("#app0B1").insertChildBefore() not to insert any child.', () => {
+        expect(PicoQ('#app0B1').insertChildBefore()[0].children.length).to.be.a('number').that.is.equal(1);
+      });
+
+      it('Expects PicoQ("#app0B2").insertChildBefore(newChild, child) to insert a second child.', () => {
+        expect(el.children.length).to.be.a('number').that.is.equal(2);
+      });
+
+      it('Expects the first child to own the class "newchild".', () => {
+        expect(el.children[0].classList.value).to.be.a('string').that.is.equal('newchild');
+      });
+
+      it('Expects the second child to own the class "firstchild".', () => {
+        expect(el.children[1].classList.value).to.be.a('string').that.is.equal('firstchild');
+      });
+    });
+
+    // PicoQ().removeChild()
+    describe('Test PicoQ().removeChild():', () => {
+      const child = PicoQ('#app0C2')[0].children[0];
+
+      it('Expects PicoQ("#app0C1").removeChild() not to remove any child.', () => {
+        expect(PicoQ('#app0C1').removeChild()[0].children.length).to.be.a('number').that.is.equal(1);
+      });
+
+      it('Expects PicoQ("#app0C2").removeChild(child) to remove the unique child.', () => {
+        expect(PicoQ('#app0C2').removeChild(child)[0].children.length).to.be.a('number').that.is.equal(0);
+      });
+    });
+
+    // PicoQ().replaceChild()
+    describe('Test PicoQ().removeChild():', () => {
+      it('Expects PicoQ("#app0D1").replaceChild() not to replace any child.', () => {
+        const el = PicoQ('#app0D1').replaceChild()[0];
+        expect(el.children[0].classList.value).to.be.a('string').that.is.equal('child');
+      });
+
+      it('Expects PicoQ("#app0D2").replaceChild(newChild, child) to replace child by newChild.', () => {
+        const newChild = document.createElement('div');
+        newChild.className = 'newchild';
+        const el = PicoQ('#app0D2')[0];
+        const child = el.children[0];
+        expect(PicoQ('#app0D2').replaceChild(newChild, child)[0].children[0].classList.value).to.be.a('string').that.is.equal('newchild');
+      });
+    });
+
+    // PicoQ().children():
+    describe('Test PicoQ().children():', () => {
+      it('Expects PicoQ("#app0E1").children().length to return a number equal to 0.', () => {
+        expect(PicoQ('#app0E1').children().length).to.be.a('number').that.is.equal(0);
+      });
+
+      it('Expects PicoQ("#app0E2").children().length to return a number equal to 3.', () => {
+        expect(PicoQ('#app0E2').children().length).to.be.a('number').that.is.equal(3);
+      });
+    });
+
+    // PicoQ().childIndex():
+    describe('Test PicoQ().childIndex():', () => {
+      it('Expects PicoQ("#app0F1").childIndex() to return a number equal to 0.', () => {
+        expect(PicoQ('#app0F1').childIndex()).to.be.a('number').that.is.equal(0);
+      });
+
+      it('Expects PicoQ("#app0F2").childIndex() to return a number equal to 2.', () => {
+        expect(PicoQ('#app0F2').childIndex()).to.be.a('number').that.is.equal(2);
+      });
+    });
+
+    // PicoQ().getRect():
+    describe('Test PicoQ(app0G"").getRect():', () => {
+      it('Expects PicoQ("#ap0GGG").getRect() to return null.', () => {
+        expect(PicoQ('#app0GGG').getRect()).to.be.null;
+      });
+
+      it('Expects PicoQ("#app0G").getRect() to return an object.', () => {
+        expect(PicoQ('#app0G').getRect()).to.be.an('object');
+      });
+
+      it('Expects this object to own the property "bottom".', () => {
+        expect(PicoQ('#app0G').getRect()).to.have.property('bottom').that.is.a('number');
+      });
+      it('Expects this object to own the property "height".', () => {
+        expect(PicoQ('#app0G').getRect()).to.have.property('height').that.is.a('number');
+      });
+      it('Expects this object to own the property "left".', () => {
+        expect(PicoQ('#app0G').getRect()).to.have.property('left').that.is.a('number');
+      });
+      it('Expects this object to own the property "right".', () => {
+        expect(PicoQ('#app0G').getRect()).to.have.property('right').that.is.a('number');
+      });
+      it('Expects this object to own the property "top".', () => {
+        expect(PicoQ('#app0G').getRect()).to.have.property('top').that.is.a('number');
+      });
+      it('Expects this object to own the property "width".', () => {
+        expect(PicoQ('#app0G').getRect()).to.have.property('width').that.is.a('number');
       });
     });
   });

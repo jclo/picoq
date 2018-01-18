@@ -149,13 +149,13 @@ module.exports = function() {
           expect(PicoQ().load()).to.be.an('object');
           done();
         });
-        it('Expects PicoQ("#app60").load() to return an object.', (done) => {
-          expect(PicoQ('#app60').load()).to.be.an('object');
+        it('Expects PicoQ("#app70").load() to return an object.', (done) => {
+          expect(PicoQ('#app70').load()).to.be.an('object');
           done();
         });
-        it('Expects PicoQ("#app60").load(...ajax-f2.html) to insert <h1>Hello!</h1>.', (done) => {
-          PicoQ('#app60').load(`${server}/test/ajax-f2.html`, () => {
-            expect(PicoQ('#app60 h1').text()).to.be.a('string').that.is.equal('Hello!');
+        it('Expects PicoQ("#app70").load(...ajax-f2.html) to insert <h1>Hello!</h1>.', (done) => {
+          PicoQ('#app70').load(`${server}/test/ajax-f2.html`, () => {
+            expect(PicoQ('#app70 h1').text()).to.be.a('string').that.is.equal('Hello!');
             done();
           });
         });

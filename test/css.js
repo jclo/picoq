@@ -21,24 +21,24 @@ const PicoQ = require('../index.js')
 module.exports = function() {
   describe('Test css functions:', () => {
     describe('Test PicoQ(selector).css():', () => {
-      it('Expects PicoQ("#app10").css() to return undefined', () => {
-        expect(PicoQ('#app10').css()).to.be.undefined;
+      it('Expects PicoQ("#app20").css() to return undefined', () => {
+        expect(PicoQ('#app20').css()).to.be.undefined;
       });
     });
 
     describe('Test PicoQ(selector).css(property):', () => {
-      it('Expects PicoQ("#app10").css("font-size") to return an empty string.', () => {
-        expect(PicoQ('#app10').css('font-size')).to.be.a('string').that.is.empty;
+      it('Expects PicoQ("#app20").css("font-size") to return an empty string.', () => {
+        expect(PicoQ('#app20').css('font-size')).to.be.a('string').that.is.empty;
       });
     });
 
     describe('Test PicoQ(selector).css(property, value):', () => {
-      it('Expects PicoQ("#app10").css("font-family", "arial") to return an object.', () => {
-        expect(PicoQ('#app10').css('font-family', 'arial')).to.be.an('object');
+      it('Expects PicoQ("#app20").css("font-family", "arial") to return an object.', () => {
+        expect(PicoQ('#app20').css('font-family', 'arial')).to.be.an('object');
       });
 
-      it('Expects PicoQ("#app10").css("font-family") to return the string "arial".', () => {
-        expect(PicoQ('#app10').css('font-family')).to.be.a('string').that.is.equal('arial');
+      it('Expects PicoQ("#app20").css("font-family") to return the string "arial".', () => {
+        expect(PicoQ('#app20').css('font-family')).to.be.a('string').that.is.equal('arial');
       });
 
     });

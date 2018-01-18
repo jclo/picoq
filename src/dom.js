@@ -140,6 +140,22 @@
     },
 
     /**
+     * Clones the selected element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Boolean}   true clone with children, false without,
+     * @returns {Object}  returns the cloned element,
+     * @since 0.0.0
+     */
+    clone: function(deep) {
+      if (deep === true || deep === false) {
+        return this[0].cloneNode(deep);
+      }
+      return this[0].cloneNode(true);
+    },
+
+    /**
      * Inserts a child element before another child element.
      *
      * @method (arg1, arg2)
@@ -149,7 +165,7 @@
      * @returns {Object}  returns this,
      * @since 0.0.0
      */
-    insertChildBefore: /* istanbul ignore next */ function(newChild, child) {
+    insertChildBefore: function(newChild, child) {
       if (newChild) {
         this[0].insertBefore(newChild, child);
       }
@@ -165,10 +181,73 @@
      * @returns {Object}  returns this,
      * @since 0.0.0
      */
-    removeChild: /* istanbul ignore next */ function(child) {
+    removeChild: function(child) {
       if (child) {
         this[0].removeChild(child);
       }
       return this;
+    },
+
+    /**
+     * Replaces a child by another.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {Object}    the new node element,
+     * @param {Object}    the node element to replace,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
+    replaceChild: function(newChild, child) {
+      if (newChild) {
+        this[0].replaceChild(newChild, child);
+      }
+      return this;
+    },
+
+    /**
+     * Returns the children.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns the children HTMLCollection,
+     * @since 0.0.8
+     */
+    children: function() {
+      return this[0].children;
+    },
+
+    /**
+     * Returns the children position in the parent tree.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns the children position,
+     * @since 0.0.8
+     */
+    childIndex: function() {
+      var child = this[0]
+        , index = 0
+        ;
+      while (child !== null) {
+        child = child.previousElementSibling;
+        index += 1;
+      }
+      return index - 1;
+    },
+
+    /**
+     * Returns the DOMRect object that bounds the contents of the range.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns the DOMRect object,
+     * @since 0.0.8
+     */
+    getRect: function() {
+      return this[0] ? this[0].getBoundingClientRect() : null;
     }
   });

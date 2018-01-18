@@ -39,39 +39,39 @@
           break;
 
         case 1:
-          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
+          if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
-          } else if (_.isString(op1)) {
+          } else if (Object.prototype.toString.call(op1) === '[object String]') {
             easing = op1;
-          } else if (_.isFunction(op1)) {
+          } else if (Object.prototype.toString.call(op1) === '[object Function]') {
             callback = op1;
           }
           break;
 
         case 2:
-          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
+          if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
-            if (_.isString(op2)) {
+            if (Object.prototype.toString.call(op2) === '[object String]') {
               easing = op2;
-            } else if (_.isFunction(op2)) {
+            } else if (Object.prototype.toString.call(op2) === '[object Function]') {
               callback = op2;
             }
-          } else if (_.isString(op1)) {
+          } else if (Object.prototype.toString.call(op1) === '[object String]') {
             easing = op1;
-            if (_.isFunction(op2)) {
+            if (Object.prototype.toString.call(op2) === '[object Function]') {
               callback = op2;
             }
           }
           break;
 
         case 3:
-          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
+          if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
           }
-          if (_.isString(op2)) {
+          if (Object.prototype.toString.call(op2) === '[object String]') {
             easing = op2;
           }
-          if (_.isFunction(op3)) {
+          if (Object.prototype.toString.call(op3) === '[object Function]') {
             callback = op3;
           }
           break;
@@ -228,7 +228,7 @@
         ;
 
       // Is the argument properties an object?
-      if (!_.isLiteralObject(properties)) {
+      if (Object.prototype.toString.call(properties) !== '[object Object]') {
         return this;
       }
 
@@ -236,7 +236,7 @@
       args = Pic.anim.extractArgs(arg2, arg3, arg4);
 
       // Set the duration:
-      duration = _.isNumber(args.duration)
+      duration = Object.prototype.toString.call(args.duration) === '[object Number]'
         ? args.duration
         : (function(arg) {
           if (arg === 'fast') return FAST;

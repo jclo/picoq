@@ -46,11 +46,11 @@
           break;
 
         case 1:
-          if (_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) === '[object String]') {
             url = args[0];
             settings = _.extend(defaultSettings);
-          } else if (_.isLiteralObject(args[0])) {
-            url = _.isString(args[0].url) ? args[0].url : '';
+          } else if (Object.prototype.toString.call(args[0]) === '[object Object]') {
+            url = Object.prototype.toString.call(args[0].url) === '[object String]' ? args[0].url : '';
             settings = _.extend(defaultSettings, args[0]);
           } else {
             url = '';
@@ -60,8 +60,8 @@
 
         case 2:
         default:
-          url = _.isString(args[0]) ? args[0] : '';
-          settings = _.isLiteralObject(args[1])
+          url = Object.prototype.toString.call(args[0]) === '[object String]' ? args[0] : '';
+          settings = Object.prototype.toString.call(args[1]) === '[object Object]'
             ? _.extend(defaultSettings, args[1])
             : _.extend(defaultSettings);
           break;
@@ -90,58 +90,58 @@
 
         // fn(url) or fn([settings])
         case 1:
-          if (_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) === '[object String]') {
             settings.url = args[0];
             break;
           }
-          if (_.isLiteralObject(args[0])) {
+          if (Object.prototype.toString.call(args[0]) === '[object Object]') {
             settings = args[0];
           }
           break;
 
         // fn(url, data) or fn(url, success) or fn(url, dataType)
         case 2:
-          if (!_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) !== '[object String]') {
             break;
           }
           settings.url = args[0];
 
-          if (_.isLiteralObject(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Object]') {
             settings.data = args[1];
             break;
           }
-          if (_.isFunction(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Function]') {
             settings.success = args[1];
             break;
           }
-          if (_.isString(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object String]') {
             settings.dataType = args[1];
           }
           break;
 
         // fn(url [, data ] [, success / dataType ]) or fn(url, success, dataType)
         case 3:
-          if (!_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) !== '[object String]') {
             break;
           }
           settings.url = args[0];
 
-          if (_.isLiteralObject(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Object]') {
             settings.data = args[1];
-            if (_.isFunction(args[2])) {
+            if (Object.prototype.toString.call(args[2]) === '[object Function]') {
               settings.success = args[2];
               break;
             }
-            if (_.isString(args[2])) {
+            if (Object.prototype.toString.call(args[2]) === '[object String]') {
               settings.dataType = args[2];
             }
             break;
           }
 
-          if (_.isFunction(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Function]') {
             settings.success = args[1];
           }
-          if (_.isString(args[2])) {
+          if (Object.prototype.toString.call(args[2]) === '[object String]') {
             settings.dataType = args[2];
           }
           break;
@@ -149,17 +149,17 @@
         // fn(url, data, success, dataType)
         case 4:
         default:
-          if (!_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) !== '[object String]') {
             break;
           }
           settings.url = args[0];
-          if (_.isLiteralObject(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Object]') {
             settings.data = args[1];
           }
-          if (_.isFunction(args[2])) {
+          if (Object.prototype.toString.call(args[2]) === '[object Function]') {
             settings.success = args[2];
           }
-          if (_.isString(args[3])) {
+          if (Object.prototype.toString.call(args[3]) === '[object String]') {
             settings.dataType = args[3];
           }
           break;
@@ -182,7 +182,7 @@
         , i
         ;
 
-      if (!_.isLiteralObject(params)) {
+      if (Object.prototype.toString.call(params) !== '[object Object]') {
         return null;
       }
 
@@ -245,7 +245,7 @@
           for (i = 0; i < callbacks.length; i++) {
             cname = Object.keys(callbacks[i])[0];
             fn = callbacks[i][cname];
-            if (_.isFunction(fn) && (cname === 'done' || cname === 'always' || cname === 'success')) {
+            if (Object.prototype.toString.call(fn) === '[object Function]' && (cname === 'done' || cname === 'always' || cname === 'success')) {
               fn(xhr.responseText, xhr.statusText, xhr);
             }
           }
@@ -420,7 +420,7 @@
       PicoQ.ajax(settings)
         .done(function(xmlString) {
           that.html(xmlString);
-          if (_.isFunction(cb)) {
+          if (Object.prototype.toString.call(cb) === '[object Function]') {
             cb();
           }
         });

@@ -1,9 +1,9 @@
 /** ****************************************************************************
- * PicoQ-easing v0.0.7
+ * PicoQ-easing v0.0.8
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
- * Copyright (c) 2017 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).
+ * Copyright (c) 2018 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).
  * Released under the MIT license. You may obtain a copy of the License
  * at: http://www.opensource.org/licenses/mit-license.php).
  *
@@ -86,7 +86,7 @@
   };
 
   // Attaches a release number to the library:
-  PicoQ.VERSION = '0.0.7';
+  PicoQ.VERSION = '0.0.8';
 
   // Attaches all the private methods to this private Pix object:
   Pic = {
@@ -112,360 +112,48 @@
 
 
   // -- Private functions ------------------------------------------------------
-  /* eslint-disable no-underscore-dangle */
 
-  // This library of functions is attached to PicoQ because we want to be able
-  // to reuse them outside the scope of this module in some circonstances (for
-  // example when PicoQ is embedded inside another library).
   PicoQ._ = {
-
-    // -- Core -----------------------------------------------------------------
-    /**
-     * Is a given variable undefined?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true or false,
-     * @since 0.0.0
-     */
-    isUndefined: function(obj) {
-      return obj === undefined;
-    },
-
-    /**
-     * Is a given value null?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true or false,
-     * @since 0.0.0
-     */
-    isNull: function(obj) {
-      return obj === null;
-    },
-
-    /**
-     * Is a given value a boolean?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true or false,
-     * @since 0.0.0
-     */
-    isBoolean: function(obj) {
-      return obj === true || obj === false || Object.prototype.toString.call(obj) === '[object Boolean]';
-    },
-
-    /**
-     * Is a given value a string?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true or false,
-     * @since 0.0.0
-     */
-    isString: function(obj) {
-      return Object.prototype.toString.call(obj) === '[object String]';
-    },
-
-    /**
-     * Is a given value a number?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true or false,
-     * @since 0.0.0
-     */
-    isNumber: function(obj) {
-      return Object.prototype.toString.call(obj) === '[object Number]';
-    },
-
-    /**
-     * Is a given value NaN?
-     * (NaN is the only number which does not equal itself)
-     * (copied from: http://underscorejs.org)
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true or false,
-     * @since 0.0.0
-     */
-    isNaN: function(obj) {
-      return PicoQ._.isNumber(obj) && obj !== +obj;
-    },
-
-    /**
-     * Is a given value an odd number?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true (odd), false (even) or undefined (not a number),
-     * @since 0.0.0
-     */
-    /* eslint-disable no-void */
-    isOdd: function(obj) {
-      var n = obj % 2;
-      return obj === parseFloat(obj) ? !!n : void 0;
-    },
-    /* eslint-enable no-void */
-
-
-    // -- Object ---------------------------------------------------------------
-    /**
-     * Is a given variable an object?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}    the object to test,
-     * @returns {Boolean} returns true or false,
-     * @since 0.0.3
-     */
-    isObject: function(obj) {
-      var type = typeof obj;
-      return (type === 'function' || type === 'object') && !!obj;
-    },
-
-    /**
-     * Is a given variable a literal object?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}    the object to test,
-     * @returns {Boolean} returns true or false,
-     * @since 0.0.3
-     */
-    isLiteralObject: function(obj) {
-      return Object.prototype.toString.call(obj) === '[object Object]';
-    },
-
-    /**
-     * Is a given variable a function?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}    the object to test,
-     * @returns {Boolean} returns true or false,
-     * @since 0.0.3
-     */
-    isFunction: function(obj) {
-      return Object.prototype.toString.call(obj) === '[object Function]';
-    },
-
-    /**
-     * Is a given value an array?
-     *
-     * @function (arg1)
-     * @private
-     * @param {Object}    the object to test,
-     * @returns {Boolean} returns true or false,
-     * @since 0.0.3
-     */
-    isArray: Array.isArray || /* istanbul ignore next */ function(obj) {
-      return Object.prototype.toString.call(obj) === '[object Array]';
-    },
-
-    /**
-     * Is a given value a Math object?
-     *
-     * @function (arg1)
-     * @public
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true or false,
-     * @since 0.0.7
-     */
-    isMath: /* istanbul ignore next */ function(obj) {
-      return Object.prototype.toString.call(obj) === '[object Math]';
-    },
-
-    /**
-     * Is a given value a Date?
-     *
-     * @function (arg1)
-     * @public
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true or false,
-     * @since 0.0.7
-     */
-    isDate: function(obj) {
-      return Object.prototype.toString.call(obj) === '[object Date]';
-    },
-
-    /**
-     * Is a given array, string or object empty?
-     *
-     * @function (arg1)
-     * @public
-     * @param {Object}      the object to test,
-     * @returns {Boolean}   returns true or false,
-     * @since 0.0.7
-     */
-    /* eslint-disable no-restricted-syntax, no-prototype-builtins */
-    isEmpty: function(obj) {
-      var key;
-      if (obj === null) return true;
-      if (this.isArray(obj) || this.isString(obj)) return obj.length === 0;
-      // Check that the object has no enumerable own-properties.
-      // If ECMAScript 5 support only: 'return Object.keys(obj).length === 0;'
-      // Otherwise, parse all properties.
-      for (key in obj) if (obj.hasOwnProperty(key)) return false;
-      return true;
-    },
-    /* eslint-enable no-restricted-syntax, no-prototype-builtins */
-
-
-    // --- Operations on Objects -----------------------------------------------
-    /**
-     * Clones a literal object or an array.
-     *
-     * @function(arg1)
-     * @public
-     * @param {Object}    the object to clone,
-     * @returns {Object}  returns the cloned object,
-     * @since 0.0.7
-     */
-    /* eslint-disable no-void, no-restricted-syntax */
-    clone: /* istanbul ignore next */ function(obj) {
-      var clone = this.isArray(obj) ? [] : {}
-        , prop
-        ;
-
-      if (!this.isObject(obj)) return void 0;
-
-      for (prop in obj) {
-        if (this.isArray(obj[prop])) {
-          clone[prop] = this.clone(obj[prop]);
-        } else if (this.isObject(obj[prop])) {
-          clone[prop] = this.extend(obj[prop]);
-        } else {
-          clone[prop] = obj[prop];
-        }
-      }
-      return clone;
-    },
-    /* eslint-enable no-void, no-restricted-syntax */
 
     /**
      * Extends a given object with all the properties in passed-in object(s).
-     * (copied from: http://underscorejs.org and added recursivity)
+     *
+     * Nota: mutates obj
+     *       The passed-in objects must be literal objects. The method extends
+     *       the first object with the properties/values of the n + 1 objects.
+     *       If the property values are objects, the method passes their reference.
+     *       This method doesn't perform a deep extend.
      *
      * @function (arg1)
-     * @public
-     * @param {Object}      the objects to merge,
-     * @returns {Object}    the resulting object,
-     * @since 0.0.7
+     * @private
+     * @param {Object}    the objects to merge,
+     * @returns {Object}  the resulting object,
+     * @since 0.0.8
      */
-    /* eslint-disable no-restricted-syntax, no-param-reassign */
+    /* eslint-disable no-param-reassign */
     extend: function(obj) {
       var source
-        , prop
+        , props
         , i
+        , j
         ;
-
-      if (!this.isObject(obj)) return obj;
 
       for (i = 1; i < arguments.length; i++) {
         source = arguments[i];
-        for (prop in source) {
-          // if (!this.isArray(arguments[i][prop]) && this.isObject(arguments[i][prop])) {
-          if (this.isLiteralObject(arguments[i][prop])) {
-            obj[prop] = obj[prop] !== undefined ? obj[prop] : {};
-            this.extend(obj[prop], arguments[i][prop]);
-          } else if (hasOwnProperty.call(source, prop)) {
-            obj[prop] = this.isArray(source[prop])
-              ? this.clone(source[prop])
-              : source[prop];
+        props = Object.keys(source);
+        for (j = 0; j < props.length; j++) {
+          if (Object.prototype.hasOwnProperty.call(source, props[j])) {
+            obj[props[j]] = source[props[j]];
           }
         }
       }
       return obj;
-    },
-    /* eslint-enable no-restricted-syntax, no-param-reassign */
-
-    /**
-     * Retrieves all the names of the object's own enumerable properties.
-     * (ECMAScript 5 only).
-     *
-     * @function (arg1)
-     * @public
-     * @param {Object}      the input object,
-     * @returns {Array}     returns the names of the keys,
-     * @since 0.0.7
-     */
-    keys: function(obj) {
-      return Object.keys(obj);
-    },
-
-    /**
-     * Parses all the names of the object's own enumerable properties
-     * (replace for...in statement).
-     * (ECMAScript 5 only).
-     *
-     * @function (arg1 arg2)
-     * @public
-     * @param {Object}      the input object,
-     * @returns {Array}     returns the names of the keys,
-     * @since 0.0.7
-     */
-    forPropIn: /* istanbul ignore next */ function(obj, callback) {
-      // var keys = overslash.keys(obj);
-      this.keys(obj).forEach(function(key) {
-        if ({}.hasOwnProperty.call(obj, key)) {
-          callback(key);
-        }
-      });
-    },
-
-    /**
-     * Extends source with target(s) while preserving the assessors.
-     *
-     * Nota:
-     * Clones a literal object at the first level while preserving the
-     * assessors (get and set). This should be the prefered method to Clones
-     * a literal object or a prototype that includes get and set assessors.
-     *
-     * Example:
-     * To clone a function prototype:
-     * var a = _.assign({}, fn.prototype);  // clone the original prototype,
-     * _.assign(fn2.prototype, a);          // assign it to fn2.prototype,
-     *
-     * @function (...arg1)
-     * @public
-     * @param {Object}      the objects to 'fusion',
-     * @returns {Object}    returns the reassigned object,
-     * @since 0.0.0
-     */
-    /* eslint-disable no-param-reassign, no-loop-func */
-    assign: function() {
-      var target = arguments[0]
-        , source
-        , descriptors
-        , i
-        ;
-
-      for (i = 1; i < arguments.length; i++) {
-        source = arguments[i];
-        descriptors = Object.keys(source).reduce(function(props, key) {
-          props[key] = Object.getOwnPropertyDescriptor(source, key);
-          return props;
-        }, {});
-      }
-      Object.defineProperties(target, descriptors);
-      return target;
     }
-    /* eslint-enable no-param-reassign, no-loop-func */
+    /* eslint-enable no-restricted-syntax, no-param-reassign */
   };
 
-  // Assign PicoQ.overslash to _:
+  // Assign PicoQ._ to _:
   _ = PicoQ._;
-
-  /* eslint-enable no-underscore-dangle */
 
 
   // -- Private functions ------------------------------------------------------
@@ -485,7 +173,7 @@
      * @since 0.0.0
      */
     normalizeCssPropertyName: function(name) {
-      var arr = _.isString(name) ? name.split('-') : []
+      var arr = Object.prototype.toString.call(name) === '[object String]' ? name.split('-') : []
         , normalized = ''
         , i
         ;
@@ -518,11 +206,27 @@
     select: /* istanbul ignore next */ function(selector) {
       var child;
 
-      if (_.isString(selector)) {
+      if (Object.prototype.toString.call(selector) === '[object String]') {
         child = this[0].querySelector(selector);
         if (child) {
           this[0] = child;
         }
+      }
+      return this;
+    },
+
+    /**
+     * Selects the specified child if it exists.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Number}    the child index,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    selectChild: function(n) {
+      if (Object.prototype.toString.call(n) === '[object Number]') {
+        this[0] = this[0].children[n] ? this[0].children[n] : this[0];
       }
       return this;
     },
@@ -707,6 +411,22 @@
     },
 
     /**
+     * Clones the selected element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Boolean}   true clone with children, false without,
+     * @returns {Object}  returns the cloned element,
+     * @since 0.0.0
+     */
+    clone: function(deep) {
+      if (deep === true || deep === false) {
+        return this[0].cloneNode(deep);
+      }
+      return this[0].cloneNode(true);
+    },
+
+    /**
      * Inserts a child element before another child element.
      *
      * @method (arg1, arg2)
@@ -716,7 +436,7 @@
      * @returns {Object}  returns this,
      * @since 0.0.0
      */
-    insertChildBefore: /* istanbul ignore next */ function(newChild, child) {
+    insertChildBefore: function(newChild, child) {
       if (newChild) {
         this[0].insertBefore(newChild, child);
       }
@@ -732,11 +452,74 @@
      * @returns {Object}  returns this,
      * @since 0.0.0
      */
-    removeChild: /* istanbul ignore next */ function(child) {
+    removeChild: function(child) {
       if (child) {
         this[0].removeChild(child);
       }
       return this;
+    },
+
+    /**
+     * Replaces a child by another.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {Object}    the new node element,
+     * @param {Object}    the node element to replace,
+     * @returns {Object}  returns this,
+     * @since 0.0.0
+     */
+    replaceChild: function(newChild, child) {
+      if (newChild) {
+        this[0].replaceChild(newChild, child);
+      }
+      return this;
+    },
+
+    /**
+     * Returns the children.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns the children HTMLCollection,
+     * @since 0.0.8
+     */
+    children: function() {
+      return this[0].children;
+    },
+
+    /**
+     * Returns the children position in the parent tree.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns the children position,
+     * @since 0.0.8
+     */
+    childIndex: function() {
+      var child = this[0]
+        , index = 0
+        ;
+      while (child !== null) {
+        child = child.previousElementSibling;
+        index += 1;
+      }
+      return index - 1;
+    },
+
+    /**
+     * Returns the DOMRect object that bounds the contents of the range.
+     *
+     * @method ()
+     * @public
+     * @param {}          -,
+     * @returns {Object}  returns the DOMRect object,
+     * @since 0.0.8
+     */
+    getRect: function() {
+      return this[0] ? this[0].getBoundingClientRect() : null;
     }
   });
 
@@ -793,12 +576,33 @@
      * @since 0.0.0
      */
     addClass: function(className) {
-      this[0].classList.add(className);
+      if (Object.prototype.toString.call(className) === '[object String]') {
+        this[0].classList.add(className);
+      }
       return this;
     },
 
     /**
-     * Removes a class name to the element.
+     * Adds a list of classes to the element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Array}     the list of classes to add,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    addClasses: function(classes) {
+      var i;
+      if (Array.isArray(classes)) {
+        for (i = 0; i < classes.length; i++) {
+          this[0].classList.add(classes[i]);
+        }
+      }
+      return this;
+    },
+
+    /**
+     * Removes a class name from the element.
      *
      * @method (arg1)
      * @public
@@ -807,7 +611,28 @@
      * @since 0.0.0
      */
     removeClass: function(className) {
-      this[0].classList.remove(className);
+      if (Object.prototype.toString.call(className) === '[object String]') {
+        this[0].classList.remove(className);
+      }
+      return this;
+    },
+
+    /**
+     * Removes a list of classes from the element.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Array}     the list of classes to remove,
+     * @returns {Object}  returns this,
+     * @since 0.0.8
+     */
+    removeClasses: function(classes) {
+      var i;
+      if (Array.isArray(classes)) {
+        for (i = 0; i < classes.length; i++) {
+          this[0].classList.remove(classes[i]);
+        }
+      }
       return this;
     },
 
@@ -823,6 +648,24 @@
     toggleClass: function(className) {
       this[0].classList.toggle(className);
       return this;
+    },
+
+    /**
+     * Checks if the element has the passed-in class.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    the class name,
+     * @returns {Boolean} returns true or false,
+     * @since 0.0.8
+     */
+    hasClass: function(className) {
+      var list = this[0].classList.value.split(' ');
+
+      if (Object.prototype.toString.call(className) === '[object String]' && list.indexOf(className) !== -1) {
+        return true;
+      }
+      return false;
     }
   });
 
@@ -923,6 +766,19 @@
         evt.initEvent(event, true, true);
       }
       return this[0].dispatchEvent(evt);
+    },
+
+    /**
+     * Fires the event associated to the selected node (alias on trigger).
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    the event name,
+     * @returns {Boolean} returns false if preventDefault was activated otherwise true,
+     * @since 0.0.0
+     */
+    fire: /* istanbul ignore next */ function(event) {
+      return this.trigger(event);
     }
   });
 
@@ -1165,39 +1021,39 @@
           break;
 
         case 1:
-          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
+          if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
-          } else if (_.isString(op1)) {
+          } else if (Object.prototype.toString.call(op1) === '[object String]') {
             easing = op1;
-          } else if (_.isFunction(op1)) {
+          } else if (Object.prototype.toString.call(op1) === '[object Function]') {
             callback = op1;
           }
           break;
 
         case 2:
-          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
+          if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
-            if (_.isString(op2)) {
+            if (Object.prototype.toString.call(op2) === '[object String]') {
               easing = op2;
-            } else if (_.isFunction(op2)) {
+            } else if (Object.prototype.toString.call(op2) === '[object Function]') {
               callback = op2;
             }
-          } else if (_.isString(op1)) {
+          } else if (Object.prototype.toString.call(op1) === '[object String]') {
             easing = op1;
-            if (_.isFunction(op2)) {
+            if (Object.prototype.toString.call(op2) === '[object Function]') {
               callback = op2;
             }
           }
           break;
 
         case 3:
-          if (_.isNumber(op1) || op1 === 'fast' || op1 === 'slow') {
+          if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
           }
-          if (_.isString(op2)) {
+          if (Object.prototype.toString.call(op2) === '[object String]') {
             easing = op2;
           }
-          if (_.isFunction(op3)) {
+          if (Object.prototype.toString.call(op3) === '[object Function]') {
             callback = op3;
           }
           break;
@@ -1354,7 +1210,7 @@
         ;
 
       // Is the argument properties an object?
-      if (!_.isLiteralObject(properties)) {
+      if (Object.prototype.toString.call(properties) !== '[object Object]') {
         return this;
       }
 
@@ -1362,7 +1218,7 @@
       args = Pic.anim.extractArgs(arg2, arg3, arg4);
 
       // Set the duration:
-      duration = _.isNumber(args.duration)
+      duration = Object.prototype.toString.call(args.duration) === '[object Number]'
         ? args.duration
         : (function(arg) {
           if (arg === 'fast') return FAST;
@@ -1443,11 +1299,11 @@
           break;
 
         case 1:
-          if (_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) === '[object String]') {
             url = args[0];
             settings = _.extend(defaultSettings);
-          } else if (_.isLiteralObject(args[0])) {
-            url = _.isString(args[0].url) ? args[0].url : '';
+          } else if (Object.prototype.toString.call(args[0]) === '[object Object]') {
+            url = Object.prototype.toString.call(args[0].url) === '[object String]' ? args[0].url : '';
             settings = _.extend(defaultSettings, args[0]);
           } else {
             url = '';
@@ -1457,8 +1313,8 @@
 
         case 2:
         default:
-          url = _.isString(args[0]) ? args[0] : '';
-          settings = _.isLiteralObject(args[1])
+          url = Object.prototype.toString.call(args[0]) === '[object String]' ? args[0] : '';
+          settings = Object.prototype.toString.call(args[1]) === '[object Object]'
             ? _.extend(defaultSettings, args[1])
             : _.extend(defaultSettings);
           break;
@@ -1487,58 +1343,58 @@
 
         // fn(url) or fn([settings])
         case 1:
-          if (_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) === '[object String]') {
             settings.url = args[0];
             break;
           }
-          if (_.isLiteralObject(args[0])) {
+          if (Object.prototype.toString.call(args[0]) === '[object Object]') {
             settings = args[0];
           }
           break;
 
         // fn(url, data) or fn(url, success) or fn(url, dataType)
         case 2:
-          if (!_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) !== '[object String]') {
             break;
           }
           settings.url = args[0];
 
-          if (_.isLiteralObject(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Object]') {
             settings.data = args[1];
             break;
           }
-          if (_.isFunction(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Function]') {
             settings.success = args[1];
             break;
           }
-          if (_.isString(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object String]') {
             settings.dataType = args[1];
           }
           break;
 
         // fn(url [, data ] [, success / dataType ]) or fn(url, success, dataType)
         case 3:
-          if (!_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) !== '[object String]') {
             break;
           }
           settings.url = args[0];
 
-          if (_.isLiteralObject(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Object]') {
             settings.data = args[1];
-            if (_.isFunction(args[2])) {
+            if (Object.prototype.toString.call(args[2]) === '[object Function]') {
               settings.success = args[2];
               break;
             }
-            if (_.isString(args[2])) {
+            if (Object.prototype.toString.call(args[2]) === '[object String]') {
               settings.dataType = args[2];
             }
             break;
           }
 
-          if (_.isFunction(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Function]') {
             settings.success = args[1];
           }
-          if (_.isString(args[2])) {
+          if (Object.prototype.toString.call(args[2]) === '[object String]') {
             settings.dataType = args[2];
           }
           break;
@@ -1546,17 +1402,17 @@
         // fn(url, data, success, dataType)
         case 4:
         default:
-          if (!_.isString(args[0])) {
+          if (Object.prototype.toString.call(args[0]) !== '[object String]') {
             break;
           }
           settings.url = args[0];
-          if (_.isLiteralObject(args[1])) {
+          if (Object.prototype.toString.call(args[1]) === '[object Object]') {
             settings.data = args[1];
           }
-          if (_.isFunction(args[2])) {
+          if (Object.prototype.toString.call(args[2]) === '[object Function]') {
             settings.success = args[2];
           }
-          if (_.isString(args[3])) {
+          if (Object.prototype.toString.call(args[3]) === '[object String]') {
             settings.dataType = args[3];
           }
           break;
@@ -1579,7 +1435,7 @@
         , i
         ;
 
-      if (!_.isLiteralObject(params)) {
+      if (Object.prototype.toString.call(params) !== '[object Object]') {
         return null;
       }
 
@@ -1642,7 +1498,7 @@
           for (i = 0; i < callbacks.length; i++) {
             cname = Object.keys(callbacks[i])[0];
             fn = callbacks[i][cname];
-            if (_.isFunction(fn) && (cname === 'done' || cname === 'always' || cname === 'success')) {
+            if (Object.prototype.toString.call(fn) === '[object Function]' && (cname === 'done' || cname === 'always' || cname === 'success')) {
               fn(xhr.responseText, xhr.statusText, xhr);
             }
           }
@@ -1817,7 +1673,7 @@
       PicoQ.ajax(settings)
         .done(function(xmlString) {
           that.html(xmlString);
-          if (_.isFunction(cb)) {
+          if (Object.prototype.toString.call(cb) === '[object Function]') {
             cb();
           }
         });

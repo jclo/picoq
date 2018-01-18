@@ -58,5 +58,18 @@
         evt.initEvent(event, true, true);
       }
       return this[0].dispatchEvent(evt);
+    },
+
+    /**
+     * Fires the event associated to the selected node (alias on trigger).
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}    the event name,
+     * @returns {Boolean} returns false if preventDefault was activated otherwise true,
+     * @since 0.0.0
+     */
+    fire: /* istanbul ignore next */ function(event) {
+      return this.trigger(event);
     }
   });

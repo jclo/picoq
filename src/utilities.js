@@ -16,7 +16,7 @@
      * @since 0.0.0
      */
     normalizeCssPropertyName: function(name) {
-      var arr = _.isString(name) ? name.split('-') : []
+      var arr = Object.prototype.toString.call(name) === '[object String]' ? name.split('-') : []
         , normalized = ''
         , i
         ;
