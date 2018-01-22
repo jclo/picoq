@@ -1,10 +1,10 @@
 ### HEAD
 
-### 0.0.8 (January 22, 2018)
+### 0.0.9 (January 22, 2018)
 
   * Updated the project to comply with ESLint 4.x,
   * Fixed a regression in .travis.yml,
-  * ...,
+  * Release.
 
 
 ### 0.0.8 (January 18, 2018)
