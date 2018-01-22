@@ -7,7 +7,7 @@ module.exports = {
   libdir: './lib',
   libname: 'PicoQ',
   parent: 'this',
-  // These are the Javascript files required to build the library:
+  // These are the Javascript files required to build the library.
   src: {
     standard: [
       './src/_header',
@@ -47,24 +47,24 @@ module.exports = {
       ' *',
       ' * A tiny Javascript library to interact with the DOM.',
       ' * (you can download it from npm or github repositories)',
-      ' * Copyright (c) 2018 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).',
+      ' * * Copyright (c) 2018 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).',
       ' * Released under the MIT license. You may obtain a copy of the License',
       ' * at: http://www.opensource.org/licenses/mit-license.php).',
-      ' * ****************************************************************************/',
+      ' * ************************************************************************** */',
       ''].join('\n'),
     easing: ['/** ****************************************************************************',
       ' * {{lib:name}} v{{lib:version}}',
       ' *',
       ' * A tiny Javascript library to interact with the DOM.',
       ' * (you can download it from npm or github repositories)',
-      ' * Copyright (c) 2018 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).',
+      ' * * Copyright (c) 2018 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).',
       ' * Released under the MIT license. You may obtain a copy of the License',
       ' * at: http://www.opensource.org/licenses/mit-license.php).',
       ' *',
       ' * {{lib:name}}-easing includes portions of code for easing equations.',
       ' * Open source under the BSD License.',
       ' * Copyright (c) 2001 Robert Penner',
-      ' * ****************************************************************************/',
+      ' * ************************************************************************** */',
       ''].join('\n'),
   },
 };

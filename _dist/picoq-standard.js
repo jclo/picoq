@@ -1,7 +1,16 @@
-// Based on UMD Lib template v0.5.3
+/** ****************************************************************************
+ * PicoQ v0.0.9
+ *
+ * A tiny Javascript library to interact with the DOM.
+ * (you can download it from npm or github repositories)
+ * * Copyright (c) 2018 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).
+ * Released under the MIT license. You may obtain a copy of the License
+ * at: http://www.opensource.org/licenses/mit-license.php).
+ * ************************************************************************** */
+// Based on UMD Lib template v0.6.0
 // ESLint declarations
 /* global define */
-/* eslint-disable one-var */
+/* eslint-disable one-var, semi-style */
 /* eslint-disable strict, no-param-reassign */
 (function(root, factory) {
   'use strict';
@@ -19,7 +28,7 @@
     // included inside another lib and the whole is browserifyied:
     if (root.PicoQ === null) root.PicoQ = factory(root);
   } else {
-    // Browser globals:
+    // Browser globals.
     root.PicoQ = factory(root);
   }
 }(this, function(root) {
@@ -34,8 +43,8 @@
     ;
   /* eslint-enable strict, no-param-reassign */
 
-
   // -- PicoQ Public -----------------------------------------------------------
+  /* eslint-disable strict */
 
   /**
    * PicoQ constructor.
@@ -73,13 +82,15 @@
   };
 
   // Attaches a release number to the library:
-  PicoQ.VERSION = '{{lib:version}}';
+  PicoQ.VERSION = '0.0.9';
 
   // Attaches all the private methods to this private Pix object:
   Pic = {
+    /* eslint-disable no-multi-spaces */
     u: null,                 // miscellaneous functions,
     anim: null,              // private functions for animate method,
     ajax: null               // private ajax functions,
+    /* eslint-enable no-multi-spaces */
   };
 
   // Gives an access to the private methods for testing purpose:
@@ -96,9 +107,11 @@
   PicoQ.prototype = {
     //
   };
+  /* eslint-enable strict */
 
 
   // -- Private functions ------------------------------------------------------
+  /* eslint-disable strict */
 
   PicoQ._ = {
 
@@ -129,6 +142,7 @@
         source = arguments[i];
         props = Object.keys(source);
         for (j = 0; j < props.length; j++) {
+          /* istanbul ignore next */
           if (Object.prototype.hasOwnProperty.call(source, props[j])) {
             obj[props[j]] = source[props[j]];
           }
@@ -141,10 +155,11 @@
 
   // Assign PicoQ._ to _:
   _ = PicoQ._;
+  /* eslint-enable strict */
 
 
   // -- Private functions ------------------------------------------------------
-  /* eslint-disable no-underscore-dangle */
+  /* eslint-disable strict, no-underscore-dangle */
 
   Pic.u = {
 
@@ -176,10 +191,11 @@
       return normalized;
     }
   };
-  /* eslint-enable no-underscore-dangle */
+  /* eslint-enable strict, no-underscore-dangle */
 
 
   // -- Public Methods to select nodes -----------------------------------------
+  /* eslint-disable strict */
   PicoQ._.extend(PicoQ.prototype, {
     /**
      * Select a child element.
@@ -255,9 +271,11 @@
       return this;
     }
   });
+  /* eslint-enable strict */
 
 
   // -- Public Methods to insert/remove nodes to/from the DOM ------------------
+  /* eslint-disable strict */
   PicoQ._.extend(PicoQ.prototype, {
     /**
      * Gets/Sets the HTML contents of the element.
@@ -509,9 +527,11 @@
       return this[0] ? this[0].getBoundingClientRect() : null;
     }
   });
+  /* eslint-disable strict */
 
 
-  // -- Public Methods to manage the css properties --------------------------------
+  // -- Public Methods to manage the css properties ----------------------------
+  /* eslint-disable strict */
   PicoQ._.extend(PicoQ.prototype, {
     /**
      * Gets/Sets the style attribute of the element,
@@ -536,9 +556,11 @@
       return this;
     }
   });
+  /* eslint-enable strict */
 
 
-  // -- Public Methods to manage the classes ---------------------------------------
+  // -- Public Methods to manage the classes -----------------------------------
+  /* eslint-disable strict */
   PicoQ._.extend(PicoQ.prototype, {
     /**
      * Returns the DOMTokenList collection of the class attributes of the element.
@@ -655,9 +677,11 @@
       return false;
     }
   });
+  /* eslint-enable strict */
 
 
-  // -- Public Methods to manage the node attributes -------------------------------
+  // -- Public Methods to manage the node attributes ---------------------------
+  /* eslint-disable strict */
   PicoQ._.extend(PicoQ.prototype, {
 
     /**
@@ -692,9 +716,11 @@
       return this;
     }
   });
+  /* eslint-disable strict */
 
 
-  // -- Public Methods to manage the events ----------------------------------------
+  // -- Public Methods to manage the events ------------------------------------
+  /* eslint-disable strict */
   PicoQ._.extend(PicoQ.prototype, {
 
     /**
@@ -768,11 +794,11 @@
       return this.trigger(event);
     }
   });
+  /* eslint-enable strict */
 
 
   // -- Private functions for animate ------------------------------------------
-  /* eslint-disable no-underscore-dangle */
-
+  /* eslint-disable strict, no-underscore-dangle */
   Pic.anim = {
 
     /**
@@ -814,7 +840,7 @@
             duration = op1;
           } else if (Object.prototype.toString.call(op1) === '[object String]') {
             easing = op1;
-          } else if (Object.prototype.toString.call(op1) === '[object Function]') {
+          } /* istanbul ignore next */ else if (Object.prototype.toString.call(op1) === '[object Function]') {
             callback = op1;
           }
           break;
@@ -824,10 +850,10 @@
             duration = op1;
             if (Object.prototype.toString.call(op2) === '[object String]') {
               easing = op2;
-            } else if (Object.prototype.toString.call(op2) === '[object Function]') {
+            } /* istanbul ignore next */ else if (Object.prototype.toString.call(op2) === '[object Function]') {
               callback = op2;
             }
-          } else if (Object.prototype.toString.call(op1) === '[object String]') {
+          } /* istanbul ignore next */ else if (Object.prototype.toString.call(op1) === '[object String]') {
             easing = op1;
             if (Object.prototype.toString.call(op2) === '[object Function]') {
               callback = op2;
@@ -835,6 +861,7 @@
           }
           break;
 
+        /* istanbul ignore next */
         case 3:
           if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
@@ -938,7 +965,8 @@
             lapseOfTime,
             props[props.name[i]].initial,
             props[props.name[i]].change,
-            duration);
+            duration
+          );
 
           elem.style[props.name[i]] = value + props[props.name[i]].suffix;
         }
@@ -1027,6 +1055,7 @@
       Pic.anim.run(el, properties, easing, duration, delay, callback);
 
       // Test Mode:
+      /* istanbul ignore next */
       if (PicoQ.VDOM) {
         this.probe = {
           duration: duration,
@@ -1038,10 +1067,11 @@
       return this;
     }
   });
-  /* eslint-enable no-underscore-dangle */
+  /* eslint-enable strict, no-underscore-dangle */
 
 
   // -- Private Ajax functions -------------------------------------------------
+  /* eslint-disable strict */
   Pic.ajax = {
 
     /**
@@ -1081,7 +1111,6 @@
 
       // Extract url and settings from arguments:
       switch (args.length) {
-
         case 0:
           url = '';
           settings = _.extend(defaultSettings);
@@ -1122,11 +1151,14 @@
      * @since 0.0.3
      */
     getSettings: function(args) {
-      var settings = { url: null, data: null, success: null, dataType: null }
-        ;
+      var settings = {
+        url: null,
+        data: null,
+        success: null,
+        dataType: null
+      };
 
       switch (args.length) {
-
         case 0:
           break;
 
@@ -1239,19 +1271,19 @@
       return s;
     },
 
-   /**
-    * Returns the deferred function done, fail or always.
-    *
-    * Nota: Mutates the array callbacks.
-    *
-    * @function (arg1, arg2, arg3)
-    * @private
-    * @param {Object}     the xhr ajax object,
-    * @param {Array}      an array of callback functions associated with done, fail, always,
-    * @param {String}     the name of the deferred function (done, fail, always),
-    * @returns {Function} returns the deferred function (done, fail or always),
-    * @since 0.0.3
-    */
+    /**
+     * Returns the deferred function done, fail or always.
+     *
+     * Nota: Mutates the array callbacks.
+     *
+     * @function (arg1, arg2, arg3)
+     * @private
+     * @param {Object}     the xhr ajax object,
+     * @param {Array}      an array of callback functions associated with done, fail, always,
+     * @param {String}     the name of the deferred function (done, fail, always),
+     * @returns {Function} returns the deferred function (done, fail or always),
+     * @since 0.0.3
+     */
     register: function(xhr, callbacks, cbname) {
       return function(cb) {
         var obj = {};
@@ -1266,16 +1298,16 @@
       };
     },
 
-   /**
-    * Fires the callback functions associated with done, fail or always.
-    *
-    * @function (arg1, arg2, arg3)
-    * @private
-    * @param {Array}      the array of callbacks,
-    * @param {Object}     the xhr ajax object,
-    * @returns {}         -,
-    * @since 0.0.3
-    */
+    /**
+     * Fires the callback functions associated with done, fail or always.
+     *
+     * @function (arg1, arg2, arg3)
+     * @private
+     * @param {Array}      the array of callbacks,
+     * @param {Object}     the xhr ajax object,
+     * @returns {}         -,
+     * @since 0.0.3
+     */
     fire: function(callbacks, xhr, result) {
       var cname
         , fn
@@ -1457,6 +1489,7 @@
 
       cb = settings.success;
       settings.success = undefined;
+      /* istanbul ignore next */
       settings.method = settings.data ? 'POST' : 'GET';
 
       PicoQ.ajax(settings)
@@ -1469,8 +1502,10 @@
       return this;
     }
   });
+  /* eslint-enable strict */
+
 
   // Returns the library name:
   return PicoQ;
 }));
-/* eslint-enable one-var */
+/* eslint-enable one-var, semi-style */

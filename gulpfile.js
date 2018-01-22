@@ -2,9 +2,9 @@
  *
  * Note: run-sequence doesn't work with arrow function. Use the old fashion!
  *
- * ****************************************************************************/
+ * ************************************************************************** */
 /* eslint-env node */
-/* eslint one-var: 0 */
+/* eslint one-var: 0, semi-style: 0 */
 
 'use strict';
 

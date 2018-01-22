@@ -1,4 +1,5 @@
-/* eslint  one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0 */
+/* eslint  one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0,
+  semi-style: 0 */
 
 'use strict';
 
@@ -6,26 +7,46 @@
 const del         = require('del')
     , gulp        = require('gulp')
     , concat      = require('gulp-concat')
-    , footer      = require('gulp-footer')
     , header      = require('gulp-header')
     , replace     = require('gulp-replace')
     , runSequence = require('run-sequence')
+    , through2    = require('through2')
     ;
 
 // -- Local modules
-const config  = require('./config')
+const config = require('./config')
     ;
 
 // -- Local constants
-const version = require('../package.json').version
-    , dist    = config.dist
-    , src     = config.src
-    , lib     = config.libname
-    , license = config.license
-    , destlib = `./_${lib}-${version}`
+const dest        = config.libdir
+    , { src }     = config
+    , { version } = require('../package.json')
+    , { dist }    = config
+    , lib         = config.libname
+    , name        = lib.replace(/\s+/g, '').toLowerCase()
+    , { license } = config
+    , destlib     = `./_${lib}-${version}`
+    , list        = Object.keys(src)
     ;
 
 // -- Local variables
+
+
+// -- Private Functions --------------------------------------------------------
+
+// Simple callback stream used to synchronize stuff
+// Source: http://unobfuscated.blogspot.co.at/2014/01/executing-asynchronous-gulp-tasks-in.html
+const synchro = function(done) {
+  return through2.obj(
+    function(data, enc, cb) {
+      cb();
+    },
+    function(cb) {
+      cb();
+      done();
+    },
+  );
+};
 
 
 // -- Gulp Tasks
@@ -46,53 +67,30 @@ gulp.task('rmjsfiles', function() {
   return del.sync(`${destlib}/*.js`);
 });
 
-// Create the library:
-gulp.task('doemlib', function() {
-  return gulp.src(src.standard)
-    .pipe(concat(`${lib.toLowerCase()}.js`))
-    .pipe(header(license.standard))
-    .pipe(replace('{{lib:name}}', `${lib}`))
-    .pipe(replace('{{lib:version}}', version))
-    // indent each line with 2 spaces:
-    .pipe(replace(/\n/g, '\n  '))
-    // remove the indent added to blanck lines:
-    // (we need to add an extra line otherwise the indent isn't removed
-    // from the last line!)
-    .pipe(footer('\n'))
-    .pipe(replace(/\s\s\n/g, '\n'))
-    // Fix the indent for the first line:
-    .pipe(replace(/\/\*\*\s\*\*\*/, '  /** *'))
-    // Remove the extra * to the bottom marker of the comment header:
-    .pipe(replace(/\s\s\*\s\*\*\*/, '  * *'))
-    // Comment 'use strict' (redondant when the lib is embedded):
-    .pipe(replace('\'use strict\';', '//  \'use strict\';'))
-    .pipe(gulp.dest(destlib));
-});
+// Creates multiple libraries:
+gulp.task('doemlib', function(done) {
+  let doneCounter = 0;
 
-// Create the easing library:
-gulp.task('doemlibeasing', function() {
-  return gulp.src(src.easing)
-    .pipe(concat(`${lib.toLowerCase()}-easing.js`))
-    .pipe(header(license.easing))
-    .pipe(replace('{{lib:name}}', `${lib}-easing`))
-    .pipe(replace('{{lib:version}}', version))
-    // indent each line with 2 spaces:
-    .pipe(replace(/\n/g, '\n  '))
-    // remove the indent added to blanck lines:
-    // (we need to add an extra line otherwise the indent isn't removed
-    // from the last line!)
-    .pipe(footer('\n'))
-    .pipe(replace(/\s\s\n/g, '\n'))
-    // Fix the indent for the first line:
-    .pipe(replace(/\/\*\*\s\*\*\*/, '  /** *'))
-    // Remove the extra * to the bottom marker of the comment header:
-    .pipe(replace(/\s\s\*\s\*\*\*/, '  * *'))
-    // Comment 'use strict' (redondant when the lib is embedded):
-    .pipe(replace('\'use strict\';', '//  \'use strict\';'))
-    .pipe(gulp.dest(destlib));
+  function incDoneCounter() {
+    doneCounter += 1;
+    if (doneCounter >= list.length) {
+      done();
+    }
+  }
+
+  list.forEach(function(item) {
+    gulp.src(`${dest}/${name}-${item}-noparent.js`)
+      .pipe(concat(`${name}-${item}.js`))
+      .pipe(header(license[item]))
+      .pipe(replace('{{lib:name}}', `${lib}`))
+      .pipe(replace('{{lib:version}}', version))
+      .pipe(replace('\'use strict\';', '//  \'use strict\';'))
+      .pipe(gulp.dest(destlib))
+      .pipe(synchro(incDoneCounter));
+  });
 });
 
 // -- Gulp Main Task
 gulp.task('makenoparentlib', function(callback) {
-  runSequence('delemlib', 'cpdist', 'rmjsfiles', ['doemlib', 'doemlibeasing'], callback);
+  runSequence('delemlib', 'cpdist', 'rmjsfiles', 'doemlib', callback);
 });

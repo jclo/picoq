@@ -1,10 +1,11 @@
 /* global describe, it */
-/* eslint  one-var: 0, import/no-extraneous-dependencies: 1, no-unused-expressions: 0 */
+/* eslint  one-var: 0, import/no-extraneous-dependencies: 1, no-unused-expressions: 0,
+  no-underscore-dangle: 0, semi-style: 0 */
 
 'use strict';
 
 // -- Node modules
-const expect    = require('chai').expect
+const { expect } = require('chai')
     ;
 
 // -- Local modules
@@ -40,7 +41,6 @@ module.exports = function() {
       it('Expects PicoQ("#app20").css("font-family") to return the string "arial".', () => {
         expect(PicoQ('#app20').css('font-family')).to.be.a('string').that.is.equal('arial');
       });
-
     });
   });
 };

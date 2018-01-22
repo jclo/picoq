@@ -6,13 +6,12 @@ cache:
 notifications:
   email: false
 node_js:
-  - "8"
+  - node
 before_install:
   - npm i -g npm@^2.0.0
 before_script:
   - npm prune
 script:
-  - npm run server
   - npm run test
   - npm run check-coverage
 after_success:

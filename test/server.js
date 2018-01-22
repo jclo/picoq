@@ -1,15 +1,15 @@
 // This server is derived from https://gist.github.com/ryanflorence/701407
 /* global */
-/* eslint one-var: 0 */
+/* eslint one-var: 0, semi-style: 0 */
 
 'use strict';
 
 // -- Node modules
 const http = require('http')
-  , url = require('url')
-  , path = require('path')
-  , fs = require('fs')
-  ;
+    , url = require('url')
+    , path = require('path')
+    , fs = require('fs')
+    ;
 
 // -- Local modules
 
@@ -25,13 +25,13 @@ const port = process.argv[2] || 8888
 // Create the HTTP Server:
 const server = http.createServer((request, response) => {
   const uri    = url.parse(request.url).pathname
-    , contentTypesByExtension = {
-      '.html': 'text/html',
-      '.json': 'text/plain',
-      '.txt': 'text/plain',
-      '.css': 'text/css',
-      '.js': 'text/javascript',
-    }
+      , contentTypesByExtension = {
+        '.html': 'text/html',
+        '.json': 'text/plain',
+        '.txt': 'text/plain',
+        '.css': 'text/css',
+        '.js': 'text/javascript',
+      }
     ;
   let filename = path.join(process.cwd(), uri)
     ;

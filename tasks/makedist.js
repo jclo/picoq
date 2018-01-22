@@ -1,4 +1,5 @@
-/* eslint one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0 */
+/* eslint one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0,
+  semi-style: 0 */
 
 'use strict';
 
@@ -10,6 +11,7 @@ const del         = require('del')
     , replace     = require('gulp-replace')
     , runSequence = require('run-sequence')
     , uglify      = require('gulp-uglify')
+    , through2    = require('through2')
     ;
 
 // -- Local modules
@@ -21,13 +23,33 @@ const release   = require('../package.json').version
     ;
 
 // -- Local constants
-const dist      = config.dist
-    , libdir    = config.libdir
-    , libname   = config.libname
-    , license   = config.license
+const { dist }    = config
+    , { src }     = config
+    , { libdir }  = config
+    , { libname } = config
+    , name        = libname.replace(/\s+/g, '').toLowerCase()
+    , { license } = config
+    , list        = Object.keys(src)
     ;
 
 // -- Local variables
+
+
+// -- Private Functions --------------------------------------------------------
+
+// Simple callback stream used to synchronize stuff
+// Source: http://unobfuscated.blogspot.co.at/2014/01/executing-asynchronous-gulp-tasks-in.html
+const synchro = function(done) {
+  return through2.obj(
+    function(data, enc, cb) {
+      cb();
+    },
+    function(cb) {
+      cb();
+      done();
+    },
+  );
+};
 
 
 // -- Gulp Tasks
@@ -39,54 +61,56 @@ gulp.task('deldist', function() {
 
 // Copy README and LICENSE:
 gulp.task('skeleton', function() {
-  return gulp.src(['README.md', 'LICENSE.md', 'example.html'])
+  return gulp.src(['README.md', 'LICENSE.md'])
     .pipe(gulp.dest(dist));
 });
 
-// Copy the development version:
-gulp.task('copydev', function() {
-  return gulp.src(`${libdir}/${libname.toLowerCase()}.js`)
-    .pipe(header(license.standard))
-    .pipe(replace('{{lib:name}}', `${libname}`))
-    .pipe(replace('{{lib:version}}', release))
-    .pipe(gulp.dest(dist));
+// Copies multiple dev. libraries:
+gulp.task('copydev', function(done) {
+  let doneCounter = 0;
+
+  function incDoneCounter() {
+    doneCounter += 1;
+    if (doneCounter >= list.length) {
+      done();
+    }
+  }
+
+  list.forEach(function(item) {
+    gulp.src(`${libdir}/${name}-${item}.js`)
+      .pipe(header(license[item]))
+      .pipe(replace('{{lib:name}}', `${libname}`))
+      .pipe(replace('{{lib:version}}', release))
+      .pipe(gulp.dest(dist))
+      .pipe(synchro(incDoneCounter));
+  });
 });
 
-// Create the minified version:
-gulp.task('makeminified', function() {
-  return gulp.src(`${libdir}/${libname.toLowerCase()}.js`)
-    .pipe(uglify())
-    .pipe(header(license.standard))
-    .pipe(replace('{{lib:name}}', `${libname}`))
-    .pipe(replace('{{lib:version}}', release))
-    .pipe(concat(`${libname.toLowerCase()}.min.js`))
-    .pipe(gulp.dest(dist));
-});
+// Minifies multiple dev. libraries:
+gulp.task('minifydev', function(done) {
+  let doneCounter = 0;
 
-// Copy the easing development version:
-gulp.task('copydeveasing', function() {
-  return gulp.src(`${libdir}/${libname.toLowerCase()}-easing.js`)
-    .pipe(header(license.easing))
-    .pipe(replace('{{lib:name}}', `${libname}-easing`))
-    .pipe(replace('{{lib:version}}', release))
-    .pipe(gulp.dest(dist));
-});
+  function incDoneCounter() {
+    doneCounter += 1;
+    if (doneCounter >= list.length) {
+      done();
+    }
+  }
 
-// Create the easing minified version:
-gulp.task('makeminifiedeasing', function() {
-  return gulp.src(`${libdir}/${libname.toLowerCase()}-easing.js`)
-    .pipe(uglify())
-    .pipe(header(license.easing))
-    .pipe(replace('{{lib:name}}', `${libname}-easing`))
-    .pipe(replace('{{lib:version}}', release))
-    .pipe(concat(`${libname.toLowerCase()}-easing.min.js`))
-    .pipe(gulp.dest(dist));
+  list.forEach(function(item) {
+    gulp.src(`${libdir}/${name}-${item}.js`)
+      .pipe(uglify())
+      .pipe(header(license[item]))
+      .pipe(replace('{{lib:name}}', `${libname}`))
+      .pipe(replace('{{lib:version}}', release))
+      .pipe(concat(`${name}-${item}.min.js`))
+      .pipe(gulp.dest(dist))
+      .pipe(synchro(incDoneCounter));
+  });
 });
 
 
 // -- Gulp Main Task:
 gulp.task('makedist', function(callback) {
-  runSequence('deldist',
-    ['skeleton', 'copydev', 'makeminified', 'copydeveasing', 'makeminifiedeasing'],
-    callback);
+  runSequence('deldist', 'skeleton', ['copydev', 'minifydev'], callback);
 });

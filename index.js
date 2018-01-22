@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./lib/picoq.js');
+module.exports = require('./lib/picoq-easing');

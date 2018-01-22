@@ -1,12 +1,14 @@
-/* global describe */
-/* eslint  one-var: 0, import/no-extraneous-dependencies: 1 */
+// ESLint declarations:
+/* global describe, it */
+/* eslint one-var: 0, no-unused-vars: 0, import/no-extraneous-dependencies: 0, semi-style: 0 */
 
 'use strict';
 
 // -- Node modules
-const JSDOM          = require('jsdom').JSDOM
-    , XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
+const { JSDOM }          = require('jsdom')
+    , { XMLHttpRequest } = require('xmlhttprequest')
     ;
+
 
 // -- Local modules
 const PicoQ       = require('../index.js')
@@ -24,7 +26,6 @@ const PicoQ       = require('../index.js')
     , fnajax      = require('./ajax.js')
     , fnajax2     = require('./ajax2.js')
     ;
-
 
 // -- Local constants
 // Create a Virtual DOM:
@@ -96,7 +97,6 @@ global.navigator = { userAgent: 'node.js' };
 
 
 // -- Main
-
 // Attach node XMLHttpRequest to JSDOM:
 vdom.window.XMLHttpRequest = XMLHttpRequest;
 // Set Virtual DOM:
