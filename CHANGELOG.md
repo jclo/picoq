@@ -3,6 +3,7 @@
 ### 0.0.8 (January 22, 2018)
 
   * Updated the project to comply with ESLint 4.x,
+  * Fixed a regression in .travis.yml,
   * ...,
 
 
