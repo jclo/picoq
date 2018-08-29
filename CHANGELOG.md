@@ -3,7 +3,7 @@
 ### 0.0.10 (August 29, 2018)
 
   * Updated the module to comply with UMDLib 0.7.0,
-  * ...
+  * Release.
 
 
 ### 0.0.9 (January 22, 2018)
