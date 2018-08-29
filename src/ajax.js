@@ -1,5 +1,8 @@
 // -- Private Ajax functions -------------------------------------------------
-/* eslint-disable strict */
+/* eslint-disable one-var, semi-style */
+
+'use strict';
+
 Pic.ajax = {
 
   /**
@@ -430,4 +433,4 @@ PicoQ._.extend(PicoQ.prototype, {
     return this;
   }
 });
-/* eslint-enable strict */
+/* eslint-enable one-var, semi-style */

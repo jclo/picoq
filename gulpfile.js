@@ -4,7 +4,7 @@
  *
  * ************************************************************************** */
 /* eslint-env node */
-/* eslint one-var: 0, semi-style: 0 */
+/* eslint one-var: 0, semi-style: 0, prefer-arrow-callback: 0 */
 
 'use strict';
 
@@ -25,14 +25,14 @@ const watch = 'src/**/*.js'
 // -- Local variables
 
 // -- Gulp Tasks
-gulp.task('watch', () => {
-  gulp.watch(watch, ['makejs']);
-});
-
-gulp.task('build', (callback) => {
+gulp.task('build', function(callback) {
   runSequence('makejs', callback);
 });
 
-gulp.task('default', (callback) => {
+gulp.task('watch', function() {
+  gulp.watch(watch, ['makejs']);
+});
+
+gulp.task('default', function(callback) {
   runSequence('makejs', 'makedist', callback);
 });

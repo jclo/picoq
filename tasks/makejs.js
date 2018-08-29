@@ -18,12 +18,13 @@ const config = require('./config')
     ;
 
 // -- Local constants
-const dest       = config.libdir
-    , { src }    = config
-    , lib        = config.libname
-    , name       = lib.replace(/\s+/g, '').toLowerCase()
-    , { parent } = config
-    , list       = Object.keys(src)
+const dest         = config.libdir
+    , { src }      = config
+    , lib          = config.libname
+    , name         = lib.replace(/\s+/g, '').toLowerCase()
+    , { parent }   = config
+    , { noparent } = config
+    , list         = Object.keys(src)
     ;
 
 // -- Local variables
@@ -72,6 +73,8 @@ gulp.task('docore', function(done) {
   list.forEach(function(item) {
     const core = src[item].slice(1, -1);
     gulp.src(core)
+      // remove the extra 'use strict':
+      .pipe(replace(/\n'use strict';\n/, ''))
       // indent the first line with 2 spaces:
       .pipe(replace(/^/g, '  '))
       // indent each other lines with 2 spaces:
@@ -105,16 +108,16 @@ gulp.task('dolibnoparent', function(done) {
 
     gulp.src([head, `${dest}/core-${item}.js`, foot])
       .pipe(replace('{{lib:name}}', lib))
-      .pipe(concat(`${name}-${item}-noparent.js`))
+      .pipe(concat(`${name}-${item}${noparent}.js`))
       .pipe(gulp.dest(dest))
       .pipe(synchro(incDoneCounter));
   });
 });
 
-// Creates multiple libraries without 'this':
+// Creates multiple libraries with 'this':
 gulp.task('dolib', function() {
   list.forEach(function(item) {
-    return gulp.src(`${dest}/${name}-${item}-noparent.js`)
+    return gulp.src(`${dest}/${name}-${item}${noparent}.js`)
       .pipe(replace('{{lib:parent}}', parent))
       .pipe(concat(`${name}-${item}.js`))
       .pipe(gulp.dest(dest));

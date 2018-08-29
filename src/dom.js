@@ -1,5 +1,8 @@
 // -- Public Methods to insert/remove nodes to/from the DOM ------------------
-/* eslint-disable strict */
+/* eslint-disable one-var, semi-style */
+
+'use strict';
+
 PicoQ._.extend(PicoQ.prototype, {
   /**
    * Gets/Sets the HTML contents of the element.
@@ -251,4 +254,4 @@ PicoQ._.extend(PicoQ.prototype, {
     return this[0] ? this[0].getBoundingClientRect() : null;
   }
 });
-/* eslint-disable strict */
+/* eslint-enable one-var, semi-style */

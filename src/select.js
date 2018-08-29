@@ -1,5 +1,8 @@
 // -- Public Methods to select nodes -----------------------------------------
-/* eslint-disable strict */
+/* */
+
+'use strict';
+
 PicoQ._.extend(PicoQ.prototype, {
   /**
    * Select a child element.
@@ -75,4 +78,4 @@ PicoQ._.extend(PicoQ.prototype, {
     return this;
   }
 });
-/* eslint-enable strict */
+/* */

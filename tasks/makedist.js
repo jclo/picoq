@@ -15,23 +15,23 @@ const del         = require('del')
     ;
 
 // -- Local modules
-const config  = require('./config')
+const config = require('./config')
     ;
 
 // -- Release version:
-const release   = require('../package.json').version
+const release = require('../package.json').version
     ;
 
 // -- Local constants
-const { dist }    = config
-    , { src }     = config
-    , { libdir }  = config
-    , { libname } = config
-    , name        = libname.replace(/\s+/g, '').toLowerCase()
-    , { license } = config
-    , list        = Object.keys(src)
+const { dist }     = config
+    , { src }      = config
+    , { libdir }   = config
+    , { libname }  = config
+    , { noparent } = config
+    , name         = libname.replace(/\s+/g, '').toLowerCase()
+    , { license }  = config
+    , list         = Object.keys(src)
     ;
-
 // -- Local variables
 
 
@@ -86,6 +86,28 @@ gulp.task('copydev', function(done) {
   });
 });
 
+// Copies multiple dev. libraries without parent:
+gulp.task('makenoparentlib', function(done) {
+  let doneCounter = 0;
+
+  function incDoneCounter() {
+    doneCounter += 1;
+    if (doneCounter >= list.length) {
+      done();
+    }
+  }
+
+  list.forEach(function(item) {
+    gulp.src(`${libdir}/${name}-${item}${noparent}.js`)
+      .pipe(header(license[item]))
+      .pipe(replace('{{lib:name}}', `${libname}`))
+      .pipe(replace('{{lib:version}}', release))
+      .pipe(replace(/ {2}'use strict';\n\n/g, ''))
+      .pipe(gulp.dest(dist))
+      .pipe(synchro(incDoneCounter));
+  });
+});
+
 // Minifies multiple dev. libraries:
 gulp.task('minifydev', function(done) {
   let doneCounter = 0;
@@ -112,5 +134,9 @@ gulp.task('minifydev', function(done) {
 
 // -- Gulp Main Task:
 gulp.task('makedist', function(callback) {
-  runSequence('deldist', 'skeleton', ['copydev', 'minifydev'], callback);
+  runSequence(
+    'deldist',
+    ['skeleton', 'copydev', 'makenoparentlib', 'minifydev'],
+    callback,
+  );
 });

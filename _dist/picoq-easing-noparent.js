@@ -17,8 +17,6 @@
 /* eslint strict: ["error", "function"] */
 /* eslint-disable one-var, semi-style */
 (function(root, factory) {
-  'use strict';
-
   /* istanbul ignore next */
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -39,9 +37,7 @@
     root.PicoQ = factory(root);
     /* eslint-enable no-param-reassign */
   }
-}(this, function(root) {
-  'use strict';
-
+}({{lib:parent}}, function(root) {
   // Defines the global variables in the scope of this module (only PicoQ is
   // attached to the root object):
   var PicoQ

@@ -1,5 +1,8 @@
 // -- Public Methods to manage the node attributes ---------------------------
-/* eslint-disable strict */
+/* */
+
+'use strict';
+
 PicoQ._.extend(PicoQ.prototype, {
 
   /**
@@ -34,4 +37,4 @@ PicoQ._.extend(PicoQ.prototype, {
     return this;
   }
 });
-/* eslint-disable strict */
+/* */

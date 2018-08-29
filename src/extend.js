@@ -1,5 +1,7 @@
 // -- Private functions ------------------------------------------------------
-/* eslint-disable strict */
+/* eslint-disable one-var,semi-style */
+
+'use strict';
 
 PicoQ._ = {
 
@@ -43,4 +45,4 @@ PicoQ._ = {
 
 // Assign PicoQ._ to _:
 _ = PicoQ._;
-/* eslint-enable strict */
+/* eslint-enable one-var,semi-style */

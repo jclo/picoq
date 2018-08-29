@@ -1,7 +1,10 @@
 // -- Easing functions -------------------------------------------------------
 /* istanbul ignore next */
-/* eslint-disable strict, no-mixed-operators, no-return-assign, no-param-reassign,
+/* eslint-disable no-mixed-operators, no-return-assign, no-param-reassign,
   no-cond-assign, no-plusplus, max-len, no-else-return, no-underscore-dangle */
+
+'use strict';
+
 PicoQ._easing = {
   linear: function(t, b, c, d) {
     return c * t / d + b;
@@ -194,5 +197,5 @@ PicoQ._easing = {
   }
 };
 PicoQ._easing.VERSION = '0.0.1';
-/* eslint-enable strict, no-mixed-operators, no-return-assign, no-param-reassign,
+/* eslint-enable no-mixed-operators, no-return-assign, no-param-reassign,
   no-cond-assign, no-plusplus, max-len, no-else-return, no-underscore-dangle */

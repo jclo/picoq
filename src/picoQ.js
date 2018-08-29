@@ -1,5 +1,7 @@
 // -- PicoQ Public -----------------------------------------------------------
-/* eslint-disable strict */
+/* */
+
+'use strict';
 
 /**
  * PicoQ constructor.
@@ -62,4 +64,4 @@ PicoQ.setTestMode = function() {
 PicoQ.prototype = {
   //
 };
-/* eslint-enable strict */
+/* */

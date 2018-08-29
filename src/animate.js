@@ -1,5 +1,8 @@
 // -- Private functions for animate ------------------------------------------
-/* eslint-disable strict, no-underscore-dangle */
+/* eslint-disable one-var, semi-style, no-underscore-dangle */
+
+'use strict';
+
 Pic.anim = {
 
   /**
@@ -268,4 +271,4 @@ PicoQ._.extend(PicoQ.prototype, {
     return this;
   }
 });
-/* eslint-enable strict, no-underscore-dangle */
+/* eslint-enable one-var, semi-style, no-underscore-dangle */

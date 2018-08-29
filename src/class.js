@@ -1,5 +1,8 @@
 // -- Public Methods to manage the classes -----------------------------------
-/* eslint-disable strict */
+/* */
+
+'use strict';
+
 PicoQ._.extend(PicoQ.prototype, {
   /**
    * Returns the DOMTokenList collection of the class attributes of the element.
@@ -116,4 +119,4 @@ PicoQ._.extend(PicoQ.prototype, {
     return false;
   }
 });
-/* eslint-enable strict */
+/* */

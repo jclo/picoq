@@ -1,8 +1,8 @@
-// Based on UMD Lib template v0.6.0
+// Based on UMD Lib template v0.7.0
 // ESLint declarations
 /* global define */
+/* eslint strict: ["error", "function"] */
 /* eslint-disable one-var, semi-style */
-/* eslint-disable strict, no-param-reassign */
 (function(root, factory) {
   'use strict';
 
@@ -17,10 +17,14 @@
     module.exports = factory(root);
     // This is a hack to attach the lib to the browser root when this lib is
     // included inside another lib and the whole is browserifyied:
+    /* eslint-disable no-param-reassign */
     if (root.PicoQ === null) root.PicoQ = factory(root);
+    /* eslint-enable no-param-reassign */
   } else {
     // Browser globals.
+    /* eslint-disable no-param-reassign */
     root.PicoQ = factory(root);
+    /* eslint-enable no-param-reassign */
   }
 }({{lib:parent}}, function(root) {
   'use strict';
@@ -32,4 +36,3 @@
     , Pic
     , _
     ;
-  /* eslint-enable strict, no-param-reassign */

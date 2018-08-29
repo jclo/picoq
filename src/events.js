@@ -1,5 +1,8 @@
 // -- Public Methods to manage the events ------------------------------------
-/* eslint-disable strict */
+/* */
+
+'use strict';
+
 PicoQ._.extend(PicoQ.prototype, {
 
   /**
@@ -73,4 +76,4 @@ PicoQ._.extend(PicoQ.prototype, {
     return this.trigger(event);
   }
 });
-/* eslint-enable strict */
+/* */

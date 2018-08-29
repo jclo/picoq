@@ -1,5 +1,7 @@
 // -- Private functions ------------------------------------------------------
-/* eslint-disable strict, no-underscore-dangle */
+/* eslint-disable one-var, semi-style */
+
+'use strict';
 
 Pic.u = {
 
@@ -31,4 +33,4 @@ Pic.u = {
     return normalized;
   }
 };
-/* eslint-enable strict, no-underscore-dangle */
+/* eslint-enable one-var, semi-style */

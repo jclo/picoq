@@ -1,5 +1,8 @@
 // -- Public Methods to manage the css properties ----------------------------
-/* eslint-disable strict */
+/* */
+
+'use strict';
+
 PicoQ._.extend(PicoQ.prototype, {
   /**
    * Gets/Sets the style attribute of the element,
@@ -24,4 +27,4 @@ PicoQ._.extend(PicoQ.prototype, {
     return this;
   }
 });
-/* eslint-enable strict */
+/* */

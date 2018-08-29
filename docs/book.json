@@ -1,0 +1,16 @@
+{
+  "gitbook":   "3.2.2",
+  "title": "PicoQ",
+  "description": "A ...",
+  "root": ".",
+  "structure": {
+    "readme": "README.md",
+    "summary": "SUMMARY.md"
+  },
+  "author": "John Doe <john@doe.com> (http://www.doe.com)",
+  "plugins": [
+    "-search"
+  ],
+  "pluginsConfig": {
+  }
+}

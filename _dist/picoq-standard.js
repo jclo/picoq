@@ -1,5 +1,5 @@
 /** ****************************************************************************
- * PicoQ v0.0.9
+ * PicoQ v0.0.10
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -7,11 +7,11 @@
  * Released under the MIT license. You may obtain a copy of the License
  * at: http://www.opensource.org/licenses/mit-license.php).
  * ************************************************************************** */
-// Based on UMD Lib template v0.6.0
+// Based on UMD Lib template v0.7.0
 // ESLint declarations
 /* global define */
+/* eslint strict: ["error", "function"] */
 /* eslint-disable one-var, semi-style */
-/* eslint-disable strict, no-param-reassign */
 (function(root, factory) {
   'use strict';
 
@@ -26,10 +26,14 @@
     module.exports = factory(root);
     // This is a hack to attach the lib to the browser root when this lib is
     // included inside another lib and the whole is browserifyied:
+    /* eslint-disable no-param-reassign */
     if (root.PicoQ === null) root.PicoQ = factory(root);
+    /* eslint-enable no-param-reassign */
   } else {
     // Browser globals.
+    /* eslint-disable no-param-reassign */
     root.PicoQ = factory(root);
+    /* eslint-enable no-param-reassign */
   }
 }(this, function(root) {
   'use strict';
@@ -41,10 +45,9 @@
     , Pic
     , _
     ;
-  /* eslint-enable strict, no-param-reassign */
 
   // -- PicoQ Public -----------------------------------------------------------
-  /* eslint-disable strict */
+  /* */
 
   /**
    * PicoQ constructor.
@@ -82,7 +85,7 @@
   };
 
   // Attaches a release number to the library:
-  PicoQ.VERSION = '0.0.9';
+  PicoQ.VERSION = '0.0.10';
 
   // Attaches all the private methods to this private Pix object:
   Pic = {
@@ -107,11 +110,11 @@
   PicoQ.prototype = {
     //
   };
-  /* eslint-enable strict */
+  /* */
 
 
   // -- Private functions ------------------------------------------------------
-  /* eslint-disable strict */
+  /* eslint-disable one-var,semi-style */
 
   PicoQ._ = {
 
@@ -155,11 +158,11 @@
 
   // Assign PicoQ._ to _:
   _ = PicoQ._;
-  /* eslint-enable strict */
+  /* eslint-enable one-var,semi-style */
 
 
   // -- Private functions ------------------------------------------------------
-  /* eslint-disable strict, no-underscore-dangle */
+  /* eslint-disable one-var, semi-style */
 
   Pic.u = {
 
@@ -191,11 +194,12 @@
       return normalized;
     }
   };
-  /* eslint-enable strict, no-underscore-dangle */
+  /* eslint-enable one-var, semi-style */
 
 
   // -- Public Methods to select nodes -----------------------------------------
-  /* eslint-disable strict */
+  /* */
+
   PicoQ._.extend(PicoQ.prototype, {
     /**
      * Select a child element.
@@ -271,11 +275,12 @@
       return this;
     }
   });
-  /* eslint-enable strict */
+  /* */
 
 
   // -- Public Methods to insert/remove nodes to/from the DOM ------------------
-  /* eslint-disable strict */
+  /* eslint-disable one-var, semi-style */
+
   PicoQ._.extend(PicoQ.prototype, {
     /**
      * Gets/Sets the HTML contents of the element.
@@ -527,11 +532,12 @@
       return this[0] ? this[0].getBoundingClientRect() : null;
     }
   });
-  /* eslint-disable strict */
+  /* eslint-enable one-var, semi-style */
 
 
   // -- Public Methods to manage the css properties ----------------------------
-  /* eslint-disable strict */
+  /* */
+
   PicoQ._.extend(PicoQ.prototype, {
     /**
      * Gets/Sets the style attribute of the element,
@@ -556,11 +562,12 @@
       return this;
     }
   });
-  /* eslint-enable strict */
+  /* */
 
 
   // -- Public Methods to manage the classes -----------------------------------
-  /* eslint-disable strict */
+  /* */
+
   PicoQ._.extend(PicoQ.prototype, {
     /**
      * Returns the DOMTokenList collection of the class attributes of the element.
@@ -677,11 +684,12 @@
       return false;
     }
   });
-  /* eslint-enable strict */
+  /* */
 
 
   // -- Public Methods to manage the node attributes ---------------------------
-  /* eslint-disable strict */
+  /* */
+
   PicoQ._.extend(PicoQ.prototype, {
 
     /**
@@ -716,11 +724,12 @@
       return this;
     }
   });
-  /* eslint-disable strict */
+  /* */
 
 
   // -- Public Methods to manage the events ------------------------------------
-  /* eslint-disable strict */
+  /* */
+
   PicoQ._.extend(PicoQ.prototype, {
 
     /**
@@ -794,11 +803,12 @@
       return this.trigger(event);
     }
   });
-  /* eslint-enable strict */
+  /* */
 
 
   // -- Private functions for animate ------------------------------------------
-  /* eslint-disable strict, no-underscore-dangle */
+  /* eslint-disable one-var, semi-style, no-underscore-dangle */
+
   Pic.anim = {
 
     /**
@@ -1067,11 +1077,12 @@
       return this;
     }
   });
-  /* eslint-enable strict, no-underscore-dangle */
+  /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
 
   // -- Private Ajax functions -------------------------------------------------
-  /* eslint-disable strict */
+  /* eslint-disable one-var, semi-style */
+
   Pic.ajax = {
 
     /**
@@ -1502,7 +1513,7 @@
       return this;
     }
   });
-  /* eslint-enable strict */
+  /* eslint-enable one-var, semi-style */
 
 
   // Returns the library name:
