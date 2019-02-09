@@ -3,6 +3,7 @@
 ### 0.1.0 (February 9, 2019)
 
   * Updated the project to comply with UMDLib 0.8.2,
+  * Updated .travis.yml,
   * ...,
 
 
