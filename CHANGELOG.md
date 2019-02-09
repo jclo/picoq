@@ -6,6 +6,7 @@
   * Updated .travis.yml,
   * Reversed some changes made in the test files,
   * Removed the tests that fail on Travis CI,
+  * Fixed regression on .travis.yml,
   * ...,
 
 
