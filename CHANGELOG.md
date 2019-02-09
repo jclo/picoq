@@ -4,6 +4,7 @@
 
   * Updated the project to comply with UMDLib 0.8.2,
   * Updated .travis.yml,
+  * Reversed some changes made in the test files,
   * ...,
 
 
