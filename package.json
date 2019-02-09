@@ -1,29 +1,32 @@
 {
   "name": "picoq",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "description": "A tiny Javascript library to interact with the DOM",
   "main": "index.js",
   "bin": {},
   "scripts": {
     "build": "gulp build",
     "watch": "gulp watch",
-    "makedist": "gulp makejs && gulp makedist",
-    "makeprivate": "gulp makeprivatepackage && sh tasks/compress.sh $npm_package_name $npm_package_version",
+    "makedist": "gulp build && gulp makedist",
+    "makeprivate": "gulp makeprivate && sh tasks/compress.sh ${npm_package_name} ${npm_package_version}",
+    "makelib": "gulp build && gulp makedist && gulp makeprivate && sh tasks/compress.sh ${npm_package_name} ${npm_package_version}",
     "server": "node test/server.js",
     "servertravis": "node test/server.js &",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcov _mocha ./test/main.js",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha ./test/main.js",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
+    "report-coverage": "nyc report --reporter=text-lcov | coveralls",
     "report": "nyc report",
-    "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "doc": "cd docs && ../node_modules/.bin/gitbook --port 9999 serve",
-    "precommit": "npm run makedist && npm run test && npm run check-coverage && npm run report"
+    "doc": "vuepress dev docs"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/jclo/picoq.git"
   },
-  "keywords": [],
+  "keywords": [
+    "DOM",
+    "jQuery"
+  ],
   "author": {
     "name": "jclo",
     "email": "jclo@mobilabs.fr",
@@ -34,31 +37,35 @@
     "url": "https://github.com/jclo/picoq/issues"
   },
   "homepage": "https://github.com/jclo/picoq",
-  "dependencies": {},
+  "dependencies": {
+    "vuepress": "0.14.8"
+  },
   "devDependencies": {
-    "chai": "4.1.2",
+    "chai": "4.2.0",
     "coveralls": "3.0.2",
     "cross-env": "5.2.0",
     "del": "3.0.0",
-    "eslint": "5.4.0",
+    "eslint": "5.13.0",
     "eslint-config-airbnb-base": "13.1.0",
-    "eslint-plugin-import": "2.14.0",
-    "gitbook-cli": "2.3.2",
-    "gulp": "3.9.1",
+    "eslint-plugin-import": "2.16.0",
+    "gulp": "4.0.0",
     "gulp-concat": "2.6.1",
-    "gulp-footer": "2.0.1",
-    "gulp-header": "2.0.5",
+    "gulp-footer": "2.0.2",
+    "gulp-header": "2.0.7",
     "gulp-replace": "1.0.0",
     "gulp-uglify": "3.0.1",
-    "husky": "0.14.3",
-    "jsdom": "12.0.0",
+    "husky": "1.3.1",
+    "jsdom": "13.2.0",
     "mocha": "5.2.0",
-    "nyc": "12.0.2",
-    "opener": "1.5.0",
-    "require-dir": "1.0.0",
-    "run-sequence": "2.2.1",
-    "through2": "2.0.3",
+    "nyc": "13.2.0",
+    "opener": "1.5.1",
+    "through2": "3.0.0",
     "xmlhttprequest": "1.8.0"
   },
-  "private": false
+  "private": false,
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && npm run makedist && npm run test && npm run check-coverage && npm run report"
+    }
+  }
 }

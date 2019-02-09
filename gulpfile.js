@@ -1,38 +1,34 @@
-/* *****************************************************************************
- *
- * Note: run-sequence doesn't work with arrow function. Use the old fashion!
- *
- * ************************************************************************** */
 /* eslint-env node */
-/* eslint one-var: 0, semi-style: 0, prefer-arrow-callback: 0 */
+/* eslint one-var: 0, semi-style: 0 */
 
 'use strict';
 
 // -- Node modules
-const gulp        = require('gulp')
-    , runSequence = require('run-sequence')
+const { watch, series } = require('gulp')
     ;
 
-// -- Local modules
-
-// Include all build files:
-require('require-dir')('./tasks');
-
 // -- Local constants
-const watch = 'src/**/*.js'
+const filesToWatch = 'src/**/*.js'
     ;
 
 // -- Local variables
 
-// -- Gulp Tasks
-gulp.task('build', function(callback) {
-  runSequence('makejs', callback);
-});
+// -- Gulp Private Tasks
+const build       = require('./tasks/makejs')
+    , makedist    = require('./tasks/makedist')
+    , makeprivate = require('./tasks/makeprivatepackage')
+    ;
 
-gulp.task('watch', function() {
-  gulp.watch(watch, ['makejs']);
-});
 
-gulp.task('default', function(callback) {
-  runSequence('makejs', 'makedist', callback);
-});
+// -- Gulp watch
+function fwatch() {
+  watch(filesToWatch, series(build));
+}
+
+
+// Gulp Public Tasks:
+exports.watch = fwatch;
+exports.build = build;
+exports.makedist = makedist;
+exports.makeprivate = makeprivate;
+exports.default = series(build, makedist, makeprivate);

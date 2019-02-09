@@ -12,19 +12,20 @@ const { JSDOM }          = require('jsdom')
 
 // -- Local modules
 const PicoQ       = require('../index.js')
-    , fnpicoq     = require('./picoq.js')
-    , fnextend    = require('./extend.js')
-    , fnutilities = require('./utilities.js')
-    , fncore      = require('./core.js')
-    , fndom       = require('./dom.js')
-    , fnselect    = require('./select.js')
-    , fncss       = require('./css.js')
-    , fnclass     = require('./class.js')
-    , fnattr      = require('./attr.js')
-    , fnevents    = require('./events.js')
-    , fnanimate   = require('./animate.js')
-    , fnajax      = require('./ajax.js')
-    , fnajax2     = require('./ajax2.js')
+    , { _ }       = PicoQ
+    , fnpicoq     = require('./lib/picoq.js')
+    , fnextend    = require('./lib/extend.js')
+    , fnutilities = require('./lib/utilities.js')
+    , fncore      = require('./lib/core.js')
+    , fndom       = require('./lib/dom.js')
+    , fnselect    = require('./lib/select.js')
+    , fncss       = require('./lib/css.js')
+    , fnclass     = require('./lib/class.js')
+    , fnattr      = require('./lib/attr.js')
+    , fnevents    = require('./lib/events.js')
+    , fnanimate   = require('./lib/animate.js')
+    , fnajax      = require('./lib/ajax.js')
+    , fnajax2     = require('./lib/ajax2.js')
     ;
 
 // -- Local constants
@@ -103,17 +104,17 @@ vdom.window.XMLHttpRequest = XMLHttpRequest;
 PicoQ.VDOM = true;
 
 describe('PicoQ', () => {
-  fnpicoq();
-  fnextend();
-  fnutilities();
-  fncore();
-  fndom();
-  fnselect();
-  fncss();
-  fnclass();
-  fnattr();
-  fnevents(vdom);
-  fnanimate();
-  fnajax();
-  fnajax2();
+  fnpicoq(PicoQ);
+  fnextend(PicoQ, _);
+  fnutilities(PicoQ);
+  fncore(PicoQ);
+  fndom(PicoQ);
+  fnselect(PicoQ);
+  fncss(PicoQ);
+  fnclass(PicoQ);
+  fnattr(PicoQ);
+  fnevents(PicoQ, vdom);
+  fnanimate(PicoQ);
+  fnajax(PicoQ);
+  fnajax2(PicoQ);
 });

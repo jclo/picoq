@@ -1,34 +1,34 @@
-/* eslint  one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0,
-  semi-style: 0 */
+/* eslint  one-var: 0, import/no-extraneous-dependencies: 0, semi-style: 0 */
 
 'use strict';
 
 // -- Node modules
-const del         = require('del')
-    , gulp        = require('gulp')
-    , concat      = require('gulp-concat')
-    , footer      = require('gulp-footer')
-    , replace     = require('gulp-replace')
-    , runSequence = require('run-sequence')
-    , through2    = require('through2')
+const { src, dest, series } = require('gulp')
+    , del      = require('del')
+    , concat   = require('gulp-concat')
+    , footer   = require('gulp-footer')
+    , replace  = require('gulp-replace')
+    , through2 = require('through2')
     ;
+
 
 // -- Local modules
 const config = require('./config')
-    ;
+   ;
+
 
 // -- Local constants
-const dest         = config.libdir
-    , { src }      = config
+const destination  = config.libdir
+    , source       = config.src
     , lib          = config.libname
     , name         = lib.replace(/\s+/g, '').toLowerCase()
     , { parent }   = config
     , { noparent } = config
-    , list         = Object.keys(src)
+    , list         = Object.keys(source)
     ;
 
-// -- Local variables
 
+// -- Local variables
 
 // -- Private Functions --------------------------------------------------------
 
@@ -36,10 +36,10 @@ const dest         = config.libdir
 // Source: http://unobfuscated.blogspot.co.at/2014/01/executing-asynchronous-gulp-tasks-in.html
 const synchro = function(done) {
   return through2.obj(
-    function(data, enc, cb) {
+    (data, enc, cb) => {
       cb();
     },
-    function(cb) {
+    (cb) => {
       cb();
       done();
     },
@@ -47,20 +47,16 @@ const synchro = function(done) {
 };
 
 
-// -- Gulp Tasks
+// -- Gulp Private Tasks
 
-// Remove the previous version:
-gulp.task('dellib', function() {
-  return del.sync(dest);
-});
+// Removes the previous version.
+function clean(done) {
+  del.sync(destination);
+  done();
+}
 
-// Remove the temp file:
-gulp.task('delcore', function() {
-  return del(`${dest}/core-*.js`);
-});
-
-// Creates multiple indented library's contents:
-gulp.task('docore', function(done) {
+// Creates the indented content.
+function docore(done) {
   let doneCounter = 0;
 
   function incDoneCounter() {
@@ -70,9 +66,9 @@ gulp.task('docore', function(done) {
     }
   }
 
-  list.forEach(function(item) {
-    const core = src[item].slice(1, -1);
-    gulp.src(core)
+  list.forEach((item) => {
+    const core = source[item].slice(1, -1);
+    src(core)
       // remove the extra 'use strict':
       .pipe(replace(/\n'use strict';\n/, ''))
       // indent the first line with 2 spaces:
@@ -85,13 +81,14 @@ gulp.task('docore', function(done) {
       .pipe(footer('\n'))
       .pipe(replace(/\s\s\n/g, '\n'))
       .pipe(concat(`core-${item}.js`))
-      .pipe(gulp.dest(dest))
-      .pipe(synchro(incDoneCounter));
+      .pipe(dest(destination))
+      .pipe(synchro(incDoneCounter))
+    ;
   });
-});
+}
 
-// Creates multiple libraries without 'this':
-gulp.task('dolibnoparent', function(done) {
+// Creates the library without 'this'.
+function dolibnoparent(done) {
   let doneCounter = 0;
 
   function incDoneCounter() {
@@ -101,31 +98,40 @@ gulp.task('dolibnoparent', function(done) {
     }
   }
 
-  list.forEach(function(item) {
-    const head = src[item][0]
-        , foot = src[item][src[item].length - 1]
+  list.forEach((item) => {
+    const head = source[item][0]
+        , foot = source[item][source[item].length - 1]
         ;
 
-    gulp.src([head, `${dest}/core-${item}.js`, foot])
+    src([head, `${destination}/core-${item}.js`, foot])
       .pipe(replace('{{lib:name}}', lib))
       .pipe(concat(`${name}-${item}${noparent}.js`))
-      .pipe(gulp.dest(dest))
-      .pipe(synchro(incDoneCounter));
+      .pipe(dest(destination))
+      .pipe(synchro(incDoneCounter))
+    ;
   });
-});
+}
 
-// Creates multiple libraries with 'this':
-gulp.task('dolib', function() {
-  list.forEach(function(item) {
-    return gulp.src(`${dest}/${name}-${item}${noparent}.js`)
+// Creates the library.
+/* eslint-disable arrow-body-style */
+function dolib(done) {
+  list.forEach((item) => {
+    return src(`${destination}/${name}-${item}${noparent}.js`)
       .pipe(replace('{{lib:parent}}', parent))
       .pipe(concat(`${name}-${item}.js`))
-      .pipe(gulp.dest(dest));
+      .pipe(dest(destination))
+    ;
   });
-});
+  done();
+}
+/* eslint-enable arrow-body-style */
+
+// Removes the temp file(s).
+function delcore(done) {
+  del.sync(`${destination}/core-*.js`);
+  done();
+}
 
 
-// -- Gulp Main Task
-gulp.task('makejs', function(callback) {
-  runSequence('dellib', 'docore', 'dolibnoparent', 'dolib', 'delcore', callback);
-});
+// -- Gulp Public Task(s)
+module.exports = series(clean, docore, dolibnoparent, dolib, delcore);

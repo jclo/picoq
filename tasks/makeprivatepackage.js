@@ -1,32 +1,37 @@
-/* eslint one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0,
-  semi-style: 0 */
+/* eslint one-var: 0, import/no-extraneous-dependencies: 0, semi-style: 0 */
 
 'use strict';
 
 // -- Node modules
-const fs   = require('fs')
-    , gulp = require('gulp')
+const { src, dest, parallel } = require('gulp')
+    , fs = require('fs')
     ;
 
+
 // -- Local modules
-const config  = require('./config')
+const config = require('./config')
     ;
+
 
 // -- Release version:
 
+
 // -- Local constants
-const { dist } = config
+const { dist }  = config
+    , { index } = config
     ;
+
 
 // -- Local variables
 
 
-// -- Gulp Tasks
-gulp.task('makeprivatepackage', function() {
-  fs.readFile('./package.json', 'utf8', function(error, data) {
+// -- Gulp Private Tasks
+
+function copypackagejson(done) {
+  // Copies and updates package.json.
+  fs.readFile('./package.json', 'utf8', (error, data) => {
     if (error) { throw error; }
     const obj = JSON.parse(data);
-    obj.main = {};
     obj.scripts = {};
     obj.dependencies = {};
     obj.devDependencies = {};
@@ -37,6 +42,19 @@ gulp.task('makeprivatepackage', function() {
       if (err) {
         throw err;
       }
+      done();
     });
   });
-});
+}
+
+// Copies the index.
+function copyindex() {
+  return src(index)
+    .pipe(dest(dist))
+  ;
+}
+
+
+// -- Gulp Public Task(s)
+
+module.exports = parallel(copypackagejson, copyindex);

@@ -9,8 +9,7 @@ const { expect } = require('chai')
     ;
 
 // -- Local modules
-const PicoQ = require('../index.js')
-    ;
+
 
 // -- Local constants
 
@@ -22,7 +21,7 @@ const PicoQ = require('../index.js')
 /**
  * trigger event could not be test in jsdom as it uses the Event constructor.
  */
-module.exports = function(vdom) {
+module.exports = function(PicoQ, vdom) {
   describe('Test events functions:', () => {
     const el    = vdom.window.document.querySelector('#app50')
         , event = vdom.window.document.createEvent('Event')

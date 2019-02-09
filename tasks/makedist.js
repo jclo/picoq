@@ -1,37 +1,37 @@
-/* eslint one-var: 0, prefer-arrow-callback: 0, import/no-extraneous-dependencies: 0,
-  semi-style: 0 */
+/* eslint one-var: 0, import/no-extraneous-dependencies: 0, semi-style: 0,
+  object-curly-newline: 0 */
 
 'use strict';
 
 // -- Node modules
-const del         = require('del')
-    , gulp        = require('gulp')
-    , concat      = require('gulp-concat')
-    , header      = require('gulp-header')
-    , replace     = require('gulp-replace')
-    , runSequence = require('run-sequence')
-    , uglify      = require('gulp-uglify')
-    , through2    = require('through2')
+const { src, dest, series, parallel } = require('gulp')
+    , del      = require('del')
+    , concat   = require('gulp-concat')
+    , header   = require('gulp-header')
+    , replace  = require('gulp-replace')
+    , uglify   = require('gulp-uglify')
+    , through2 = require('through2')
     ;
+
 
 // -- Local modules
 const config = require('./config')
+    , pack   = require('../package.json')
     ;
 
-// -- Release version:
-const release = require('../package.json').version
-    ;
 
 // -- Local constants
 const { dist }     = config
-    , { src }      = config
+    , source       = config.src
     , { libdir }   = config
     , { libname }  = config
     , { noparent } = config
     , name         = libname.replace(/\s+/g, '').toLowerCase()
     , { license }  = config
-    , list         = Object.keys(src)
+    , list         = Object.keys(source)
     ;
+
+
 // -- Local variables
 
 
@@ -41,10 +41,10 @@ const { dist }     = config
 // Source: http://unobfuscated.blogspot.co.at/2014/01/executing-asynchronous-gulp-tasks-in.html
 const synchro = function(done) {
   return through2.obj(
-    function(data, enc, cb) {
+    (data, enc, cb) => {
       cb();
     },
-    function(cb) {
+    (cb) => {
       cb();
       done();
     },
@@ -52,21 +52,22 @@ const synchro = function(done) {
 };
 
 
-// -- Gulp Tasks
+// -- Gulp Private Tasks
 
-// Remove previous dist:
-gulp.task('deldist', function() {
-  return del.sync(dist);
-});
+// Removes the previous dist.
+function deldist(done) {
+  del.sync(dist);
+  done();
+}
 
-// Copy README and LICENSE:
-gulp.task('skeleton', function() {
-  return gulp.src(['README.md', 'LICENSE.md'])
-    .pipe(gulp.dest(dist));
-});
+// Copies README and LICENSE.
+function doskeleton() {
+  return src(['README.md', 'LICENSE.md'])
+    .pipe(dest(dist));
+}
 
-// Copies multiple dev. libraries:
-gulp.task('copydev', function(done) {
+// Copies the development version.
+function copydev(done) {
   let doneCounter = 0;
 
   function incDoneCounter() {
@@ -76,18 +77,23 @@ gulp.task('copydev', function(done) {
     }
   }
 
-  list.forEach(function(item) {
-    gulp.src(`${libdir}/${name}-${item}.js`)
+  list.forEach((item) => {
+    src(`${libdir}/${name}-${item}.js`)
       .pipe(header(license[item]))
       .pipe(replace('{{lib:name}}', `${libname}`))
-      .pipe(replace('{{lib:version}}', release))
-      .pipe(gulp.dest(dist))
-      .pipe(synchro(incDoneCounter));
+      .pipe(replace('{{lib:version}}', pack.version))
+      .pipe(replace('{{lib:description}}', pack.description))
+      .pipe(replace('{{lib:author}}', pack.author.name))
+      .pipe(replace('{{lib:email}}', pack.author.email))
+      .pipe(replace('{{lib:url}}', pack.author.url))
+      .pipe(dest(dist))
+      .pipe(synchro(incDoneCounter))
+    ;
   });
-});
+}
 
-// Copies multiple dev. libraries without parent:
-gulp.task('makenoparentlib', function(done) {
+// Copies the development version without parent.
+function makenoparentlib(done) {
   let doneCounter = 0;
 
   function incDoneCounter() {
@@ -97,19 +103,24 @@ gulp.task('makenoparentlib', function(done) {
     }
   }
 
-  list.forEach(function(item) {
-    gulp.src(`${libdir}/${name}-${item}${noparent}.js`)
+  list.forEach((item) => {
+    src(`${libdir}/${name}-${item}${noparent}.js`)
       .pipe(header(license[item]))
       .pipe(replace('{{lib:name}}', `${libname}`))
-      .pipe(replace('{{lib:version}}', release))
+      .pipe(replace('{{lib:version}}', pack.version))
+      .pipe(replace('{{lib:description}}', pack.description))
+      .pipe(replace('{{lib:author}}', pack.author.name))
+      .pipe(replace('{{lib:email}}', pack.author.email))
+      .pipe(replace('{{lib:url}}', pack.author.url))
       .pipe(replace(/ {2}'use strict';\n\n/g, ''))
-      .pipe(gulp.dest(dist))
-      .pipe(synchro(incDoneCounter));
+      .pipe(dest(dist))
+      .pipe(synchro(incDoneCounter))
+    ;
   });
-});
+}
 
-// Minifies multiple dev. libraries:
-gulp.task('minifydev', function(done) {
+// Creates the minified version.
+function makeminified(done) {
   let doneCounter = 0;
 
   function incDoneCounter() {
@@ -119,24 +130,27 @@ gulp.task('minifydev', function(done) {
     }
   }
 
-  list.forEach(function(item) {
-    gulp.src(`${libdir}/${name}-${item}.js`)
+  list.forEach((item) => {
+    src(`${libdir}/${name}-${item}.js`)
       .pipe(uglify())
       .pipe(header(license[item]))
       .pipe(replace('{{lib:name}}', `${libname}`))
-      .pipe(replace('{{lib:version}}', release))
+      .pipe(replace('{{lib:version}}', pack.version))
+      .pipe(replace('{{lib:description}}', pack.description))
+      .pipe(replace('{{lib:author}}', pack.author.name))
+      .pipe(replace('{{lib:email}}', pack.author.email))
+      .pipe(replace('{{lib:url}}', pack.author.url))
       .pipe(concat(`${name}-${item}.min.js`))
-      .pipe(gulp.dest(dist))
-      .pipe(synchro(incDoneCounter));
+      .pipe(dest(dist))
+      .pipe(synchro(incDoneCounter))
+    ;
   });
-});
+}
 
 
-// -- Gulp Main Task:
-gulp.task('makedist', function(callback) {
-  runSequence(
-    'deldist',
-    ['skeleton', 'copydev', 'makenoparentlib', 'minifydev'],
-    callback,
-  );
-});
+// -- Gulp Public Task(s):
+
+module.exports = series(
+  deldist,
+  parallel(doskeleton, copydev, makenoparentlib, makeminified),
+);

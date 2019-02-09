@@ -9,8 +9,7 @@ const { expect } = require('chai')
     ;
 
 // -- Local modules
-const PicoQ = require('../index.js')
-    ;
+
 
 // -- Local constants
 
@@ -19,7 +18,7 @@ const PicoQ = require('../index.js')
 
 
 // -- Main
-module.exports = function() {
+module.exports = function(PicoQ) {
   describe('Test css functions:', () => {
     describe('Test PicoQ(selector).css():', () => {
       it('Expects PicoQ("#app20").css() to return undefined', () => {

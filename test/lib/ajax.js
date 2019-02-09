@@ -9,8 +9,7 @@ const { expect } = require('chai')
     ;
 
 // -- Local modules
-const PicoQ = require('../index.js')
-    ;
+
 
 // -- Local constants
 
@@ -19,7 +18,7 @@ const PicoQ = require('../index.js')
 
 
 // -- Main
-module.exports = function() {
+module.exports = function(PicoQ) {
   describe('Test Ajax functions:', () => {
     // it('Expects ...', (done) => {
     //   PicoQ.ajax(`${server}/test/ajax-f1.html`).done((data, status, xhr) => {

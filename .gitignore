@@ -2,7 +2,6 @@
 __trash
 .nyc_output
 coverage
-docs/_book
 node_modules
 private_repo
 .eslintrc

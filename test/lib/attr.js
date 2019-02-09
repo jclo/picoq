@@ -9,8 +9,7 @@ const { expect } = require('chai')
     ;
 
 // -- Local modules
-const PicoQ = require('../index.js')
-    ;
+
 
 // -- Local constants
 
@@ -19,7 +18,7 @@ const PicoQ = require('../index.js')
 
 
 // -- Main
-module.exports = function() {
+module.exports = function(PicoQ) {
   describe('Test attributes functions:', () => {
     describe('Test PicoQ().attr():', () => {
       it('Expects PicoQ("#app40").attr() to return null.', () => {

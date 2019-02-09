@@ -9,11 +9,12 @@ const { expect } = require('chai')
     ;
 
 // -- Local modules
-const PicoQ = require('../index.js')
-    ;
+
 
 // -- Local constants
 const server = 'http://localhost:8888/'
+    , f1     = 'test/lib/ajax-f1.txt'
+    , f2     = 'test/lib/ajax-f2.html'
     ;
 
 
@@ -21,7 +22,7 @@ const server = 'http://localhost:8888/'
 
 
 // -- Main
-module.exports = function() {
+module.exports = function(PicoQ) {
   describe('Test Ajax functions (next):', () => {
     describe('Test Ajax public functions & methods:', () => {
       describe('Text PicoQ.ajax():', () => {
@@ -32,7 +33,7 @@ module.exports = function() {
             , fnfail = false
             ;
 
-          PicoQ.ajax(`${server}/test/ajax-f1.txt`)
+          PicoQ.ajax(`${server}/${f1}`)
             .done(() => { fndone = true; })
             .fail(() => { fnfail = true; })
             .always(() => {
@@ -63,7 +64,7 @@ module.exports = function() {
         });
 
         it('Expects PicoQ.ajax(".../ajax-f1.txt").always(...) to return 200.', (done) => {
-          PicoQ.ajax(`${server}/test/ajax-f1.txt`)
+          PicoQ.ajax(`${server}/${f1}`)
             .always((data, status, xhr) => {
               expect(xhr.status).to.be.a('number').that.is.equal(200);
               done();
@@ -79,7 +80,7 @@ module.exports = function() {
         });
 
         it('Expects PicoQ.ajax(".../ajax-f1.txt").done(...) to return data equal to "Hi!".', (done) => {
-          PicoQ.ajax(`${server}/test/ajax-f1.txt`)
+          PicoQ.ajax(`${server}/${f1}`)
             .done()
             .always((data) => {
               expect(data.slice(0, 3)).to.be.a('string').that.is.equal('Hi!');
@@ -90,7 +91,7 @@ module.exports = function() {
 
       describe('Test PicoQ.get():', () => {
         it('Expects PicoQ.get(".../ajax-f1.txt", function(data) {}) to return data equal to "Hi!".', (done) => {
-          PicoQ.get(`${server}/test/ajax-f1.txt`, (data) => {
+          PicoQ.get(`${server}/${f1}`, (data) => {
             expect(data.slice(0, 3)).to.be.a('string').that.is.equal('Hi!');
             done();
           });
@@ -103,7 +104,7 @@ module.exports = function() {
           ;
 
         it('Expects PicoQ.getJSON(".../ajax-f1.txt?param1=value1&param2=value2") to return an object.', (done) => {
-          PicoQ.getJSON(`${server}/test/ajax-f1.txt?param1=value1&param2=value2`, (data) => {
+          PicoQ.getJSON(`${server}/${f1}?param1=value1&param2=value2`, (data) => {
             params = data;
             expect(data).to.be.an('object');
             done();
@@ -117,7 +118,7 @@ module.exports = function() {
         });
 
         it('Expects PicoQ.getJSON(".../ajax-f1.txt", {param1: valueA, param2: valueB}) to return an object.', (done) => {
-          PicoQ.getJSON(`${server}/test/ajax-f1.txt`, { param1: 'valueA', param2: 'valueB' }, (data) => {
+          PicoQ.getJSON(`${server}/${f1}`, { param1: 'valueA', param2: 'valueB' }, (data) => {
             params2 = data;
             expect(data).to.be.an('object');
             done();
@@ -137,7 +138,7 @@ module.exports = function() {
       // is just limited to a POST action.
       describe('Test PicoQ.post():', () => {
         it('Expects PicoQ.post(".../ajax-f1.txt", {param1: valueA, param2: valueB}) to return a string.', (done) => {
-          PicoQ.post(`${server}/test/ajax-f1.txt`, { param1: 'valueA', param2: 'valueB' }, (data) => {
+          PicoQ.post(`${server}/${f1}`, { param1: 'valueA', param2: 'valueB' }, (data) => {
             expect(data).to.be.a('string');
             done();
           });
@@ -154,7 +155,7 @@ module.exports = function() {
           done();
         });
         it('Expects PicoQ("#app70").load(...ajax-f2.html) to insert <h1>Hello!</h1>.', (done) => {
-          PicoQ('#app70').load(`${server}/test/ajax-f2.html`, () => {
+          PicoQ('#app70').load(`${server}/${f2}`, () => {
             expect(PicoQ('#app70 h1').text()).to.be.a('string').that.is.equal('Hello!');
             done();
           });

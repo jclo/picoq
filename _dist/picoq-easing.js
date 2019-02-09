@@ -1,9 +1,9 @@
 /** ****************************************************************************
- * PicoQ v0.0.10
+ * PicoQ v0.1.0
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
- * * Copyright (c) 2018 Jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr).
+ * Copyright (c) 2019 jclo <jclo@mobilabs.fr> (http://www.mobilabs.fr/).
  * Released under the MIT license. You may obtain a copy of the License
  * at: http://www.opensource.org/licenses/mit-license.php).
  *
@@ -11,7 +11,7 @@
  * Open source under the BSD License.
  * Copyright (c) 2001 Robert Penner
  * ************************************************************************** */
-// Based on UMD Lib template v0.7.0
+// Based on UMD Lib template v0.8.1
 // ESLint declarations
 /* global define */
 /* eslint strict: ["error", "function"] */
@@ -89,7 +89,7 @@
   };
 
   // Attaches a release number to the library:
-  PicoQ.VERSION = '0.0.10';
+  PicoQ.VERSION = '0.1.0';
 
   // Attaches all the private methods to this private Pix object:
   Pic = {

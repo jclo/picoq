@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.1.0 (February 9, 2019)
+
+  * Updated the project to comply with UMDLib 0.8.2,
+  * ...,
+
+
 ### 0.0.10 (August 29, 2018)
 
   * Updated the module to comply with UMDLib 0.7.0,

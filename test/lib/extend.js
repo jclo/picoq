@@ -9,9 +9,7 @@ const { expect } = require('chai')
     ;
 
 // -- Local modules
-const PicoQ = require('../index.js')
-    , { _ } = PicoQ
-    ;
+
 
 // -- Local constants
 
@@ -20,7 +18,7 @@ const PicoQ = require('../index.js')
 
 
 // -- Main
-module.exports = function() {
+module.exports = function(PicoQ, _) {
   describe('Test PicoQ._ functions:', () => {
     describe('Test _.extend():', () => {
       it('Expexts _.extend("aaa") to return "aaa".', () => {

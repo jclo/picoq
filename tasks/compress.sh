@@ -18,7 +18,6 @@ then
   exit 1
 fi
 
-
 mkdir -p ${NPM}/${name}/${VERSION}
 cp -r ${DIST} ${NPM}/${name}/${VERSION}/${name}
 cd ${NPM}/${name}/${VERSION}

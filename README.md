@@ -135,6 +135,6 @@ PicoQ(sel).load()               | Loads data and place the returned HTML into th
 [download-url]: https://www.npmjs.com/package/picoq
 [travis-url]: https://travis-ci.org/jclo/picoq
 [coveralls-url]: https://coveralls.io/github/jclo/picoq?branch=master
-[dependencies-url]: https://david-dm.org/jclo/picoq#info=dependencies
-[devdependencies-url]: https://david-dm.org/jclo/picoq#info=devDependencies
+[dependencies-url]: https://david-dm.org/jclo/picoq
+[devdependencies-url]: https://david-dm.org/jclo/picoq?type=dev
 [license-url]: http://opensource.org/licenses/MIT
