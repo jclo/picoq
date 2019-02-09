@@ -6,8 +6,8 @@
   * Updated .travis.yml,
   * Reversed some changes made in the test files,
   * Removed the tests that fail on Travis CI,
-  * Fixed regression on .travis.yml,
-  * ...,
+  * Fixed a regression on .travis.yml,
+  * Release.
 
 
 ### 0.0.10 (August 29, 2018)
