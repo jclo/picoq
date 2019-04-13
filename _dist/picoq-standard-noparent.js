@@ -1,5 +1,5 @@
-/** ****************************************************************************
- * PicoQ v0.1.1alpha2
+/*! ****************************************************************************
+ * PicoQ v0.1.1alpha4
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -79,7 +79,7 @@
   };
 
   // Attaches a release number to the library:
-  PicoQ.VERSION = '0.1.1alpha2';
+  PicoQ.VERSION = '0.1.1alpha4';
 
   // Attaches all the private methods to this private Pix object:
   Pic = {

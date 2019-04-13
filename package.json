@@ -1,6 +1,6 @@
 {
   "name": "picoq",
-  "version": "0.1.1alpha3",
+  "version": "0.1.1alpha4",
   "description": "A tiny Javascript library to interact with the DOM",
   "main": "index.js",
   "bin": {},
@@ -8,8 +8,6 @@
     "build": "gulp build",
     "watch": "gulp watch",
     "makedist": "gulp build && gulp makedist",
-    "makeprivate": "gulp makeprivate && sh tasks/compress.sh ${npm_package_name} ${npm_package_version}",
-    "makelib": "gulp build && gulp makedist && gulp makeprivate && sh tasks/compress.sh ${npm_package_name} ${npm_package_version}",
     "server": "node test/server.js",
     "servertravis": "node test/server.js &",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha ./test/main.js",

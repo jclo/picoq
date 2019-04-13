@@ -1,5 +1,5 @@
 /* global describe, it */
-/* eslint  one-var: 0, import/no-extraneous-dependencies: 1, no-unused-expressions: 0,
+/* eslint  one-var: 0, no-unused-expressions: 0,
   no-underscore-dangle: 0, semi-style: 0 */
 
 'use strict';

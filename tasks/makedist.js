@@ -1,9 +1,9 @@
-/* eslint one-var: 0, import/no-extraneous-dependencies: 0, semi-style: 0,
-  object-curly-newline: 0 */
+/* eslint one-var: 0, import/no-extraneous-dependencies: 0, semi-style: 0 */
 
 'use strict';
 
 // -- Node modules
+/* eslint-disable-next-line object-curly-newline */
 const { src, dest, series, parallel } = require('gulp')
     , del      = require('del')
     , concat   = require('gulp-concat')

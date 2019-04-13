@@ -113,8 +113,8 @@ function dolibnoparent(done) {
 }
 
 // Creates the library.
-/* eslint-disable arrow-body-style */
 function dolib(done) {
+  /* eslint-disable-next-line arrow-body-style */
   list.forEach((item) => {
     return src(`${destination}/${name}-${item}${noparent}.js`)
       .pipe(replace('{{lib:parent}}', parent))
@@ -124,7 +124,6 @@ function dolib(done) {
   });
   done();
 }
-/* eslint-enable arrow-body-style */
 
 // Removes the temp file(s).
 function delcore(done) {
