@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.1.1 (April 13, 2019)
+
+  * Fixed some typos in the documentation,
+  * ...,
+
+
 ### 0.1.0 (February 9, 2019)
 
   * Updated the project to comply with UMDLib 0.8.2,

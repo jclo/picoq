@@ -1,7 +1,7 @@
 // Title:
 module.exports = {
   title: 'PicoQ',
-  description: 'A template for writing micro UMD Javascript libraries',
+  description: 'A tiny Javascript library to interact with the DOM',
 }
 
 // Theme
@@ -11,7 +11,7 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
-      { text: 'Github', link: 'https://github.com/jclo/umdlib' },
+      { text: 'Github', link: 'https://github.com/jclo/picoq' },
     ],
 
     // Sidebar
@@ -25,7 +25,6 @@ module.exports = {
       // fallback
       '/': [
         '',        /* / */
-        'license.md',
       ]
     },
 
