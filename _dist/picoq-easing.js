@@ -1,5 +1,5 @@
 /** ****************************************************************************
- * PicoQ v0.1.1alpha1
+ * PicoQ v0.1.1alpha2
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -30,14 +30,12 @@
     module.exports = factory(root);
     // This is a hack to attach the lib to the browser root when this lib is
     // included inside another lib and the whole is browserifyied:
-    /* eslint-disable no-param-reassign */
+    /* eslint-disable-next-line no-param-reassign */
     if (root.PicoQ === null) root.PicoQ = factory(root);
-    /* eslint-enable no-param-reassign */
   } else {
     // Browser globals.
-    /* eslint-disable no-param-reassign */
+    /* eslint-disable-next-line no-param-reassign */
     root.PicoQ = factory(root);
-    /* eslint-enable no-param-reassign */
   }
 }(this, function(root) {
   'use strict';
@@ -89,7 +87,7 @@
   };
 
   // Attaches a release number to the library:
-  PicoQ.VERSION = '0.1.1alpha1';
+  PicoQ.VERSION = '0.1.1alpha2';
 
   // Attaches all the private methods to this private Pix object:
   Pic = {
@@ -214,7 +212,7 @@
      * @returns {Object}  returns this,
      * @since 0.0.7
      */
-    select: /* istanbul ignore next */ function(selector) {
+    select: function(selector) {
       var child;
 
       if (Object.prototype.toString.call(selector) === '[object String]') {
@@ -251,7 +249,7 @@
      * @returns {Object}  returns this,
      * @since 0.0.7
      */
-    parent: /* istanbul ignore next */ function() {
+    parent: function() {
       if (this.root) {
         // As a root parent is defined, we stop at it.
         if (this[0] !== this.root) {
@@ -272,7 +270,7 @@
      * @returns {Object}  returns this,
      * @since 0.0.7
      */
-    firstParent: /* istanbul ignore next */ function() {
+    firstParent: function() {
       if (this.root) {
         this[0] = this.root;
       }
@@ -778,7 +776,7 @@
      * @returns {Boolean} returns false if preventDefault was activated otherwise true,
      * @since 0.0.0
      */
-    trigger: /* istanbul ignore next */ function(event) {
+    trigger: function(event) {
       // Create event object from event name:
       // (http://2ality.com/2013/06/triggering-events.html)
       var evt;
@@ -803,7 +801,7 @@
      * @returns {Boolean} returns false if preventDefault was activated otherwise true,
      * @since 0.0.0
      */
-    fire: /* istanbul ignore next */ function(event) {
+    fire: function(event) {
       return this.trigger(event);
     }
   });
@@ -1055,7 +1053,7 @@
             duration = op1;
           } else if (Object.prototype.toString.call(op1) === '[object String]') {
             easing = op1;
-          } /* istanbul ignore next */ else if (Object.prototype.toString.call(op1) === '[object Function]') {
+          } else if (Object.prototype.toString.call(op1) === '[object Function]') {
             callback = op1;
           }
           break;
@@ -1065,10 +1063,10 @@
             duration = op1;
             if (Object.prototype.toString.call(op2) === '[object String]') {
               easing = op2;
-            } /* istanbul ignore next */ else if (Object.prototype.toString.call(op2) === '[object Function]') {
+            } else if (Object.prototype.toString.call(op2) === '[object Function]') {
               callback = op2;
             }
-          } /* istanbul ignore next */ else if (Object.prototype.toString.call(op1) === '[object String]') {
+          } else if (Object.prototype.toString.call(op1) === '[object String]') {
             easing = op1;
             if (Object.prototype.toString.call(op2) === '[object Function]') {
               callback = op2;
@@ -1076,7 +1074,6 @@
           }
           break;
 
-        /* istanbul ignore next */
         case 3:
           if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
             duration = op1;
@@ -1089,7 +1086,6 @@
           }
           break;
 
-        /* istanbul ignore next */
         default:
           break;
       }
@@ -1111,7 +1107,7 @@
      *                    per animated property,
      * @since 0.0.0
      */
-    getProps: /* istanbul ignore next */ function(el, properties) {
+    getProps: function(el, properties) {
       var keys  = Object.keys(properties)
         , style = window.getComputedStyle(el)
         , props = {}
@@ -1270,7 +1266,6 @@
       Pic.anim.run(el, properties, easing, duration, delay, callback);
 
       // Test Mode:
-      /* istanbul ignore next */
       if (PicoQ.VDOM) {
         this.probe = {
           duration: duration,
@@ -1705,7 +1700,6 @@
 
       cb = settings.success;
       settings.success = undefined;
-      /* istanbul ignore next */
       settings.method = settings.data ? 'POST' : 'GET';
 
       PicoQ.ajax(settings)

@@ -4,6 +4,7 @@
 
   * Fixed some typos in the documentation,
   * Removed unwanted "istanbul ignore next",
+  * Updated the dependencies,
   * ...,
 
 
