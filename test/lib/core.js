@@ -1,6 +1,5 @@
 /* global describe, it */
-/* eslint  one-var: 0, import/no-extraneous-dependencies: 1, no-unused-expressions: 0,
-  no-underscore-dangle: 0, semi-style: 0 */
+/* eslint  one-var: 0, semi-style: 0 */
 
 'use strict';
 
@@ -25,12 +24,12 @@ module.exports = function(PicoQ) {
     });
 
     it('Expects PicoQ()[0] to return undefined.', () => {
-      expect(PicoQ()[0]).to.be.undefined;
+      expect(PicoQ()[0]).to.be.a('undefined');
     });
 
     it('Expects PicoQ("#appX")[0] to return null.', () => {
       // expect(PicoQ('#app1')[0].id).to.be.a('string').equal('app1');
-      expect(PicoQ('#appX')[0]).to.be.null;
+      expect(PicoQ('#appX')[0]).to.be.a('null');
     });
 
     it('Expects PicoQ("#app1")[0].id to return "app1".', () => {

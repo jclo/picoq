@@ -1,6 +1,5 @@
 /* global describe, it */
-/* eslint  one-var: 0, no-unused-expressions: 0,
-  no-underscore-dangle: 0, semi-style: 0 */
+/* eslint  one-var: 0, no-unused-expressions: 1, semi-style: 0 */
 
 'use strict';
 
@@ -143,16 +142,16 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.be.an('object');
         });
         it('Expects this object to own the property url that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.a('null');
         });
         it('Expects this object to own the property data that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.a('null');
         });
         it('Expects this object to own the property success that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.a('null');
         });
         it('Expects this object to own the property dataType that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.a('null');
         });
 
         // fn(url)
@@ -168,7 +167,7 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.be.an('object');
         });
         it('Expects this object to own the property url that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.a('null');
         });
 
         // fn(settings)
@@ -186,16 +185,16 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.be.an('object');
         });
         it('Expects this object to own the property url that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.a('null');
         });
         it('Expects this object to own the property data that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.a('null');
         });
         it('Expects this object to own the property success that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.a('null');
         });
         it('Expects this object to own the property dataType that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.a('null');
         });
 
         // fn(url, data)
@@ -243,13 +242,13 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.equal('aaa');
         });
         it('Expects this object to own the property data that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.a('null');
         });
         it('Expects this object to own the property success that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.a('null');
         });
         it('Expects this object to own the property dataType that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.a('null');
         });
 
         // fn(others, others, others)
@@ -258,16 +257,16 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.be.an('object');
         });
         it('Expects this object to own the property url that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.a('null');
         });
         it('Expects this object to own the property data that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.a('null');
         });
         it('Expects this object to own the property success that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.a('null');
         });
         it('Expects this object to own the property dataType that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.a('null');
         });
 
         // fn(url, data, success)
@@ -313,10 +312,10 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.an('object');
         });
         it('Expects this object to own the property success that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.a('null');
         });
         it('Expects this object to own the property dataType that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.a('null');
         });
 
         // fn(url, others, others)
@@ -328,13 +327,13 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.equal('aaa');
         });
         it('Expects this object to own the property data that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.a('null');
         });
         it('Expects this object to own the property success that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.a('null');
         });
         it('Expects this object to own the property dataType that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.a('null');
         });
 
         // fn(url, success, dataType)
@@ -376,16 +375,16 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.be.an('object');
         });
         it('Expects this object to own the property url that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('url').that.is.a('null');
         });
         it('Expects this object to own the property data that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.a('null');
         });
         it('Expects this object to own the property success that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.a('null');
         });
         it('Expects this object to own the property dataType that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.a('null');
         });
 
         // fn(url, others, success, dataType)
@@ -394,7 +393,7 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.be.an('object');
         });
         it('Expects this object to own the property data that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.a('null');
         });
 
         // fn(url, others, others, dataType)
@@ -403,10 +402,10 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.be.an('object');
         });
         it('Expects this object to own the property data that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.a('null');
         });
         it('Expects this object to own the property success that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.a('null');
         });
 
         // fn(url, others, others, others)
@@ -415,13 +414,13 @@ module.exports = function(PicoQ) {
           expect(Pic.ajax.getSettings(arg)).to.be.an('object');
         });
         it('Expects this object to own the property data that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('data').that.is.a('null');
         });
         it('Expects this object to own the property success that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('success').that.is.a('null');
         });
         it('Expects this object to own the property dataType that is null.', () => {
-          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.null;
+          expect(Pic.ajax.getSettings(arg)).to.have.property('dataType').that.is.a('null');
         });
       });
     });
@@ -430,7 +429,7 @@ module.exports = function(PicoQ) {
       const o = { param1: 'value1', param2: 'value2' };
       const s = 'param1=value1&param2=value2';
       it('Expects this function without argument to return null.', () => {
-        expect(Pic.ajax.encodeParams()).to.be.null;
+        expect(Pic.ajax.encodeParams()).to.be.a('null');
       });
       it('Expects this function with the argument { param1: "value1", param2: "value2" } to return a string.', () => {
         expect(Pic.ajax.encodeParams(o)).to.be.a('string');

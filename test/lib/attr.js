@@ -1,6 +1,5 @@
 /* global describe, it */
-/* eslint  one-var: 0, import/no-extraneous-dependencies: 1, no-unused-expressions: 0,
-  no-underscore-dangle: 0, semi-style: 0 */
+/* eslint  one-var: 0, no-unused-expressions: 1, semi-style: 0 */
 
 'use strict';
 
@@ -22,11 +21,11 @@ module.exports = function(PicoQ) {
   describe('Test attributes functions:', () => {
     describe('Test PicoQ().attr():', () => {
       it('Expects PicoQ("#app40").attr() to return null.', () => {
-        expect(PicoQ('#app40').attr()).to.be.null;
+        expect(PicoQ('#app40').attr()).to.be.a('null');
       });
 
       it('Expects PicoQ("#app40").attr("style") to return null.', () => {
-        expect(PicoQ('#app40').attr('style')).to.be.null;
+        expect(PicoQ('#app40').attr('style')).to.be.a('null');
       });
 
       it('Expects PicoQ("#app40").attr("style", "color.blue") to return an object.', () => {
@@ -40,6 +39,7 @@ module.exports = function(PicoQ) {
 
     describe('Test PicoQ().removeAttr():', () => {
       it('Expects PicoQ("#app41").attr("style") to return the string "blue".', () => {
+        /* eslint-disable-next-line no-param-reassign */
         PicoQ('#app41')[0].style.color = 'blue';
         expect(PicoQ('#app41').attr('style')).to.be.a('string').that.is.equal('color: blue;');
       });

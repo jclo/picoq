@@ -6,6 +6,7 @@
   * Removed unwanted "istanbul ignore next",
   * Updated the dependencies,
   * Made some minor improvements to the build,
+  * Made some minor changes to the test files,
   * ...,
 
 

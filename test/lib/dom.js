@@ -1,6 +1,5 @@
 /* global describe, it, document */
-/* eslint  one-var: 0, import/no-extraneous-dependencies: 1, no-unused-expressions: 0,
-  no-underscore-dangle: 0, semi-style: 0 */
+/* eslint  one-var: 0, no-unused-expressions: 1, semi-style: 0 */
 
 'use strict';
 
@@ -23,7 +22,7 @@ module.exports = function(PicoQ) {
     // PicoQ().html():
     describe('Test PicoQ().html():', () => {
       it('Expects PicoQ("#appX").html() to return undefined.', () => {
-        expect(PicoQ('#appX').html()).to.be.undefined;
+        expect(PicoQ('#appX').html()).to.be.a('undefined');
       });
 
       it('Expects PicoQ("#app1").html() to return an empty string.', () => {
@@ -237,7 +236,7 @@ module.exports = function(PicoQ) {
     // PicoQ().getRect():
     describe('Test PicoQ(app0G"").getRect():', () => {
       it('Expects PicoQ("#ap0GGG").getRect() to return null.', () => {
-        expect(PicoQ('#app0GGG').getRect()).to.be.null;
+        expect(PicoQ('#app0GGG').getRect()).to.be.a('null');
       });
 
       it('Expects PicoQ("#app0G").getRect() to return an object.', () => {

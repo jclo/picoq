@@ -1,6 +1,6 @@
 // ESLint declarations:
-/* global describe, it */
-/* eslint one-var: 0, no-unused-vars: 0, import/no-extraneous-dependencies: 0, semi-style: 0 */
+/* global describe */
+/* eslint one-var: 0, semi-style: 0 */
 
 'use strict';
 

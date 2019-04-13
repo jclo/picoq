@@ -1,6 +1,5 @@
 /* global describe, it */
-/* eslint  one-var: 0, import/no-extraneous-dependencies: 1, no-unused-expressions: 0,
-  no-underscore-dangle: 0, semi-style: 0 */
+/* eslint  one-var: 0, semi-style: 0 */
 
 'use strict';
 
@@ -38,7 +37,7 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ.probe to be {duration: 400, easing: "swing", callback: null }.', () => {
         expect(o1.probe.duration).to.be.a('number').that.is.equal(400);
         expect(o1.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o1.probe.callback).to.be.null;
+        expect(o1.probe.callback).to.be.a('null');
       });
 
       // Duration number:
@@ -49,7 +48,7 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ.probe to be {duration: 500, easing: "swing", callback: null }.', () => {
         expect(o2.probe.duration).to.be.a('number').that.is.equal(500);
         expect(o2.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o2.probe.callback).to.be.null;
+        expect(o2.probe.callback).to.be.a('null');
       });
 
       // Duration slow:
@@ -60,7 +59,7 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ.probe to be {duration: 600, easing: "swing", callback: null }.', () => {
         expect(o3.probe.duration).to.be.a('number').that.is.equal(600);
         expect(o3.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o3.probe.callback).to.be.null;
+        expect(o3.probe.callback).to.be.a('null');
       });
 
       // Duration fast:
@@ -71,7 +70,7 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ.probe to be {duration: 200, easing: "swing", callback: null }.', () => {
         expect(o4.probe.duration).to.be.a('number').that.is.equal(200);
         expect(o4.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o4.probe.callback).to.be.null;
+        expect(o4.probe.callback).to.be.a('null');
       });
 
       // with easing
@@ -82,7 +81,7 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ.probe to be {duration: 400, easing: "swing", callback: null }.', () => {
         expect(o5.probe.duration).to.be.a('number').that.is.equal(400);
         expect(o5.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o5.probe.callback).to.be.null;
+        expect(o5.probe.callback).to.be.a('null');
       });
 
       // with callback
@@ -104,7 +103,7 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ.probe to be {duration: 500, easing: "swing", callback: null }.', () => {
         expect(o7.probe.duration).to.be.a('number').that.is.equal(500);
         expect(o7.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o7.probe.callback).to.be.null;
+        expect(o7.probe.callback).to.be.a('null');
       });
 
       // duration, callback

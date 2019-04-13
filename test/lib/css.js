@@ -1,6 +1,5 @@
 /* global describe, it */
-/* eslint  one-var: 0, import/no-extraneous-dependencies: 1, no-unused-expressions: 0,
-  no-underscore-dangle: 0, semi-style: 0 */
+/* eslint  one-var: 0, no-unused-expressions: 1, semi-style: 0 */
 
 'use strict';
 
@@ -22,7 +21,7 @@ module.exports = function(PicoQ) {
   describe('Test css functions:', () => {
     describe('Test PicoQ(selector).css():', () => {
       it('Expects PicoQ("#app20").css() to return undefined', () => {
-        expect(PicoQ('#app20').css()).to.be.undefined;
+        expect(PicoQ('#app20').css()).to.be.a('undefined');
       });
     });
 
