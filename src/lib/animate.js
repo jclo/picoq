@@ -44,7 +44,7 @@ Pic.anim = {
           duration = op1;
         } else if (Object.prototype.toString.call(op1) === '[object String]') {
           easing = op1;
-        } /* istanbul ignore next */ else if (Object.prototype.toString.call(op1) === '[object Function]') {
+        } else if (Object.prototype.toString.call(op1) === '[object Function]') {
           callback = op1;
         }
         break;
@@ -54,10 +54,10 @@ Pic.anim = {
           duration = op1;
           if (Object.prototype.toString.call(op2) === '[object String]') {
             easing = op2;
-          } /* istanbul ignore next */ else if (Object.prototype.toString.call(op2) === '[object Function]') {
+          } else if (Object.prototype.toString.call(op2) === '[object Function]') {
             callback = op2;
           }
-        } /* istanbul ignore next */ else if (Object.prototype.toString.call(op1) === '[object String]') {
+        } else if (Object.prototype.toString.call(op1) === '[object String]') {
           easing = op1;
           if (Object.prototype.toString.call(op2) === '[object Function]') {
             callback = op2;
@@ -65,7 +65,6 @@ Pic.anim = {
         }
         break;
 
-      /* istanbul ignore next */
       case 3:
         if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
           duration = op1;
@@ -78,7 +77,6 @@ Pic.anim = {
         }
         break;
 
-      /* istanbul ignore next */
       default:
         break;
     }
@@ -100,7 +98,7 @@ Pic.anim = {
    *                    per animated property,
    * @since 0.0.0
    */
-  getProps: /* istanbul ignore next */ function(el, properties) {
+  getProps: function(el, properties) {
     var keys  = Object.keys(properties)
       , style = window.getComputedStyle(el)
       , props = {}
@@ -259,7 +257,6 @@ PicoQ._.extend(PicoQ.prototype, {
     Pic.anim.run(el, properties, easing, duration, delay, callback);
 
     // Test Mode:
-    /* istanbul ignore next */
     if (PicoQ.VDOM) {
       this.probe = {
         duration: duration,

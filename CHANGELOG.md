@@ -3,6 +3,7 @@
 ### 0.1.1 (April 13, 2019)
 
   * Fixed some typos in the documentation,
+  * Removed unwanted "istanbul ignore next",
   * ...,
 
 

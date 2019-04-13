@@ -17,14 +17,12 @@
     module.exports = factory(root);
     // This is a hack to attach the lib to the browser root when this lib is
     // included inside another lib and the whole is browserifyied:
-    /* eslint-disable no-param-reassign */
+    /* eslint-disable-next-line no-param-reassign */
     if (root.PicoQ === null) root.PicoQ = factory(root);
-    /* eslint-enable no-param-reassign */
   } else {
     // Browser globals.
-    /* eslint-disable no-param-reassign */
+    /* eslint-disable-next-line no-param-reassign */
     root.PicoQ = factory(root);
-    /* eslint-enable no-param-reassign */
   }
 }({{lib:parent}}, function(root) {
   'use strict';

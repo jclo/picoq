@@ -13,7 +13,7 @@ PicoQ._.extend(PicoQ.prototype, {
    * @returns {Object}  returns this,
    * @since 0.0.7
    */
-  select: /* istanbul ignore next */ function(selector) {
+  select: function(selector) {
     var child;
 
     if (Object.prototype.toString.call(selector) === '[object String]') {
@@ -50,7 +50,7 @@ PicoQ._.extend(PicoQ.prototype, {
    * @returns {Object}  returns this,
    * @since 0.0.7
    */
-  parent: /* istanbul ignore next */ function() {
+  parent: function() {
     if (this.root) {
       // As a root parent is defined, we stop at it.
       if (this[0] !== this.root) {
@@ -71,7 +71,7 @@ PicoQ._.extend(PicoQ.prototype, {
    * @returns {Object}  returns this,
    * @since 0.0.7
    */
-  firstParent: /* istanbul ignore next */ function() {
+  firstParent: function() {
     if (this.root) {
       this[0] = this.root;
     }

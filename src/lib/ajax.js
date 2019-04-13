@@ -420,7 +420,6 @@ PicoQ._.extend(PicoQ.prototype, {
 
     cb = settings.success;
     settings.success = undefined;
-    /* istanbul ignore next */
     settings.method = settings.data ? 'POST' : 'GET';
 
     PicoQ.ajax(settings)

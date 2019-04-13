@@ -47,7 +47,7 @@ PicoQ._.extend(PicoQ.prototype, {
    * @returns {Boolean} returns false if preventDefault was activated otherwise true,
    * @since 0.0.0
    */
-  trigger: /* istanbul ignore next */ function(event) {
+  trigger: function(event) {
     // Create event object from event name:
     // (http://2ality.com/2013/06/triggering-events.html)
     var evt;
@@ -72,7 +72,7 @@ PicoQ._.extend(PicoQ.prototype, {
    * @returns {Boolean} returns false if preventDefault was activated otherwise true,
    * @since 0.0.0
    */
-  fire: /* istanbul ignore next */ function(event) {
+  fire: function(event) {
     return this.trigger(event);
   }
 });
