@@ -8,8 +8,8 @@
   * Made some minor improvements to the build,
   * Made some minor changes to the test files,
   * Reorganised the source code,
-  * Removed easing code and replaced it from JEasing library,  
-  * ...,
+  * Removed easing code and replaced it with JEasing library,  
+  * Release.
 
 
 ### 0.1.0 (February 9, 2019)
