@@ -1,4 +1,3 @@
   // Returns the library name:
   return PicoQ;
 }));
-/* eslint-enable one-var, semi-style */

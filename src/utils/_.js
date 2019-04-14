@@ -1,9 +1,28 @@
-// -- Private functions ------------------------------------------------------
-/* eslint-disable one-var,semi-style */
+/** **************************************************************************
+ *-
+ * Defines an utility library.
+ *
+ * _.js is just a literal object that contains a set of functions.
+ * it can't be intantiated.
+ *
+ *
+ * Public Static Methods:
+ *  . extend                      extends a given object with passed-in object(s),
+ *
+ *
+ *
+ * @namespace    _
+ * @dependencies none
+ * @exports      -
+ * @author       -
+ * @since        0.0.0
+ * @version      -
+ * ************************************************************************ */
+/* eslint-disable one-var, semi-style */
 
 'use strict';
 
-PicoQ._ = {
+_ = {
 
   /**
    * Extends a given object with all the properties in passed-in object(s).
@@ -16,11 +35,11 @@ PicoQ._ = {
    *
    * @function (arg1)
    * @private
-   * @param {Object}    the objects to merge,
-   * @returns {Object}  the resulting object,
+   * @param {Object}      the objects to merge,
+   * @returns {Object}    the resulting object,
    * @since 0.0.8
    */
-  /* eslint-disable no-param-reassign */
+  /* eslint-disable noo-param-reassign */
   extend: function(obj) {
     var source
       , props
@@ -34,15 +53,12 @@ PicoQ._ = {
       for (j = 0; j < props.length; j++) {
         /* istanbul ignore next */
         if (Object.prototype.hasOwnProperty.call(source, props[j])) {
+          /* eslint-disable-next-line no-param-reassign */
           obj[props[j]] = source[props[j]];
         }
       }
     }
     return obj;
   }
-  /* eslint-enable no-restricted-syntax, no-param-reassign */
 };
-
-// Assign PicoQ._ to _:
-_ = PicoQ._;
-/* eslint-enable one-var,semi-style */
+/* eslint-enable one-var, semi-style */

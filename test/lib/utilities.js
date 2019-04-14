@@ -17,21 +17,17 @@ const { expect } = require('chai')
 
 
 // -- Main
-module.exports = function(PicoQ) {
+module.exports = function(Util) {
   describe('Test Utility functions:', () => {
-    // Makes the internal private functions accessible:
-    PicoQ.setTestMode();
-    const _u = PicoQ.Pic.u;
-
-    describe('Test _u.normalizeCssPropertyName():', () => {
-      it('Expects _u.normalizeCssPropertyName() to return en empty string.', () => {
-        expect(_u.normalizeCssPropertyName()).to.be.a('string').that.is.empty;
+    describe('Test Util.normalizeCssPropertyName():', () => {
+      it('Expects Util.normalizeCssPropertyName() to return en empty string.', () => {
+        expect(Util.normalizeCssPropertyName()).to.be.a('string').that.is.empty;
       });
-      it('Expects _u.normalizeCssPropertyName("font-size") to return "fontSize".', () => {
-        expect(_u.normalizeCssPropertyName('font-size')).to.be.a('string').that.is.equal('fontSize');
+      it('Expects Util.normalizeCssPropertyName("font-size") to return "fontSize".', () => {
+        expect(Util.normalizeCssPropertyName('font-size')).to.be.a('string').that.is.equal('fontSize');
       });
-      it('Expects _u.normalizeCssPropertyName("border-bottom-color") to return "borderBottomColor".', () => {
-        expect(_u.normalizeCssPropertyName('border-bottom-color')).to.be.a('string').that.is.equal('borderBottomColor');
+      it('Expects Util.normalizeCssPropertyName("border-bottom-color") to return "borderBottomColor".', () => {
+        expect(Util.normalizeCssPropertyName('border-bottom-color')).to.be.a('string').that.is.equal('borderBottomColor');
       });
     });
   });

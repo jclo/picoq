@@ -1,12 +1,13 @@
 ### HEAD
 
-### 0.1.1 (April 13, 2019)
+### 0.1.1 (April 14, 2019)
 
   * Fixed some typos in the documentation,
   * Removed unwanted "istanbul ignore next",
   * Updated the dependencies,
   * Made some minor improvements to the build,
   * Made some minor changes to the test files,
+  * Reorganised the source code,
   * ...,
 
 

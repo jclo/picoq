@@ -12,7 +12,6 @@ const { JSDOM }          = require('jsdom')
 
 // -- Local modules
 const PicoQ       = require('../index.js')
-    , { _ }       = PicoQ
     , fnpicoq     = require('./lib/picoq.js')
     , fnextend    = require('./lib/extend.js')
     , fnutilities = require('./lib/utilities.js')
@@ -104,9 +103,12 @@ vdom.window.XMLHttpRequest = XMLHttpRequest;
 PicoQ.VDOM = true;
 
 describe('PicoQ', () => {
+  // Attaches internal object tree for accessing private functions.
+  PicoQ.setTestMode();
+
   fnpicoq(PicoQ);
-  fnextend(PicoQ, _);
-  fnutilities(PicoQ);
+  fnextend(PicoQ, PicoQ.PIQ._);
+  fnutilities(PicoQ.PIQ.Util.Public);
   fncore(PicoQ);
   fndom(PicoQ);
   fnselect(PicoQ);
@@ -115,6 +117,6 @@ describe('PicoQ', () => {
   fnattr(PicoQ);
   fnevents(PicoQ, vdom);
   fnanimate(PicoQ);
-  fnajax(PicoQ);
+  fnajax(PicoQ.PIQ.Ajax.Private);
   fnajax2(PicoQ);
 });

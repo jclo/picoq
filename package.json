@@ -1,6 +1,6 @@
 {
   "name": "picoq",
-  "version": "0.1.1alpha5",
+  "version": "0.1.1alpha6",
   "description": "A tiny Javascript library to interact with the DOM",
   "main": "index.js",
   "bin": {},

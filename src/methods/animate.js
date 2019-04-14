@@ -1,9 +1,50 @@
-// -- Private functions for animate ------------------------------------------
+/** **************************************************************************
+ *-
+ * Performs a custom animation on a set of CSS properties.
+ *
+ * animate.js extends PicoQ.prototype.
+ *
+ * Private Functions:
+ *  . _extractArgs                extracts the optional argument of 'animate',
+ *  . _getProps                   retrieves the CSS property values,
+ *  . _run                        updates dynamically the CSS properties,
+ *  . _swing                      defines the default easing method,
+ *
+ *
+ * Public Static Methods:
+ *  . animate Performs a custom animation on a set of CSS properties.
+ *
+ *
+ *
+ * @namespace    PicoQ
+ * @dependencies none
+ * @exports      -
+ * @author       -
+ * @since        0.0.0
+ * @version      -
+ * ************************************************************************ */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
 'use strict';
 
-Pic.anim = {
+(function() {
+  // IIFE
+
+  // -- Module path
+
+
+  // -- Local modules
+  var Util = PIQ.Util.Public
+    ;
+
+
+  // -- Local constants
+
+
+  // -- Local variables
+
+
+  // -- Private Functions ----------------------------------------------------
 
   /**
    * Extracts the optional argument of 'animate'.
@@ -17,7 +58,7 @@ Pic.anim = {
    *                    and callback,
    * @since 0.0.0
    */
-  extractArgs: function(op1, op2, op3) {
+  function _extractArgs(op1, op2, op3) {
     var args
       , duration
       , easing
@@ -40,6 +81,7 @@ Pic.anim = {
         break;
 
       case 1:
+        /* eslint-disable-next-line max-len */
         if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
           duration = op1;
         } else if (Object.prototype.toString.call(op1) === '[object String]') {
@@ -50,6 +92,7 @@ Pic.anim = {
         break;
 
       case 2:
+        /* eslint-disable-next-line max-len */
         if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
           duration = op1;
           if (Object.prototype.toString.call(op2) === '[object String]') {
@@ -66,6 +109,7 @@ Pic.anim = {
         break;
 
       case 3:
+        /* eslint-disable-next-line max-len */
         if (Object.prototype.toString.call(op1) === '[object Number]' || op1 === 'fast' || op1 === 'slow') {
           duration = op1;
         }
@@ -85,7 +129,7 @@ Pic.anim = {
       easing: easing,
       callback: callback
     };
-  },
+  }
 
   /**
    * Retrieves the CSS property values for the given node.
@@ -98,7 +142,7 @@ Pic.anim = {
    *                    per animated property,
    * @since 0.0.0
    */
-  getProps: function(el, properties) {
+  function _getProps(el, properties) {
     var keys  = Object.keys(properties)
       , style = window.getComputedStyle(el)
       , props = {}
@@ -113,7 +157,7 @@ Pic.anim = {
     // Parse the properties:
     for (i = 0; i < keys.length; i++) {
       // Normalize the name of the property:
-      name = Pic.u.normalizeCssPropertyName(keys[i]);
+      name = Util.normalizeCssPropertyName(keys[i]);
       // Check it is a valid CSS property:
       cssValue = style.getPropertyValue(name);
       if (cssValue) {
@@ -135,7 +179,7 @@ Pic.anim = {
     }
     props.name = names;
     return props;
-  },
+  }
 
   /**
    * Updates dynamically the CSS properties from their initial value to their final.
@@ -151,8 +195,8 @@ Pic.anim = {
    * @returns {}        -,
    * @since 0.0.0
    */
-  run: function(el, properties, easing, duration, delay, callback) {
-    var props = Pic.anim.getProps(el, properties)
+  function _run(el, properties, easing, duration, delay, callback) {
+    var props = _getProps(el, properties)
       , elem = el
       , lapseOfTime = 0
       , timer
@@ -178,10 +222,10 @@ Pic.anim = {
         if (callback) callback();
       }
     }, delay);
-  },
+  }
 
   /**
-   * The default easing method (if PicoQ.easing.e() aren't provided).
+   * Defines the default easing method (if PicoQ.easing.e() aren't provided).
    *
    * @function (arg1, arg2, arg3, arg4)
    * @private
@@ -193,79 +237,80 @@ Pic.anim = {
    * @since 0.0.0
    */
   /* eslint-disable no-mixed-operators */
-  swing: function(t, b, c, d) {
+  function _swing(t, b, c, d) {
     return c * (0.5 - Math.cos(t / d * Math.PI) / 2) + b;
   } /* eslint-enable no-mixed-operators */
-};
-/* eslint-enable no-underscore-dangle */
 
 
-// -- Public Methods to animate the CSS properties ---------------------------
-PicoQ._.extend(PicoQ.prototype, {
-  /**
-   * Performs a custom animation of a set of CSS properties.
-   *
-   * @method (properties [, duration ] [, easing ] [, complete ])
-   * @public
-   * @param {Object}    An object of CSS properties,
-   * @param {Number}    define how long the animation run,
-   * @param {Easing}    the easing animation method,
-   * @param {Function}  the function to call at completion,
-   * @returns {Object}  returns this,
-   * @since 0.0.0
-   */
-  /* eslint-disable no-underscore-dangle */
-  animate: function(properties, arg2, arg3, arg4) {
-    var DTIME = 400
-      , FAST  = 200
-      , SLOW  = 600
-      , INC   = 10
-      , el = this[0]
-      , delay = INC
-      , args
-      , duration
-      , easing
-      , callback
-      ;
+  // -- Public Static Methods ------------------------------------------------
 
-    // Is the argument properties an object?
-    if (Object.prototype.toString.call(properties) !== '[object Object]') {
+  _.extend(PicoQ.prototype, {
+
+    /**
+     * Performs a custom animation on a set of CSS properties.
+     *
+     * @method (properties [, duration ] [, easing ] [, complete ])
+     * @public
+     * @param {Object}      An object of CSS properties,
+     * @param {Number}      define how long the animation run,
+     * @param {Easing}      the easing animation method,
+     * @param {Function}    the function to call at completion,
+     * @returns {Object}    returns this,
+     * @since 0.0.0
+     */
+    /* eslint-disable no-underscore-dangle */
+    animate: function(properties, arg2, arg3, arg4) {
+      var DTIME = 400
+        , FAST  = 200
+        , SLOW  = 600
+        , INC   = 10
+        , el = this[0]
+        , delay = INC
+        , args
+        , duration
+        , easing
+        , callback
+        ;
+
+      // Is the argument properties an object?
+      if (Object.prototype.toString.call(properties) !== '[object Object]') {
+        return this;
+      }
+
+      // Extract the optional arguments:
+      args = _extractArgs(arg2, arg3, arg4);
+
+      // Set the duration:
+      duration = Object.prototype.toString.call(args.duration) === '[object Number]'
+        ? args.duration
+        : (function(arg) {
+          if (arg === 'fast') return FAST;
+          if (arg === 'slow') return SLOW;
+          return DTIME;
+        }(args.duration));
+
+      // Set the easing (swing only for the time being):
+      easing = (PicoQ._easing && PicoQ._easing[args.easing])
+        ? PicoQ._easing[args.easing]
+        : _swing;
+
+      // Set the callback:
+      callback = args.callback ? args.callback : null;
+
+      // Run the animation:
+      _run(el, properties, easing, duration, delay, callback);
+
+      // Test Mode:
+      if (PicoQ.VDOM) {
+        this.probe = {
+          duration: duration,
+          easing: (PicoQ._easing && PicoQ._easing[args.easing]) ? args.easing : 'swing',
+          callback: callback
+        };
+      }
+
       return this;
     }
-
-    // Extract the optional arguments:
-    args = Pic.anim.extractArgs(arg2, arg3, arg4);
-
-    // Set the duration:
-    duration = Object.prototype.toString.call(args.duration) === '[object Number]'
-      ? args.duration
-      : (function(arg) {
-        if (arg === 'fast') return FAST;
-        if (arg === 'slow') return SLOW;
-        return DTIME;
-      }(args.duration));
-
-    // Set the easing (swing only for the time being):
-    easing = (PicoQ._easing && PicoQ._easing[args.easing])
-      ? PicoQ._easing[args.easing]
-      : Pic.anim.swing;
-
-    // Set the callback:
-    callback = args.callback ? args.callback : null;
-
-    // Run the animation:
-    Pic.anim.run(el, properties, easing, duration, delay, callback);
-
-    // Test Mode:
-    if (PicoQ.VDOM) {
-      this.probe = {
-        duration: duration,
-        easing: (PicoQ._easing && PicoQ._easing[args.easing]) ? args.easing : 'swing',
-        callback: callback
-      };
-    }
-
-    return this;
-  }
-});
+  });
+}());
 /* eslint-enable one-var, semi-style, no-underscore-dangle */
