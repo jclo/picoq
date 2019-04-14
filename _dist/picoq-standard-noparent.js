@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * PicoQ v0.1.1alpha6
+ * PicoQ v0.2.0
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -11,6 +11,7 @@
 // ESLint declarations
 /* global define */
 /* eslint strict: ["error", "function"] */
+/* eslint no-shadow: ["error", { "allow": ["root"] }] */
 (function(root, factory) {
   /* istanbul ignore next */
   if (typeof define === 'function' && define.amd) {
@@ -62,6 +63,7 @@
 
   PIQ = {
     _: null,
+    JEasing: null,
     Util: {
       Public: {}
     },
@@ -151,7 +153,7 @@
     previousPicoQ = root.PicoQ;
 
     // Attaches a release number to the library:
-    PicoQ.VERSION = '0.1.1alpha6';
+    PicoQ.VERSION = '0.2.0';
 
 
     // -- Public Static Methods ------------------------------------------------
@@ -1526,8 +1528,8 @@
           }(args.duration));
 
         // Set the easing (swing only for the time being):
-        easing = (PicoQ._easing && PicoQ._easing[args.easing])
-          ? PicoQ._easing[args.easing]
+        easing = (PIQ.JEasing && PIQ.JEasing[args.easing])
+          ? PIQ.JEeasing[args.easing]
           : _swing;
 
         // Set the callback:
@@ -1540,7 +1542,7 @@
         if (PicoQ.VDOM) {
           this.probe = {
             duration: duration,
-            easing: (PicoQ._easing && PicoQ._easing[args.easing]) ? args.easing : 'swing',
+            easing: (PIQ.JEasing && PIQ.JEasing[args.easing]) ? args.easing : 'swing',
             callback: callback
           };
         }

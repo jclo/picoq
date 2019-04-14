@@ -1,2 +1,3 @@
 _dist/picoq-easing.min.js
 _dist/picoq-standard.min.js
+src/lib/jeasing.js

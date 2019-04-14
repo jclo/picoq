@@ -1,6 +1,6 @@
 ### HEAD
 
-### 0.1.1 (April 14, 2019)
+### 0.2.0 (April 14, 2019)
 
   * Fixed some typos in the documentation,
   * Removed unwanted "istanbul ignore next",
@@ -8,6 +8,7 @@
   * Made some minor improvements to the build,
   * Made some minor changes to the test files,
   * Reorganised the source code,
+  * Removed easing code and replaced it from JEasing library,  
   * ...,
 
 

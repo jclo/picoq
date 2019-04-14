@@ -17,6 +17,7 @@
 
 PIQ = {
   _: null,
+  JEasing: null,
   Util: {
     Public: {}
   },

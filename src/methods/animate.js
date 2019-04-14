@@ -290,8 +290,8 @@
         }(args.duration));
 
       // Set the easing (swing only for the time being):
-      easing = (PicoQ._easing && PicoQ._easing[args.easing])
-        ? PicoQ._easing[args.easing]
+      easing = (PIQ.JEasing && PIQ.JEasing[args.easing])
+        ? PIQ.JEeasing[args.easing]
         : _swing;
 
       // Set the callback:
@@ -304,7 +304,7 @@
       if (PicoQ.VDOM) {
         this.probe = {
           duration: duration,
-          easing: (PicoQ._easing && PicoQ._easing[args.easing]) ? args.easing : 'swing',
+          easing: (PIQ.JEasing && PIQ.JEasing[args.easing]) ? args.easing : 'swing',
           callback: callback
         };
       }

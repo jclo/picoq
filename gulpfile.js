@@ -14,8 +14,9 @@ const filesToWatch = 'src/**/*.js'
 // -- Local variables
 
 // -- Gulp Private Tasks
-const build       = require('./tasks/makejs')
-    , makedist    = require('./tasks/makedist')
+const build      = require('./tasks/makejs')
+    , importlibs = require('./tasks/import')
+    , makedist   = require('./tasks/makedist')
     ;
 
 
@@ -28,5 +29,6 @@ function fwatch() {
 // Gulp Public Tasks:
 exports.watch = fwatch;
 exports.build = build;
+exports.import = importlibs;
 exports.makedist = makedist;
 exports.default = series(build, makedist);

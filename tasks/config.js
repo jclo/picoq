@@ -9,6 +9,14 @@ module.exports = {
   parent: 'this',
   noparent: '-noparent',
   index: './index.js',
+  // These are the embedded external libraries.
+  import: {
+    parent: 'PIQ',
+    dest: './src/lib',
+    lib: [
+      './node_modules/jeasing/_dist/jeasing-noparent.js',
+    ],
+  },
   // These are the Javascript files required to build the library.
   src: {
     standard: [
@@ -41,11 +49,11 @@ module.exports = {
       './src/methods/class.js',
       './src/methods/attr.js',
       './src/methods/events.js',
-      './src/methods/easing.js',
       './src/methods/animate.js',
       './src/ajax/ajaxprivate.js',
       './src/ajax/ajaxstatic.js',
       './src/ajax/ajaxmethods.js',
+      './src/lib/jeasing.js',
       './src/_footer',
     ],
   },
