@@ -3,7 +3,7 @@
 ### 0.2.1 (April 15, 2019)
 
   * Updated the package JEasing,
-  * ...,
+  * Release.
 
 
 ### 0.2.0 (April 14, 2019)
