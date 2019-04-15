@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * PicoQ v0.2.0
+ * PicoQ v0.2.1
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -153,7 +153,7 @@
     previousPicoQ = root.PicoQ;
 
     // Attaches a release number to the library:
-    PicoQ.VERSION = '0.2.0';
+    PicoQ.VERSION = '0.2.1';
 
 
     // -- Public Static Methods ------------------------------------------------
@@ -1529,7 +1529,7 @@
 
         // Set the easing (swing only for the time being):
         easing = (PIQ.JEasing && PIQ.JEasing[args.easing])
-          ? PIQ.JEeasing[args.easing]
+          ? PIQ.JEasing[args.easing]
           : _swing;
 
         // Set the callback:

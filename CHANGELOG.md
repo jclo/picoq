@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.2.1 (April 15, 2019)
+
+  * Updated the package JEasing,
+  * ...,
+
+
 ### 0.2.0 (April 14, 2019)
 
   * Fixed some typos in the documentation,

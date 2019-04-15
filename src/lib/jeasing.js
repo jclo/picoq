@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * JEasing v0.0.1
+ * JEasing v0.0.2
  *
  * A simple library that implements Robert Penner's easing equations.
  * (you can download it from npm or github repositories)
@@ -27,6 +27,10 @@
     // only CommonJS-like environments that support module.exports,
     // like Node.
     module.exports = factory(root);
+    // This is a hack to attach the lib to the browser root when this lib is
+    // included inside another lib and the whole is browserifyied:
+    /* eslint-disable-next-line no-param-reassign */
+    if (root.JEasing === null) root.JEasing = factory(root);
   } else {
     // Browser globals.
     /* eslint-disable-next-line no-param-reassign */
@@ -302,7 +306,7 @@
   };
 
   // Current version of the library:
-  JEasing.VERSION = '0.0.1';
+  JEasing.VERSION = '0.0.2';
   /* - */
 
 
