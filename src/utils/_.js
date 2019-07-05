@@ -39,7 +39,6 @@ _ = {
    * @returns {Object}    the resulting object,
    * @since 0.0.8
    */
-  /* eslint-disable noo-param-reassign */
   extend: function(obj) {
     var source
       , props

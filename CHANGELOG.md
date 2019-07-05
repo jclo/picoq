@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.2.2 (July 5, 2019)
+
+  * Updated the dependencies,
+  * ...,
+
+
 ### 0.2.1 (April 15, 2019)
 
   * Updated the package JEasing,

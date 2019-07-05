@@ -2,7 +2,6 @@
 // ESLint declarations
 /* global define */
 /* eslint strict: ["error", "function"] */
-/* eslint no-shadow: ["error", { "allow": ["root"] }] */
 (function(root, factory) {
   'use strict';
 

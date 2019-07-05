@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * PicoQ v0.2.1
+ * PicoQ v0.2.2
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -11,7 +11,6 @@
 // ESLint declarations
 /* global define */
 /* eslint strict: ["error", "function"] */
-/* eslint no-shadow: ["error", { "allow": ["root"] }] */
 (function(root, factory) {
   'use strict';
 
@@ -157,7 +156,7 @@
     previousPicoQ = root.PicoQ;
 
     // Attaches a release number to the library:
-    PicoQ.VERSION = '0.2.1';
+    PicoQ.VERSION = '0.2.2';
 
 
     // -- Public Static Methods ------------------------------------------------
@@ -245,7 +244,6 @@
      * @returns {Object}    the resulting object,
      * @since 0.0.8
      */
-    /* eslint-disable noo-param-reassign */
     extend: function(obj) {
       var source
         , props
