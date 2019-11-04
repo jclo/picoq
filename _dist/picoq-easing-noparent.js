@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * PicoQ v0.2.2
+ * PicoQ v0.2.3
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -156,7 +156,7 @@
     previousPicoQ = root.PicoQ;
 
     // Attaches a release number to the library:
-    PicoQ.VERSION = '0.2.2';
+    PicoQ.VERSION = '0.2.3';
 
 
     // -- Public Static Methods ------------------------------------------------
