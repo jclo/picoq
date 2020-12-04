@@ -1,7 +1,7 @@
-// Based on UMD Lib template v0.8.4
 // ESLint declarations
 /* global define */
 /* eslint strict: ["error", "function"] */
+{{lib:es6:define}}
 (function(root, factory) {
   'use strict';
 
@@ -13,29 +13,12 @@
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
-    module.exports = factory(root);
-    // This is a hack to attach the lib to the browser root when this lib is
-    // included inside another lib and the whole is browserifyied:
     /* eslint-disable-next-line no-param-reassign */
-    if (root.PicoQ === null) root.PicoQ = factory(root);
+    module.exports = factory(root);
   } else {
     // Browser globals.
     /* eslint-disable-next-line no-param-reassign */
     root.PicoQ = factory(root);
   }
-}({{lib:parent}}, function(root) {
+}({{lib:es6:link}}, (root) => {
   'use strict';
-
-  // These are the global variables accessible everywhere inside this module.
-  // 'PicoQ' is the variable that defines this library and it is the only variable
-  // accessible outside this module.
-  // 'PIQ' is an object that exports public methods from the IIFE module
-  // in which they are defined.
-  // And, '_' is an object that gives access to an embedded small utility library.
-  /* eslint-disable one-var, semi-style */
-  var PicoQ
-    , PIQ
-    , _
-    ;
-
-  /* eslint-enable one-var, semi-style */

@@ -1,86 +1,63 @@
-/* eslint */
+/* eslint one-var: 0, semi-style: 0 */
 
 'use strict';
 
+// -- Vendor Modules
+
+
+// -- Local Modules
+const pack = require('../package.json');
+
+
+// -- Local Constants
+const libname = 'PicoQ'
+    , name    = libname.replace(/\s+/g, '').toLowerCase()
+    ;
+
+
+// -- Local Variables
+
+
+// -- Main
+
 module.exports = {
+  ES6GLOB: '$__ES6GLOB',
   dist: './_dist',
   libdir: './lib',
-  libname: 'PicoQ',
-  parent: 'this',
-  noparent: '-noparent',
+  libname,
+  name,
   index: './index.js',
-  // These are the embedded external libraries.
-  import: {
-    parent: 'PIQ',
-    dest: './src/lib',
-    lib: [
-      './node_modules/jeasing/_dist/jeasing-noparent.js',
-    ],
-  },
+  distlink: `./_dist/lib/${name}.js`,
+
   // These are the Javascript files required to build the library.
-  src: {
-    standard: [
-      './src/_header',
-      './src/tree.js',
-      './src/picoq.js',
-      './src/utils/_.js',
-      './src/utils/utilities.js',
-      './src/methods/select.js',
-      './src/methods/dom.js',
-      './src/methods/css.js',
-      './src/methods/class.js',
-      './src/methods/attr.js',
-      './src/methods/events.js',
-      './src/methods/animate.js',
-      './src/ajax/ajaxprivate.js',
-      './src/ajax/ajaxstatic.js',
-      './src/ajax/ajaxmethods.js',
-      './src/_footer',
-    ],
-    easing: [
-      './src/_header',
-      './src/tree.js',
-      './src/picoq.js',
-      './src/utils/_.js',
-      './src/utils/utilities.js',
-      './src/methods/select.js',
-      './src/methods/dom.js',
-      './src/methods/css.js',
-      './src/methods/class.js',
-      './src/methods/attr.js',
-      './src/methods/events.js',
-      './src/methods/animate.js',
-      './src/ajax/ajaxprivate.js',
-      './src/ajax/ajaxstatic.js',
-      './src/ajax/ajaxmethods.js',
-      './src/lib/jeasing.js',
-      './src/_footer',
-    ],
-  },
-  license: {
-    standard: ['/*! ****************************************************************************',
-      ' * {{lib:name}} v{{lib:version}}',
+  /* eslint-disable no-multi-spaces */
+  src: [
+    // These three files (_header and _head.js) must be declared
+    // in this order as they create the umd module, define the global
+    // constants/variables and the object tree!
+    './src/_header',
+    './src/_head.js',
+
+    './src/picoq.js',
+    './src/lib/extend.js',
+    './src/private/animate.js',
+
+    // This file must always be the last one as it closes the umd module.
+    './src/_footer',
+  ],
+  /* eslint-enable no-multi-spaces */
+
+  get license() {
+    return ['/*! ****************************************************************************',
+      ` * ${libname} v${pack.version}`,
       ' *',
-      ' * {{lib:description}}.',
+      ` * ${pack.description}.`,
       ' * (you can download it from npm or github repositories)',
-      ' * Copyright (c) 2019 {{lib:author}} <{{lib:email}}> ({{lib:url}}).',
+      ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
       ' * Released under the MIT license. You may obtain a copy of the License',
       ' * at: http://www.opensource.org/licenses/mit-license.php).',
+      ' * Built from ES6lib v1.0.6.',
       ' * ************************************************************************** */',
-      ''].join('\n'),
-    easing: ['/*! ****************************************************************************',
-      ' * {{lib:name}} v{{lib:version}}',
-      ' *',
-      ' * {{lib:description}}.',
-      ' * (you can download it from npm or github repositories)',
-      ' * Copyright (c) 2019 {{lib:author}} <{{lib:email}}> ({{lib:url}}).',
-      ' * Released under the MIT license. You may obtain a copy of the License',
-      ' * at: http://www.opensource.org/licenses/mit-license.php).',
-      ' *',
-      ' * {{lib:name}}-easing includes portions of code for easing equations.',
-      ' * Open source under the BSD License.',
-      ' * Copyright (c) 2001 Robert Penner',
-      ' * ************************************************************************** */',
-      ''].join('\n'),
+      ''].join('\n');
   },
 };

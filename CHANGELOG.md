@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.0.0 (December 4, 2020)
+
+  * Reshuffled the project with the boilerplate ES6lib,
+  * ...,
+
+
 ### 0.2.3 (November 4, 2019)
 
   * Updated the dependencies,

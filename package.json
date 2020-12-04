@@ -1,72 +1,72 @@
 {
   "name": "picoq",
-  "version": "0.2.3",
+  "version": "1.0.0-alpha.0",
   "description": "A tiny Javascript library to interact with the DOM",
-  "main": "index.js",
+  "main": "_dist/lib/picoq.js",
+  "minified": "_dist/lib/picoq.min.js",
+  "unpkg": "_dist/lib/picoq.mjs",
+  "module": "_dist/lib/picoq.min.mjs",
   "bin": {},
   "scripts": {
     "build": "gulp build",
     "watch": "gulp watch",
-    "import": "gulp import",
-    "makedist": "gulp build && gulp makedist",
-    "server": "node test/server.js",
-    "servertravis": "node test/server.js &",
+    "dev": "gulp rundev",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha ./test/main.js",
-    "check-coverage": "nyc check-coverage --statements 90 --branches 85 --functions 90 --lines 90",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
     "report": "nyc report",
-    "doc": "vuepress dev docs"
+    "makedist": "gulp makedist",
+    "app": "gulp runapp",
+    "doc": ""
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/jclo/picoq.git"
   },
   "keywords": [
-    "DOM",
-    "jQuery"
+    "ES6"
   ],
   "author": {
-    "name": "jclo",
-    "email": "jclo@mobilabs.fr",
-    "url": "http://www.mobilabs.fr/"
+    "name": "Mobilabs",
+    "email": "contact@mobilabs.fr",
+    "url": "http://www.mobilabs.fr"
   },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jclo/picoq/issues"
   },
   "homepage": "https://github.com/jclo/picoq",
-  "dependencies": {
-    "jeasing": "0.0.2",
-    "vuepress": "1.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "chai": "4.2.0",
-    "coveralls": "3.0.7",
-    "cross-env": "6.0.3",
-    "del": "5.1.0",
-    "eslint": "6.6.0",
-    "eslint-config-airbnb-base": "14.0.0",
-    "eslint-plugin-import": "2.18.2",
-    "gulp": "4.0.2",
-    "gulp-concat": "2.6.1",
-    "gulp-footer": "2.0.2",
-    "gulp-header": "2.0.9",
-    "gulp-rename": "1.4.0",
-    "gulp-replace": "1.0.0",
-    "gulp-uglify": "3.0.2",
-    "husky": "3.0.9",
-    "jsdom": "15.2.1",
-    "mocha": "6.2.2",
-    "nyc": "14.1.1",
-    "opener": "1.5.1",
-    "through2": "3.0.1",
-    "xmlhttprequest": "1.8.0"
+    "chai": "^4.2.0",
+    "coveralls": "^3.1.0",
+    "cross-env": "^7.0.2",
+    "del": "^6.0.0",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-header": "^2.0.9",
+    "gulp-replace": "^1.0.0",
+    "gulp-uglify-es": "^2.0.0",
+    "husky": "^4.3.0",
+    "jsdom": "^16.4.0",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "open": "^7.3.0",
+    "opener": "^1.5.2",
+    "@mobilabs/es6lib": "1.0.6"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "private": false,
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build && npm run makedist && npm run test && npm run check-coverage && npm run report"
+      "pre-commit": ""
     }
   }
 }
