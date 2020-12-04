@@ -3,6 +3,7 @@
 ### 1.0.0 (December 4, 2020)
 
   * Reshuffled the project with the boilerplate ES6lib,
+  * Reconnected picoq.js to git,
   * ...,
 
 
