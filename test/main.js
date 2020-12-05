@@ -2,10 +2,11 @@
 /* global describe */
 /* eslint one-var: 0, semi-style: 0 */
 
-'use strict';
 
 // -- Vendor Modules
-const { JSDOM } = require('jsdom');
+const { JSDOM } = require('jsdom')
+    , fetch     = require('node-fetch')
+    ;
 
 
 // -- Local Modules
@@ -20,6 +21,7 @@ const PicoQ     = require('../index')
     , fnattr    = require('./int/attr.js')
     , fnevents  = require('./int/events.js')
     , fnanimate = require('./int/animate.js')
+    , fnfetch   = require('./int/fetch.js')
     ;
 
 
@@ -90,6 +92,7 @@ const HTML = `
       <div id="app63" style="position: absolute; top: 10px"></div>
     </div>
     <div id="app70"></div>
+    <div id="app80"></div>
     </body>
   </html>
 `;
@@ -98,9 +101,8 @@ const dom = new JSDOM(HTML);
 global.window = dom.window;
 global.document = dom.window.document;
 global.navigator = { userAgent: 'node.js' };
+global.fetch = fetch;
 
-// Set Virtual DOM:
-PicoQ.VDOM = true;
 
 describe('Test PicoQ:', () => {
   testlib(PicoQ, libname, pack.version, 'without new');
@@ -112,4 +114,6 @@ describe('Test PicoQ:', () => {
   fnattr(PicoQ);
   fnevents(PicoQ);
   fnanimate(PicoQ);
+
+  fnfetch(PicoQ);
 });

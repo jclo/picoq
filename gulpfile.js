@@ -1,6 +1,5 @@
 /* eslint one-var: 0, semi-style: 0 */
 
-'use strict';
 
 // -- Vendor Modules
 const { watch, series } = require('gulp')
@@ -13,7 +12,7 @@ const { watch, series } = require('gulp')
 
 
 // -- Local Constants
-const filesToWatch = ['src/**/*.js', 'src/_header', 'src/_footer']
+const filesToWatch = ['src/**/*.js']
     ;
 
 

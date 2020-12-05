@@ -1,12 +1,12 @@
-/* eslint  one-var: 0, import/no-extraneous-dependencies: 0, semi-style: 0
+/* eslint one-var: 0, import/no-extraneous-dependencies: 0, semi-style: 0,
   object-curly-newline: 0 */
 
-'use strict';
 
 // -- Vendor Modules
 const { src, dest, series, parallel } = require('gulp')
     , del     = require('del')
     , concat  = require('gulp-concat')
+    , Kadoo   = require('kadoo')
     , replace = require('gulp-replace')
     ;
 
@@ -20,12 +20,9 @@ const pack   = require('../package.json')
 // -- Local Constants
 const destination = config.libdir
     , { ES6GLOB } = config
-    , source      = config.src
+    , { source }  = config
     , { libname } = config
     , { name }    = config
-    , head        = source[0]
-    , core        = source.slice(1, -1)
-    , foot        = source[source.length - 1]
     , { version } = pack
     ;
 
@@ -41,32 +38,39 @@ function clean(done) {
   done();
 }
 
-// Creates the content.
-function docore() {
-  return src(core)
+// Creates the library.
+function dogenericlib() {
+  const kadoo = Kadoo(source, { type: 'generic' });
+
+  return kadoo.bundle()
     .pipe(replace('{{lib:name}}', libname))
     .pipe(replace('{{lib:version}}', version))
-    // remove the extra global and 'use strict':
+
+    // Remove extra global.
+    // (keep the first global only)
+    .pipe(replace(/\/\* global/, '/* gloobal'))
     .pipe(replace(/\/\* global[\w$_\s,]+\*\//g, '/* - */'))
-    .pipe(replace(/\n'use strict';\n/, ''))
-    // indent the first line with 2 spaces:
-    .pipe(replace(/^/g, '  '))
-    // indent each other lines with 2 spaces:
-    .pipe(replace(/\n/g, '\n  '))
-    .pipe(concat('core.js'))
+    .pipe(replace(/\/\* gloobal/, '/* global'))
+
+    // Remove extra 'use strict'.
+    // (keep the two first only)
+    .pipe(replace(/use strict/, 'use_strict'))
+    .pipe(replace(/use strict/, 'use_strict'))
+    .pipe(replace(/'use strict';/g, '/* - */'))
+    .pipe(replace(/use_strict/g, 'use strict'))
+
+    .pipe(concat(`${'generic'}.js`))
     .pipe(dest(destination))
   ;
 }
 
 // Create the UMD Module.
 function doumdlib() {
-  return src([head, `${destination}/core.js`, foot])
+  return src(`${destination}/${'generic'}.js`)
     .pipe(replace('{{lib:es6:define}}\n', ''))
     .pipe(replace('{{lib:es6:link}}', 'this'))
     .pipe(replace('{{lib:es6:export}}\n', ''))
     .pipe(concat(`${name}.js`))
-    // fix the blanck lines we indented too:
-    .pipe(replace(/\s{2}\n/g, '\n'))
     .pipe(dest(destination))
   ;
 }
@@ -76,27 +80,25 @@ function domodule() {
   let exportM = '\n// -- Export\n';
   exportM += `export default ${ES6GLOB}.${libname};`;
 
-  return src([head, `${destination}/core.js`, foot])
+  return src(`${destination}/${'generic'}.js`)
     .pipe(replace('{{lib:es6:define}}', `const ${ES6GLOB} = {};`))
     .pipe(replace('{{lib:es6:link}}', ES6GLOB))
     .pipe(replace('{{lib:es6:export}}', exportM))
     .pipe(concat(`${name}.mjs`))
-    // fix the blanck lines we indented too:
-    .pipe(replace(/\s{2}\n/g, '\n'))
     .pipe(dest(destination))
   ;
 }
 
 // Removes the temp file(s).
-function delcore(done) {
-  del.sync(`${destination}/core.js`);
+function delgeneric(done) {
+  del.sync(`${destination}/generic.js`);
   done();
 }
 
 
 // -- Gulp Public Task(s)
 module.exports = series(
-  clean, docore,
+  clean, dogenericlib,
   parallel(doumdlib, domodule),
-  delcore,
+  delgeneric,
 );

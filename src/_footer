@@ -1,4 +1,0 @@
-  // Returns the library name:
-  return PicoQ;
-}));
-{{lib:es6:export}}

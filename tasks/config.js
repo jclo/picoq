@@ -1,6 +1,5 @@
 /* eslint one-var: 0, semi-style: 0 */
 
-'use strict';
 
 // -- Vendor Modules
 
@@ -12,6 +11,7 @@ const pack = require('../package.json');
 // -- Local Constants
 const libname = 'PicoQ'
     , name    = libname.replace(/\s+/g, '').toLowerCase()
+    , source  = './src/picoq.js'
     ;
 
 
@@ -26,26 +26,11 @@ module.exports = {
   libdir: './lib',
   libname,
   name,
+
+  // This is the entry javascript file of your library.
+  source,
   index: './index.js',
   distlink: `./_dist/lib/${name}.js`,
-
-  // These are the Javascript files required to build the library.
-  /* eslint-disable no-multi-spaces */
-  src: [
-    // These three files (_header and _head.js) must be declared
-    // in this order as they create the umd module, define the global
-    // constants/variables and the object tree!
-    './src/_header',
-    './src/_head.js',
-
-    './src/picoq.js',
-    './src/lib/extend.js',
-    './src/private/animate.js',
-
-    // This file must always be the last one as it closes the umd module.
-    './src/_footer',
-  ],
-  /* eslint-enable no-multi-spaces */
 
   get license() {
     return ['/*! ****************************************************************************',
@@ -56,7 +41,7 @@ module.exports = {
       ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
       ' * Released under the MIT license. You may obtain a copy of the License',
       ' * at: http://www.opensource.org/licenses/mit-license.php).',
-      ' * Built from ES6lib v1.0.6.',
+      ' * Built from ES6Kadoo v1.0.6.',
       ' * ************************************************************************** */',
       ''].join('\n');
   },

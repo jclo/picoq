@@ -86,10 +86,7 @@ PicoQ(sel).off(event, listener)     | Removes an event listener and returns this
 PicoQ(sel).trigger(event)           | Fires an event and returns true or false,
 PicoQ(sel).fire(event)              | Aliases the 'trigger' method,
 
-PicoQ.ajax()                        | Performs an asynchronous HTTP (Ajax) request,
-PicoQ.ajax().done()                 | Fires the function on success,
-PicoQ.ajax().fail()                 | Fires the function on error,
-PicoQ.ajax().always()               | Fires the function at completion,
+PicoQ.fetch()                       | Performs an asynchronous HTTP request,
 PicoQ.get()                         | Performs an asynchronous HTTP GET request,
 PicoQ.getJSON()                     | Performs an asynchronous HTTP GET request on a JSON file,
 PicoQ.post()                        | Performs an asynchronous HTTP POST request,

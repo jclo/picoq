@@ -2,7 +2,6 @@
 /* global describe, it */
 /* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0 */
 
-'use strict';
 
 // -- Vendor Modules
 const { expect } = require('chai')

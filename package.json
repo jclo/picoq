@@ -1,6 +1,6 @@
 {
   "name": "picoq",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "A tiny Javascript library to interact with the DOM",
   "main": "_dist/lib/picoq.js",
   "minified": "_dist/lib/picoq.min.js",
@@ -11,7 +11,7 @@
     "build": "gulp build",
     "watch": "gulp watch",
     "dev": "gulp rundev",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha ./test/main.js",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require esm ./test/main.js",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
     "check-coverage": "nyc check-coverage --statements 80 --branches 70 --functions 75 --lines 80",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -46,6 +46,7 @@
     "eslint": "^7.13.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "esm": "^3.2.25",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.7.0",
@@ -54,11 +55,13 @@
     "gulp-uglify-es": "^2.0.0",
     "husky": "^4.3.0",
     "jsdom": "^16.4.0",
+    "kadoo": "^1.0.2",
     "mocha": "^8.2.1",
+    "node-fetch": "^2.6.1",
     "nyc": "^15.1.0",
     "open": "^7.3.0",
     "opener": "^1.5.2",
-    "@mobilabs/es6lib": "1.0.6"
+    "@mobilabs/es6kadoo": "1.0.6"
   },
   "publishConfig": {
     "access": "public"

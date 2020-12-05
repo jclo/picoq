@@ -2,7 +2,6 @@
 /* global describe, it */
 /* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0 */
 
-'use strict';
 
 // -- Vendor Modules
 const { expect } = require('chai')
@@ -16,9 +15,9 @@ const { expect } = require('chai')
 // Number of owned custom properties added by your library,
 // number of owned and inherited properties added by your library (instance),
 // number of items returned by '_setTestMode'.
-const LIBPROPS = 0
+const LIBPROPS = 4
     , OWNPROPS = 3
-    , INHPROPS = 43
+    , INHPROPS = 44
     , TESTMODE = 0
     ;
 
@@ -72,6 +71,7 @@ module.exports = function(PicoQ, libname, version, type) {
 
         // -- This section must  be adapted --
         // Add here the owned properties added by your library.
+        // 'fetch', 'get', 'getJSON', 'post',
         describe('Check the owned specific custom properties:', () => {
           it('Expects PicoQ to own the property ... to be completed or ... removed!', () => {
             expect(true).to.be.equal(true);

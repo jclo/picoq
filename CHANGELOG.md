@@ -1,9 +1,10 @@
 ### HEAD
 
-### 1.0.0 (December 4, 2020)
+### 1.0.0 (December 5, 2020)
 
-  * Reshuffled the project with the boilerplate ES6lib,
+  * Reshuffled the project with the boilerplate ES6Kadoo,
   * Reconnected picoq.js to git,
+  * Added the fetch methods,
   * ...,
 
 

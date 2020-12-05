@@ -2,7 +2,6 @@
 /* global describe, it */
 /* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0 */
 
-'use strict';
 
 // -- Vendor Modules
 const { expect } = require('chai')
@@ -37,10 +36,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}) to return this.', () => {
         expect(o1).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 400, easing: "swing", callback: null }.', () => {
-        expect(o1.probe.duration).to.be.a('number').that.is.equal(400);
-        expect(o1.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o1.probe.callback).to.be.a('null');
+      it('Expects PicoQ()._probe to be {duration: 400, easing: "swing", callback: null }.', () => {
+        expect(o1._probe.duration).to.be.a('number').that.is.equal(400);
+        expect(o1._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o1._probe.callback).to.be.a('null');
       });
 
       // Duration number:
@@ -48,10 +47,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, 500) to return this.', () => {
         expect(o2).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 500, easing: "swing", callback: null }.', () => {
-        expect(o2.probe.duration).to.be.a('number').that.is.equal(500);
-        expect(o2.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o2.probe.callback).to.be.a('null');
+      it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: null }.', () => {
+        expect(o2._probe.duration).to.be.a('number').that.is.equal(500);
+        expect(o2._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o2._probe.callback).to.be.a('null');
       });
 
       // Duration slow:
@@ -59,10 +58,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, "slow") to return this.', () => {
         expect(o3).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 600, easing: "swing", callback: null }.', () => {
-        expect(o3.probe.duration).to.be.a('number').that.is.equal(600);
-        expect(o3.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o3.probe.callback).to.be.a('null');
+      it('Expects PicoQ()._probe to be {duration: 600, easing: "swing", callback: null }.', () => {
+        expect(o3._probe.duration).to.be.a('number').that.is.equal(600);
+        expect(o3._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o3._probe.callback).to.be.a('null');
       });
 
       // Duration fast:
@@ -70,10 +69,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, "fast") to return this.', () => {
         expect(o4).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 200, easing: "swing", callback: null }.', () => {
-        expect(o4.probe.duration).to.be.a('number').that.is.equal(200);
-        expect(o4.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o4.probe.callback).to.be.a('null');
+      it('Expects PicoQ()._probe to be {duration: 200, easing: "swing", callback: null }.', () => {
+        expect(o4._probe.duration).to.be.a('number').that.is.equal(200);
+        expect(o4._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o4._probe.callback).to.be.a('null');
       });
 
       // with easing
@@ -81,10 +80,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, "swing") to return this.', () => {
         expect(o5).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 400, easing: "swing", callback: null }.', () => {
-        expect(o5.probe.duration).to.be.a('number').that.is.equal(400);
-        expect(o5.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o5.probe.callback).to.be.a('null');
+      it('Expects PicoQ()._probe to be {duration: 400, easing: "swing", callback: null }.', () => {
+        expect(o5._probe.duration).to.be.a('number').that.is.equal(400);
+        expect(o5._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o5._probe.callback).to.be.a('null');
       });
 
       // with callback
@@ -92,10 +91,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, function() {}) to return this.', () => {
         expect(o6).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 400, easing: "swing", callback: "Function" }.', () => {
-        expect(o6.probe.duration).to.be.a('number').that.is.equal(400);
-        expect(o6.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o6.probe.callback).to.be.a('function');
+      it('Expects PicoQ()._probe to be {duration: 400, easing: "swing", callback: "Function" }.', () => {
+        expect(o6._probe.duration).to.be.a('number').that.is.equal(400);
+        expect(o6._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o6._probe.callback).to.be.a('function');
       });
 
       // duration, easing
@@ -103,10 +102,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, 500, "swing") to return this.', () => {
         expect(o7).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 500, easing: "swing", callback: null }.', () => {
-        expect(o7.probe.duration).to.be.a('number').that.is.equal(500);
-        expect(o7.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o7.probe.callback).to.be.a('null');
+      it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: null }.', () => {
+        expect(o7._probe.duration).to.be.a('number').that.is.equal(500);
+        expect(o7._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o7._probe.callback).to.be.a('null');
       });
 
       // duration, callback
@@ -114,10 +113,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, 500, function() {}) to return this.', () => {
         expect(o8).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 500, easing: "swing", callback: "function" }.', () => {
-        expect(o8.probe.duration).to.be.a('number').that.is.equal(500);
-        expect(o8.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o8.probe.callback).to.be.a('function');
+      it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: "function" }.', () => {
+        expect(o8._probe.duration).to.be.a('number').that.is.equal(500);
+        expect(o8._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o8._probe.callback).to.be.a('function');
       });
 
       // easing, callback
@@ -125,10 +124,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, "swing", function() {}) to return this.', () => {
         expect(o9).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 400, easing: "swing", callback: "function" }.', () => {
-        expect(o9.probe.duration).to.be.a('number').that.is.equal(400);
-        expect(o9.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o9.probe.callback).to.be.a('function');
+      it('Expects PicoQ()._probe to be {duration: 400, easing: "swing", callback: "function" }.', () => {
+        expect(o9._probe.duration).to.be.a('number').that.is.equal(400);
+        expect(o9._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o9._probe.callback).to.be.a('function');
       });
 
       // duration, easing, callback
@@ -136,10 +135,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, 500, "swing", function() {}) to return this.', () => {
         expect(o10).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 500, easing: "swing", callback: "function" }.', () => {
-        expect(o10.probe.duration).to.be.a('number').that.is.equal(500);
-        expect(o10.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o10.probe.callback).to.be.a('function');
+      it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: "function" }.', () => {
+        expect(o10._probe.duration).to.be.a('number').that.is.equal(500);
+        expect(o10._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o10._probe.callback).to.be.a('function');
       });
 
       // duration, easing, callback
@@ -147,10 +146,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, "fast", "swing", function() {}) to return this.', () => {
         expect(o11).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 200, easing: "swing", callback: "function" }.', () => {
-        expect(o11.probe.duration).to.be.a('number').that.is.equal(200);
-        expect(o11.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o11.probe.callback).to.be.a('function');
+      it('Expects PicoQ()._probe to be {duration: 200, easing: "swing", callback: "function" }.', () => {
+        expect(o11._probe.duration).to.be.a('number').that.is.equal(200);
+        expect(o11._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o11._probe.callback).to.be.a('function');
       });
 
       // duration, easing, callback
@@ -158,10 +157,10 @@ module.exports = function(PicoQ) {
       it('Expects PicoQ("#app61").animate({top: "100px"}, "slow", "swing", function() {}) to return this.', () => {
         expect(o12).to.be.an('object');
       });
-      it('Expects PicoQ.probe to be {duration: 500, easing: "swing", callback: "function" }.', () => {
-        expect(o12.probe.duration).to.be.a('number').that.is.equal(600);
-        expect(o12.probe.easing).to.be.a('string').that.is.equal('swing');
-        expect(o12.probe.callback).to.be.a('function');
+      it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: "function" }.', () => {
+        expect(o12._probe.duration).to.be.a('number').that.is.equal(600);
+        expect(o12._probe.easing).to.be.a('string').that.is.equal('swing');
+        expect(o12._probe.callback).to.be.a('function');
       });
 
       // Test animate
