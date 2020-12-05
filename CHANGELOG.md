@@ -5,7 +5,7 @@
   * Reshuffled the project with the boilerplate ES6Kadoo,
   * Reconnected picoq.js to git,
   * Added the fetch methods,
-  * ...,
+  * Release.
 
 
 ### 0.2.3 (November 4, 2019)
