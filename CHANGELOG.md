@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.0.1 (December 6, 2020)
+
+  * Added the diff method,
+  * ...,
+
+
 ### 1.0.0 (December 5, 2020)
 
   * Reshuffled the project with the boilerplate ES6Kadoo,

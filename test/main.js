@@ -10,11 +10,13 @@ const { JSDOM } = require('jsdom')
 
 
 // -- Local Modules
-const PicoQ     = require('../index')
+const PicoQ     = require('../src/picoq').default
+    // PicoQ    = require('../index')
     , pack      = require('../package.json')
     , testlib   = require('./int/lib')
 
     , fndom     = require('./int/dom.js')
+    , fndiff    = require('./int/diff.js')
     , fnselect  = require('./int/select.js')
     , fncss     = require('./int/css.js')
     , fnclass   = require('./int/class.js')
@@ -67,6 +69,12 @@ const HTML = `
 
     <div id="app0G"></div>
 
+    <div id="app0DD1"></div>
+    <div id="app0DD2"><p>a</p><p>b</p><p>c</p></div>
+    <div id="app0DD3"></div>
+    <div id="app0DD4"><h2>My Todos</h2><ul><li>Swim</li><li>Climb</li><li>Jump</li><li>Play</li><li>Take a nap...</li></ul></div>
+    <div id="app0DD5"><h2>My Todos</h2><ul></ul></div>
+
     <div id="app10" class="Parent"><p class="FirstChild"></p><p class="SecondChild"></p></div>
 
     <div id="app20"></div>
@@ -100,14 +108,25 @@ const HTML = `
 const dom = new JSDOM(HTML);
 global.window = dom.window;
 global.document = dom.window.document;
+global.DOMParser = dom.window.DOMParser;
 global.navigator = { userAgent: 'node.js' };
 global.fetch = fetch;
 
 
 describe('Test PicoQ:', () => {
-  testlib(PicoQ, libname, pack.version, 'without new');
+  // Nota:
+  // If you choose 'PicoQ = require('../index')', 'display-coverage' will
+  // show the coverage of all the library in one file.
+  //
+  // If you want to display the coverage file by file, you must choose
+  // 'PicoQ = require('../src/picoQ').default'. But, in this case,
+  // the build isn't done, so you should pass '{{lib:name}}' as libname and
+  // '{{lib:version}}' as the library version.
+  testlib(PicoQ, '{{lib:name}}', '{{lib:version}}', 'without new');
+  // testlib(PicoQ, libname, pack.version, 'without new');
 
   fndom(PicoQ);
+  fndiff(PicoQ);
   fnselect(PicoQ);
   fncss(PicoQ);
   fnclass(PicoQ);

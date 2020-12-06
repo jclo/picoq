@@ -17,8 +17,8 @@ const { expect } = require('chai')
 // number of items returned by '_setTestMode'.
 const LIBPROPS = 4
     , OWNPROPS = 3
-    , INHPROPS = 44
-    , TESTMODE = 0
+    , INHPROPS = 45
+    , TESTMODE = 1
     ;
 
 

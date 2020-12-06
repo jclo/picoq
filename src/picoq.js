@@ -58,6 +58,7 @@
  *  . after                       appends an HTML string after the current node,
  *  . before                      appends an HTML string before the current node,
  *  . replaceWith                 replaces the current node with the given DOMString,
+ *  . diff                        updates the node to match the passed-in template,
  *
  *  . text                        gets/sets the text contents of the element,
  *
@@ -111,6 +112,7 @@
 // -- Local Modules
 import Anim from './private/animate';
 import F from './private/fetch';
+import D from './private/diffing';
 
 
 // -- Local Constants
@@ -178,7 +180,7 @@ PicoQ.VERSION = '{{lib:version}}';
  * @since 0.0.0
  */
 PicoQ._setTestMode = function() {
-  return [];
+  return [D];
 };
 
 
@@ -575,6 +577,20 @@ methods = {
       && (!this._root || this[0].id !== this._root.id)) {
       this[0].insertAdjacentHTML('beforebegin', xmlString);
     }
+    return this;
+  },
+
+  /**
+   * Updates the DOM node from the passed-in template.
+   *
+   * @method (arg1)
+   * @public
+   * @param {XMLString}     the template,
+   * @returns {Object}      returns this,
+   * @since 0.0.0
+   */
+  diff(XMLString) {
+    D.diff(D.stringToHTML(XMLString), this[0]);
     return this;
   },
 
