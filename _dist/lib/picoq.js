@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * PicoQ v1.0.1-alpha.1
+ * PicoQ v1.0.1
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -89,7 +89,6 @@
      *  . selectChild                 selects the nth child,
      *  . parent                      returns to the parent element,
      *  . firstParent                 returns to the root parent if defined,
-     *
      *  . find                        returns the NodeList of the matching children,
      *  . tag                         returns the tag name of the selected element,
      *
@@ -107,6 +106,7 @@
      *  . after                       appends an HTML string after the current node,
      *  . before                      appends an HTML string before the current node,
      *  . replaceWith                 replaces the current node with the given DOMString,
+     *
      *  . diff                        updates the node to match the passed-in template,
      *
      *  . text                        gets/sets the text contents of the element,
@@ -195,7 +195,7 @@
       const obj = Object.create(methods);
       obj._library = {
         name: 'PicoQ',
-        version: '1.0.1-alpha.1',
+        version: '1.0.1',
       };
 
       obj._root = cid !== 'body' ? document.querySelector(cid) : undefined;
@@ -213,7 +213,7 @@
 
     // Attaches constants to PicoQ that provide name and version of the lib.
     PicoQ.NAME = 'PicoQ';
-    PicoQ.VERSION = '1.0.1-alpha.1';
+    PicoQ.VERSION = '1.0.1';
 
 
     // -- Private Static Methods -----------------------------------------------
@@ -229,7 +229,7 @@
      * @since 0.0.0
      */
     PicoQ._setTestMode = function() {
-      return [D];
+      return [F, D];
     };
 
 
@@ -433,10 +433,7 @@
        * @since 0.0.0
        */
       tag() {
-        if (this[0]) {
-          return this[0].tagName;
-        }
-        return null;
+        return this[0] ? this[0].tagName : null;
       },
 
       /**
@@ -482,8 +479,10 @@
        * @since 0.0.0
        */
       append(tagName) {
-        const element = document.createElement(tagName);
-        this[0] = this[0].appendChild(element);
+        if (this[0] && typeof tagName === 'string') {
+          const element = document.createElement(tagName);
+          this[0] = this[0].appendChild(element);
+        }
         return this;
       },
 
@@ -497,7 +496,9 @@
        * @since 0.0.0
        */
       appendTextChild(text) {
-        this[0].appendChild(document.createTextNode(text));
+        if (this[0] && typeof text === 'string') {
+          this[0].appendChild(document.createTextNode(text));
+        }
         return this;
       },
 
@@ -512,12 +513,16 @@
        * @since 0.0.0
        */
       appendBefore(tagName, node) {
-        const newChild = document.createElement(tagName)
-            , child = this[0].querySelector(node)
-            ;
+        if (this[0] && typeof tagName === 'string' && typeof node === 'string') {
+          const newChild = document.createElement(tagName)
+              , child = this[0].querySelector(node)
+              ;
 
-        this[0].insertBefore(newChild, child);
-        this[0] = newChild;
+          if (child) {
+            this[0].insertBefore(newChild, child);
+            this[0] = newChild;
+          }
+        }
         return this;
       },
 
@@ -532,12 +537,16 @@
        * @since 0.0.0
        */
       appendAfter(tagName, node) {
-        const newChild = document.createElement(tagName)
-            , child = this[0].querySelector(node).nextElementSibling
-            ;
+        if (this[0] && typeof tagName === 'string' && typeof node === 'string') {
+          const newChild = document.createElement(tagName)
+              , child = this[0].querySelector(node)
+              ;
 
-        this[0].insertBefore(newChild, child);
-        this[0] = newChild;
+          if (child) {
+            this[0].insertBefore(newChild, child.nextElementSibling);
+            this[0] = newChild;
+          }
+        }
         return this;
       },
 
@@ -551,9 +560,11 @@
        * @since 0.0.0
        */
       replace(tagName) {
-        const element = document.createElement(tagName);
-        this[0].parentNode.replaceChild(element, this[0]);
-        this[0] = element;
+        if (this[0] && typeof tagName === 'string') {
+          const element = document.createElement(tagName);
+          this[0].parentNode.replaceChild(element, this[0]);
+          this[0] = element;
+        }
         return this;
       },
 
@@ -567,7 +578,7 @@
        * @since 0.0.0
        */
       appendHTML(xmlString) {
-        if (typeof xmlString === 'string') {
+        if (this[0] && typeof xmlString === 'string') {
           this[0].insertAdjacentHTML('beforeend', xmlString);
         }
         return this;
@@ -583,7 +594,7 @@
        * @since 0.0.0
        */
       prepend(xmlString) {
-        if (typeof xmlString === 'string') {
+        if (this[0] && typeof xmlString === 'string') {
           this[0].insertAdjacentHTML('afterbegin', xmlString);
         }
         return this;
@@ -602,7 +613,7 @@
        * @since 0.0.0
        */
       after(xmlString) {
-        if (typeof xmlString === 'string'
+        if (this[0] && typeof xmlString === 'string'
           && (!this._root || this[0].id !== this._root.id)) {
           this[0].insertAdjacentHTML('afterend', xmlString);
         }
@@ -622,24 +633,10 @@
        * @since 0.0.0
        */
       before(xmlString) {
-        if (typeof xmlString === 'string'
+        if (this[0] && typeof xmlString === 'string'
           && (!this._root || this[0].id !== this._root.id)) {
           this[0].insertAdjacentHTML('beforebegin', xmlString);
         }
-        return this;
-      },
-
-      /**
-       * Updates the DOM node from the passed-in template.
-       *
-       * @method (arg1)
-       * @public
-       * @param {XMLString}     the template,
-       * @returns {Object}      returns this,
-       * @since 0.0.0
-       */
-      diff(XMLString) {
-        D.diff(D.stringToHTML(XMLString), this[0]);
         return this;
       },
 
@@ -656,9 +653,10 @@
        * @since 0.0.0
        */
       replaceWith(xmlString) {
+        if (!this[0]) return this;
+
         const oldChild = this[0]
-            , parento   = oldChild.parentNode
-            // , index    =  Array.prototype.indexOf.call(parent.children, oldChild)
+            , parento  = oldChild.parentNode
             , wrapper  = document.createElement('div')
             ;
 
@@ -674,6 +672,22 @@
       },
 
       /**
+       * Updates the DOM node from the passed-in template.
+       *
+       * @method (arg1)
+       * @public
+       * @param {XMLString}     the template,
+       * @returns {Object}      returns this,
+       * @since 0.0.0
+       */
+      diff(XMLString) {
+        if (this[0] && typeof XMLString === 'string') {
+          D.diff(D.stringToHTML(XMLString), this[0]);
+        }
+        return this;
+      },
+
+      /**
        * Gets/Sets the text contents of the element,
        *
        * @method (arg1)
@@ -683,11 +697,16 @@
        * @since 0.0.0
        */
       text(texte) {
-        if (texte !== undefined) {
-          this[0].textContent = texte;
-          return this;
+        if (this[0]) {
+          if (typeof texte === 'string') {
+            this[0].textContent = texte;
+            return this;
+          }
+          if (texte === undefined) {
+            return this[0].textContent;
+          }
         }
-        return this[0].textContent;
+        return this;
       },
 
       /**
@@ -700,10 +719,9 @@
        * @since 0.0.0
        */
       clone(deep) {
-        if (deep === true || deep === false) {
-          return this[0].cloneNode(deep);
-        }
-        return this[0].cloneNode(true);
+        return (deep === true || deep === false)
+          ? this[0].cloneNode(deep)
+          : this[0].cloneNode(true);
       },
 
       /**
@@ -716,7 +734,7 @@
        * @since 0.0.0
        */
       firstChild() {
-        return this[0].firstElementChild;
+        return this[0] ? this[0].firstElementChild : this;
       },
 
       /**
@@ -730,7 +748,7 @@
        * @since 0.0.0
        */
       insertChildBefore(newChild, child) {
-        if (newChild) {
+        if (this[0] && newChild) {
           this[0].insertBefore(newChild, child);
         }
         return this;
@@ -746,7 +764,7 @@
        * @since 0.0.0
        */
       removeChild(child) {
-        if (child) {
+        if (this[0] && child) {
           this[0].removeChild(child);
         }
         return this;
@@ -763,7 +781,7 @@
        * @since 0.0.0
        */
       replaceChild(newChild, child) {
-        if (newChild) {
+        if (this[0] && newChild) {
           this[0].replaceChild(newChild, child);
         }
         return this;
@@ -779,7 +797,7 @@
        * @since 0.0.8
        */
       children() {
-        return this[0].children;
+        return this[0] ? this[0].children : null;
       },
 
       /**
@@ -841,11 +859,13 @@
 
         if (!value) {
           // Get attribute:
-          return this[0].style[attr];
+          return this[0] ? this[0].style[attr] : null;
         }
 
         // Set attribute:
-        this[0].style[attr] = value;
+        if (this[0]) {
+          this[0].style[attr] = value;
+        }
         return this;
       },
 
@@ -859,7 +879,7 @@
        * @since 0.0.0
        */
       getClassList() {
-        return this[0].classList;
+        return this[0] ? this[0].classList : null;
       },
 
       /**
@@ -872,7 +892,7 @@
        * @since 0.0.0
        */
       addClass(className) {
-        if (Object.prototype.toString.call(className) === '[object String]') {
+        if (this[0] && Object.prototype.toString.call(className) === '[object String]') {
           this[0].classList.add(className);
         }
         return this;
@@ -888,7 +908,7 @@
        * @since 0.0.8
        */
       addClasses(classes) {
-        if (Array.isArray(classes)) {
+        if (this[0] && Array.isArray(classes)) {
           for (let i = 0; i < classes.length; i++) {
             this[0].classList.add(classes[i]);
           }
@@ -906,7 +926,7 @@
        * @since 0.0.0
        */
       removeClass(className) {
-        if (Object.prototype.toString.call(className) === '[object String]') {
+        if (this[0] && Object.prototype.toString.call(className) === '[object String]') {
           this[0].classList.remove(className);
         }
         return this;
@@ -922,7 +942,7 @@
        * @since 0.0.8
        */
       removeClasses(classes) {
-        if (Array.isArray(classes)) {
+        if (this[0] && Array.isArray(classes)) {
           for (let i = 0; i < classes.length; i++) {
             this[0].classList.remove(classes[i]);
           }
@@ -940,7 +960,9 @@
        * @since 0.0.0
        */
       toggleClass(className) {
-        this[0].classList.toggle(className);
+        if (this[0] && typeof className === 'string') {
+          this[0].classList.toggle(className);
+        }
         return this;
       },
 
@@ -954,12 +976,8 @@
        * @since 0.0.8
        */
       hasClass(className) {
-        const list = this[0].classList.value.split(' ');
-
-        if (Object.prototype.toString.call(className) === '[object String]' && list.indexOf(className) !== -1) {
-          return true;
-        }
-        return false;
+        const list = this[0] ? this[0].classList.value.split(' ') : [];
+        return (Object.prototype.toString.call(className) === '[object String]' && list.indexOf(className) !== -1);
       },
 
       /**
@@ -973,11 +991,11 @@
        * @since 0.0.0
        */
       attr(attribute, value) {
-        if (value) {
+        if (this[0] && attribute && value) {
           this[0].setAttribute(attribute, value);
           return this;
         }
-        return this[0].getAttribute(attribute);
+        return this[0] ? this[0].getAttribute(attribute) : null;
       },
 
       /**
@@ -990,7 +1008,7 @@
        * @since 0.0.0
        */
       removeAttr(attribute) {
-        if (attribute) {
+        if (this[0] && attribute) {
           this[0].removeAttribute(attribute);
         }
         return this;
@@ -1083,7 +1101,6 @@
        * @since 0.0.0
        */
       load(...args) {
-        if (!this[0]) return this;
         return F.loadXML(this, ...args);
       },
     };
@@ -1521,20 +1538,90 @@
      * @since 0.0.0
      */
     function _getArgs(...args) {
-      let url = ''
-        , options = { method: 'GET' }
-        , type = null
-        , callback = null
-        ;
-
       const [arg1, arg2, arg3, arg4] = args;
-      if (args.length === 0) return [null, options, null, null];
 
+      switch (args.length) {
+        case 0:
+          return [null, null, null, null];
+
+        case 1:
+          if (typeof arg1 === 'string') {
+            return [arg1, {}, null, null];
+          }
+          return [null, null, null, null];
+
+        case 2:
+          if (typeof arg1 === 'string') {
+            if (typeof arg2 === 'object' && arg2.method) {
+              return [arg1, arg2, null, null];
+            }
+            if (typeof arg2 === 'string') {
+              return [arg1, {}, arg2, null];
+            }
+            if (typeof arg2 === 'function') {
+              return [arg1, {}, null, arg2];
+            }
+            return [arg1, {}, null, null];
+          }
+          return [null, null, null, null];
+
+        case 3:
+          if (typeof arg1 === 'string') {
+            if (typeof arg2 === 'object' && arg2.method) {
+              if (typeof arg3 === 'string') {
+                return [arg1, arg2, arg3, null];
+              }
+              if (typeof arg3 === 'function') {
+                return [arg1, arg2, null, arg3];
+              }
+              return [arg1, arg2, null, null];
+            }
+
+            if (typeof arg2 === 'string') {
+              if (typeof arg3 === 'function') {
+                return [arg1, {}, arg2, arg3];
+              }
+              return [arg1, {}, arg2, null];
+            }
+
+            if (typeof arg3 === 'function') {
+              return [arg1, {}, null, arg3];
+            }
+            return [arg1, {}, null, null];
+          }
+          return [null, null, null, null];
+
+        case 4:
+          if ((typeof arg1 === 'string')
+            && typeof arg2 === 'object' && arg2.method
+            && typeof arg3 === 'string'
+            && typeof arg4 === 'function') {
+            return [arg1, arg2, arg3, arg4];
+          }
+          if ((typeof arg1 === 'string')
+            && typeof arg2 === 'object' && arg2.method
+            && typeof arg3 === 'string') {
+            return [arg1, arg2, arg3, null];
+          }
+          return [null, null, null, null];
+
+        default:
+          // > 4
+          if ((typeof arg1 === 'string')
+            && typeof arg2 === 'object' && arg2.method
+            && typeof arg3 === 'string'
+            && typeof arg4 === 'function') {
+            return [arg1, arg2, arg3, arg4];
+          }
+          return [null, null, null, null];
+      }
+
+    /*
       if (args.length === 1) {
         if (typeof arg1 === 'string') {
-          return [arg1, options, null, null];
+          return [arg1, null, null, null];
         }
-        return [url, options, null, null];
+        return [null, null, null, null];
       }
 
       if (args.length === 2) {
@@ -1543,13 +1630,13 @@
             return [arg1, arg2, null, null];
           }
           if (typeof arg2 === 'string') {
-            return [arg1, options, arg2, null];
+            return [arg1, null, arg2, null];
           }
           if (typeof arg2 === 'function') {
-            return [arg1, options, null, arg2];
+            return [arg1, null, null, arg2];
           }
         }
-        return [url, options, null, null];
+        return [null, null, null, null];
       }
 
       if (args.length === 3) {
@@ -1568,10 +1655,10 @@
             if (typeof arg3 === 'function') {
               return [arg1, options, arg2, arg3];
             }
-            return [arg1, options, arg2, null];
+            return [arg1, null, arg2, null];
           }
         }
-        return [url, options, null, null];
+        return [null, null, null, null];
       }
 
       if (args.length > 3) {
@@ -1582,7 +1669,9 @@
         return [url, options, type, callback];
       }
 
-      return [url, options, null, null];
+      return [null, null, null, null];
+
+      */
     }
 
     /**
@@ -1632,6 +1721,23 @@
     // -- Public Static Methods ------------------------------------------------
 
     const Fetch = {
+
+      /**
+       * Returns the named fetch arguments.
+       * (for testing purpose only)
+       *
+       * @method (arg1, [arg2], [arg3], [arg4])
+       * @public
+       * @param {String}        the server url,
+       * @param {Object}        the fetch options,
+       * @param {String}        the type of file (json or text),
+       * @param {String}        the function to call at the completion,
+       * @returns {Object}      returns a promise,
+       * @since 0.0.0
+       */
+      _getArgs(...args) {
+        return _getArgs(...args);
+      },
 
       /**
        * Fetches data on the server.
@@ -1748,7 +1854,7 @@
             if (err) {
               reject(err);
             } else {
-              picoq.html(data);
+              if (picoq[0]) picoq.html(data);
               resolve(data);
             }
             if (callback) callback(err, data);

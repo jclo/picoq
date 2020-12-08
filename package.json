@@ -1,6 +1,6 @@
 {
   "name": "picoq",
-  "version": "1.0.1-alpha.2",
+  "version": "1.0.1",
   "description": "A tiny Javascript library to interact with the DOM",
   "main": "_dist/lib/picoq.js",
   "minified": "_dist/lib/picoq.min.js",

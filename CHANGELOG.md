@@ -4,7 +4,7 @@
 
   * Added the diff method,
   * Reshuffled the test suite,
-  * ...,
+  * Release.
 
 
 ### 1.0.0 (December 5, 2020)
