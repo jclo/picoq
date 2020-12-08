@@ -23,112 +23,123 @@ module.exports = function(PicoQ) {
   //
   // getlass, addClass, removeClass, toggleClass
   describe('Test class functions:', () => {
-    // PicoQ().getClassList():
     describe('Test PicoQ().getClassList():', () => {
-      it('Expects PicoQ("#app30").getClassList().value to return an empty string.', () => {
-        expect(PicoQ('#app30').getClassList().value).to.be.a('string').that.has.lengthOf(0);
+      it('Expects PicoQ("#zzz").getClassList().value to return a null.', () => {
+        expect(PicoQ('#zzz').getClassList()).to.be.a('null');
       });
 
-      it('Expects PicoQ("#app31").getClassList().value to return the string "aaa".', () => {
-        expect(PicoQ('#app31').getClassList().value).to.be.a('string').that.is.equal('aaa');
+      it('Expects PicoQ("#app800").getClassList().value to return an empty string.', () => {
+        expect(PicoQ('#app800').getClassList().value).to.be.a('string').that.has.lengthOf(0);
+      });
+
+      it('Expects PicoQ("#app801").getClassList().value to return the string "aaa".', () => {
+        expect(PicoQ('#app801').getClassList().value).to.be.a('string').that.is.equal('aaa');
       });
     });
 
-    // PicoQ().addClass():
+
     describe('Test PicoQ().addClass():', () => {
-      it('Expects PicoQ("#app32").getClassList().value to return an empty string.', () => {
-        expect(PicoQ('#app32').getClassList().value).to.be.a('string').that.has.lengthOf(0);
+      it('Expects PicoQ("#app810").getClassList().value to return an empty string.', () => {
+        expect(PicoQ('#app810').getClassList().value).to.be.a('string').that.has.lengthOf(0);
       });
 
-      it('Expects PicoQ("#app32").addClass(1).getClassList().value to return an empty string.', () => {
-        expect(PicoQ('#app32').addClass(1).getClassList().value).to.be.a('string').that.has.lengthOf(0);
+      it('Expects PicoQ("#app810").addClass(1).getClassList().value to return an empty string.', () => {
+        expect(PicoQ('#app810').addClass(1).getClassList().value).to.be.a('string').that.has.lengthOf(0);
       });
 
-      it('Expects PicoQ("#app32").addClass("abc").getClassList().value to return the string "abc".', () => {
-        expect(PicoQ('#app32').addClass('abc').getClassList().value).to.be.a('string').that.is.equal('abc');
+      it('Expects PicoQ("#app810").addClass("abc").getClassList().value to return the string "abc".', () => {
+        expect(PicoQ('#app810').addClass('abc').getClassList().value).to.be.a('string').that.is.equal('abc');
       });
     });
 
-    // PicoQ().addClasses():
+
     describe('Test PicoQ().addClasses():', () => {
-      it('Expects PicoQ("#app33").getClassList().value to return an empty string.', () => {
-        expect(PicoQ('#app33').getClassList().value).to.be.a('string').that.has.lengthOf(0);
+      it('Expects PicoQ("#app820").getClassList().value to return an empty string.', () => {
+        expect(PicoQ('#app820').getClassList().value).to.be.a('string').that.has.lengthOf(0);
       });
 
-      it('Expects PicoQ("#app33").addClasses("aaa").getClassList().value to return an empty string.', () => {
-        expect(PicoQ('#app33').addClasses('aaa').getClassList().value).to.be.a('string').that.has.lengthOf(0);
+      it('Expects PicoQ("#app820").addClasses("aaa").getClassList().value to return an empty string.', () => {
+        expect(PicoQ('#app820').addClasses('aaa').getClassList().value).to.be.a('string').that.has.lengthOf(0);
       });
 
-      it('Expects PicoQ("#app33").addClasses(["aaa", "bbb", "ccc"]).getClassList().value to return the string "aaa bbb ccc".', () => {
-        expect(PicoQ('#app33').addClasses(['aaa', 'bbb', 'ccc']).getClassList().value).to.be.a('string').that.is.equal('aaa bbb ccc');
+      it('Expects PicoQ("#app820").addClasses(["aaa", "bbb", "ccc"]).getClassList().value to return the string "aaa bbb ccc".', () => {
+        expect(PicoQ('#app820').addClasses(['aaa', 'bbb', 'ccc']).getClassList().value).to.be.a('string').that.is.equal('aaa bbb ccc');
       });
     });
 
-    // PicoQ().removeClass():
+
     describe('Test PicoQ().removeClass():', () => {
-      it('Expects PicoQ("#app34").getClassList().value to return the string "bbb".', () => {
-        expect(PicoQ('#app34').getClassList().value).to.be.a('string').that.is.equal('bbb');
+      it('Expects PicoQ("#app830").getClassList().value to return the string "bbb".', () => {
+        expect(PicoQ('#app830').getClassList().value).to.be.a('string').that.is.equal('bbb');
       });
 
-      it('Expects PicoQ("#app34").removeClass(2).getClassList().value to return the string "bbb".', () => {
-        expect(PicoQ('#app34').removeClass(2).getClassList().value).to.be.a('string').that.is.equal('bbb');
+      it('Expects PicoQ("#app830").removeClass(2).getClassList().value to return the string "bbb".', () => {
+        expect(PicoQ('#app830').removeClass(2).getClassList().value).to.be.a('string').that.is.equal('bbb');
       });
 
-      it('Expects PicoQ("#app34").removeClass("bbb").getClassList().value to return an empty string.', () => {
-        expect(PicoQ('#app34').removeClass('bbb').getClassList().value).to.be.a('string').that.has.lengthOf(0);
+      it('Expects PicoQ("#app830").removeClass("bbb").getClassList().value to return an empty string.', () => {
+        expect(PicoQ('#app830').removeClass('bbb').getClassList().value).to.be.a('string').that.has.lengthOf(0);
       });
     });
 
-    // PicoQ().removeClasses():
+
     describe('Test PicoQ().removeClasses():', () => {
-      it('Expects PicoQ("#app35").getClassList().value to return the string "abc def ghi".', () => {
-        expect(PicoQ('#app35').getClassList().value).to.be.a('string').that.is.equal('abc def ghi');
+      it('Expects PicoQ("#app840").getClassList().value to return the string "abc def ghi".', () => {
+        expect(PicoQ('#app840').getClassList().value).to.be.a('string').that.is.equal('abc def ghi');
       });
 
-      it('Expects PicoQ("#app35").removeClasses("xyz").getClassList().value to return string "abc def ghi".', () => {
-        expect(PicoQ('#app35').removeClasses('xyz').getClassList().value).to.be.a('string').that.is.equal('abc def ghi');
+      it('Expects PicoQ("#app840").removeClasses("xyz").getClassList().value to return string "abc def ghi".', () => {
+        expect(PicoQ('#app840').removeClasses('xyz').getClassList().value).to.be.a('string').that.is.equal('abc def ghi');
       });
 
-      it('Expects PicoQ("#app35").removeClasses(["abc", "def, "ghi"]).getClassList().value to return an empty string.', () => {
-        expect(PicoQ('#app35').removeClasses(['abc', 'def', 'ghi']).getClassList().value).to.be.a('string').that.has.lengthOf(0);
-      });
-    });
-
-    // PicoQ().toggleClass():
-    describe('Test PicoQ().toggleClass():', () => {
-      it('Expects PicoQ("#app36").getClassList().value to return an empty string.', () => {
-        expect(PicoQ('#app36').getClassList().value).to.be.a('string').that.has.lengthOf(0);
-      });
-
-      it('Expects PicoQ("#app36").toggleClass("abc").getClassList().value to return the string "abc".', () => {
-        expect(PicoQ('#app36').toggleClass('abc').getClassList().value).to.be.a('string').that.is.equal('abc');
-      });
-
-      it('Expects PicoQ("#app36").toggleClass("abc").getClassList().value to return an empty string.', () => {
-        expect(PicoQ('#app36').toggleClass('abc').getClassList().value).to.be.a('string').that.has.lengthOf(0);
+      it('Expects PicoQ("#app840").removeClasses(["abc", "def, "ghi"]).getClassList().value to return an empty string.', () => {
+        expect(PicoQ('#app840').removeClasses(['abc', 'def', 'ghi']).getClassList().value).to.be.a('string').that.has.lengthOf(0);
       });
     });
 
-    // PicoQ().hasClass():
+
     describe('Test PicoQ().toggleClass():', () => {
-      it('Expects PicoQ("#app37").isClass(123) to return false.', () => {
-        expect(PicoQ('#app37').hasClass(123)).to.be.equal(false);
+      it('Expects PicoQ("#zzz").toggleClass() to return a null.', () => {
+        expect(PicoQ('#zzz').toggleClass()[0]).to.be.a('null');
       });
 
-      it('Expects PicoQ("#app37").isClass("aaa") to return true.', () => {
-        expect(PicoQ('#app37').hasClass('aaa')).to.be.equal(true);
+      it('Expects PicoQ("#app850").getClassList().value to return an empty string.', () => {
+        expect(PicoQ('#app850').getClassList().value).to.be.a('string').that.has.lengthOf(0);
       });
 
-      it('Expects PicoQ("#app37").isClass("bbb") to return true.', () => {
-        expect(PicoQ('#app37').hasClass('bbb')).to.be.equal(true);
+      it('Expects PicoQ("#app850").toggleClass("abc").getClassList().value to return the string "abc".', () => {
+        expect(PicoQ('#app850').toggleClass('abc').getClassList().value).to.be.a('string').that.is.equal('abc');
       });
 
-      it('Expects PicoQ("#app37").isClass("ccc") to return true.', () => {
-        expect(PicoQ('#app37').hasClass('ccc')).to.be.equal(true);
+      it('Expects PicoQ("#app850").toggleClass("abc").getClassList().value to return an empty string.', () => {
+        expect(PicoQ('#app850').toggleClass('abc').getClassList().value).to.be.a('string').that.has.lengthOf(0);
+      });
+    });
+
+
+    describe('Test PicoQ().hasClass():', () => {
+      it('Expects PicoQ("#zzz").hasClass() to return false.', () => {
+        expect(PicoQ('#zzz').hasClass()).to.be.a('boolean').that.is.equal(false);
       });
 
-      it('Expects PicoQ("#app37").isClass("cc") to return false.', () => {
-        expect(PicoQ('#app37').hasClass('cc')).to.be.equal(false);
+      it('Expects PicoQ("#app860").isClass(123) to return false.', () => {
+        expect(PicoQ('#app860').hasClass(123)).to.be.equal(false);
+      });
+
+      it('Expects PicoQ("#app860").isClass("aaa") to return true.', () => {
+        expect(PicoQ('#app860').hasClass('aaa')).to.be.equal(true);
+      });
+
+      it('Expects PicoQ("#app860").isClass("bbb") to return true.', () => {
+        expect(PicoQ('#app860').hasClass('bbb')).to.be.equal(true);
+      });
+
+      it('Expects PicoQ("#app860").isClass("ccc") to return true.', () => {
+        expect(PicoQ('#app860').hasClass('ccc')).to.be.equal(true);
+      });
+
+      it('Expects PicoQ("#app860").isClass("cc") to return false.', () => {
+        expect(PicoQ('#app860').hasClass('cc')).to.be.equal(false);
       });
     });
   });

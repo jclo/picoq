@@ -1,8 +1,9 @@
 ### HEAD
 
-### 1.0.1 (December 6, 2020)
+### 1.0.1 (December 8, 2020)
 
   * Added the diff method,
+  * Reshuffled the test suite,
   * ...,
 
 

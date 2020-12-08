@@ -1,6 +1,6 @@
 {
   "name": "picoq",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha.2",
   "description": "A tiny Javascript library to interact with the DOM",
   "main": "_dist/lib/picoq.js",
   "minified": "_dist/lib/picoq.min.js",
@@ -13,7 +13,7 @@
     "dev": "gulp rundev",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require esm ./test/main.js",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
-    "check-coverage": "nyc check-coverage --statements 80 --branches 70 --functions 75 --lines 80",
+    "check-coverage": "nyc check-coverage --statements 95 --branches 90 --functions 90 --lines 95",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
     "report": "nyc report",
     "makedist": "gulp makedist",

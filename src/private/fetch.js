@@ -55,20 +55,90 @@
  * @since 0.0.0
  */
 function _getArgs(...args) {
-  let url = ''
-    , options = { method: 'GET' }
-    , type = null
-    , callback = null
-    ;
-
   const [arg1, arg2, arg3, arg4] = args;
-  if (args.length === 0) return [null, options, null, null];
 
+  switch (args.length) {
+    case 0:
+      return [null, null, null, null];
+
+    case 1:
+      if (typeof arg1 === 'string') {
+        return [arg1, {}, null, null];
+      }
+      return [null, null, null, null];
+
+    case 2:
+      if (typeof arg1 === 'string') {
+        if (typeof arg2 === 'object' && arg2.method) {
+          return [arg1, arg2, null, null];
+        }
+        if (typeof arg2 === 'string') {
+          return [arg1, {}, arg2, null];
+        }
+        if (typeof arg2 === 'function') {
+          return [arg1, {}, null, arg2];
+        }
+        return [arg1, {}, null, null];
+      }
+      return [null, null, null, null];
+
+    case 3:
+      if (typeof arg1 === 'string') {
+        if (typeof arg2 === 'object' && arg2.method) {
+          if (typeof arg3 === 'string') {
+            return [arg1, arg2, arg3, null];
+          }
+          if (typeof arg3 === 'function') {
+            return [arg1, arg2, null, arg3];
+          }
+          return [arg1, arg2, null, null];
+        }
+
+        if (typeof arg2 === 'string') {
+          if (typeof arg3 === 'function') {
+            return [arg1, {}, arg2, arg3];
+          }
+          return [arg1, {}, arg2, null];
+        }
+
+        if (typeof arg3 === 'function') {
+          return [arg1, {}, null, arg3];
+        }
+        return [arg1, {}, null, null];
+      }
+      return [null, null, null, null];
+
+    case 4:
+      if ((typeof arg1 === 'string')
+        && typeof arg2 === 'object' && arg2.method
+        && typeof arg3 === 'string'
+        && typeof arg4 === 'function') {
+        return [arg1, arg2, arg3, arg4];
+      }
+      if ((typeof arg1 === 'string')
+        && typeof arg2 === 'object' && arg2.method
+        && typeof arg3 === 'string') {
+        return [arg1, arg2, arg3, null];
+      }
+      return [null, null, null, null];
+
+    default:
+      // > 4
+      if ((typeof arg1 === 'string')
+        && typeof arg2 === 'object' && arg2.method
+        && typeof arg3 === 'string'
+        && typeof arg4 === 'function') {
+        return [arg1, arg2, arg3, arg4];
+      }
+      return [null, null, null, null];
+  }
+
+/*
   if (args.length === 1) {
     if (typeof arg1 === 'string') {
-      return [arg1, options, null, null];
+      return [arg1, null, null, null];
     }
-    return [url, options, null, null];
+    return [null, null, null, null];
   }
 
   if (args.length === 2) {
@@ -77,13 +147,13 @@ function _getArgs(...args) {
         return [arg1, arg2, null, null];
       }
       if (typeof arg2 === 'string') {
-        return [arg1, options, arg2, null];
+        return [arg1, null, arg2, null];
       }
       if (typeof arg2 === 'function') {
-        return [arg1, options, null, arg2];
+        return [arg1, null, null, arg2];
       }
     }
-    return [url, options, null, null];
+    return [null, null, null, null];
   }
 
   if (args.length === 3) {
@@ -102,10 +172,10 @@ function _getArgs(...args) {
         if (typeof arg3 === 'function') {
           return [arg1, options, arg2, arg3];
         }
-        return [arg1, options, arg2, null];
+        return [arg1, null, arg2, null];
       }
     }
-    return [url, options, null, null];
+    return [null, null, null, null];
   }
 
   if (args.length > 3) {
@@ -116,7 +186,9 @@ function _getArgs(...args) {
     return [url, options, type, callback];
   }
 
-  return [url, options, null, null];
+  return [null, null, null, null];
+
+  */
 }
 
 /**
@@ -166,6 +238,23 @@ function _fetch(url, options, type, callback) {
 // -- Public Static Methods ------------------------------------------------
 
 const Fetch = {
+
+  /**
+   * Returns the named fetch arguments.
+   * (for testing purpose only)
+   *
+   * @method (arg1, [arg2], [arg3], [arg4])
+   * @public
+   * @param {String}        the server url,
+   * @param {Object}        the fetch options,
+   * @param {String}        the type of file (json or text),
+   * @param {String}        the function to call at the completion,
+   * @returns {Object}      returns a promise,
+   * @since 0.0.0
+   */
+  _getArgs(...args) {
+    return _getArgs(...args);
+  },
 
   /**
    * Fetches data on the server.
@@ -282,7 +371,7 @@ const Fetch = {
         if (err) {
           reject(err);
         } else {
-          picoq.html(data);
+          if (picoq[0]) picoq.html(data);
           resolve(data);
         }
         if (callback) callback(err, data);

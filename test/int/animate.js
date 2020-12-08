@@ -24,16 +24,16 @@ module.exports = function(PicoQ) {
     // Test animate() without any arguments:
     describe('Test PicoQ(selector).animate():', () => {
       it('Expects PicoQ(selector).animate() to return this.', () => {
-        PicoQ('#app60').animate();
-        expect(PicoQ('#app60').animate()).to.be.an('object');
+        PicoQ('#app1000').animate();
+        expect(PicoQ('#app1000').animate()).to.be.an('object');
       });
     });
 
     describe('Test PicoQ(selector).animate(properties):', () => {
-      const o1 = PicoQ('#app61').animate({ top: '100px' });
+      const o1 = PicoQ('#app1010').animate({ top: '100px' });
 
       // Duration default:
-      it('Expects PicoQ("#app61").animate({top: "100px"}) to return this.', () => {
+      it('Expects PicoQ("#app1010").animate({top: "100px"}) to return this.', () => {
         expect(o1).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 400, easing: "swing", callback: null }.', () => {
@@ -43,8 +43,8 @@ module.exports = function(PicoQ) {
       });
 
       // Duration number:
-      const o2 = PicoQ('#app61').animate({ top: '100px' }, 500);
-      it('Expects PicoQ("#app61").animate({top: "100px"}, 500) to return this.', () => {
+      const o2 = PicoQ('#app1010').animate({ top: '100px' }, 500);
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, 500) to return this.', () => {
         expect(o2).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: null }.', () => {
@@ -54,8 +54,8 @@ module.exports = function(PicoQ) {
       });
 
       // Duration slow:
-      const o3 = PicoQ('#app61').animate({ top: '100px' }, 'slow');
-      it('Expects PicoQ("#app61").animate({top: "100px"}, "slow") to return this.', () => {
+      const o3 = PicoQ('#app1010').animate({ top: '100px' }, 'slow');
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, "slow") to return this.', () => {
         expect(o3).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 600, easing: "swing", callback: null }.', () => {
@@ -65,8 +65,8 @@ module.exports = function(PicoQ) {
       });
 
       // Duration fast:
-      const o4 = PicoQ('#app61').animate({ top: '100px' }, 'fast');
-      it('Expects PicoQ("#app61").animate({top: "100px"}, "fast") to return this.', () => {
+      const o4 = PicoQ('#app1010').animate({ top: '100px' }, 'fast');
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, "fast") to return this.', () => {
         expect(o4).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 200, easing: "swing", callback: null }.', () => {
@@ -76,8 +76,8 @@ module.exports = function(PicoQ) {
       });
 
       // with easing
-      const o5 = PicoQ('#app61').animate({ top: '100px' }, 'swing');
-      it('Expects PicoQ("#app61").animate({top: "100px"}, "swing") to return this.', () => {
+      const o5 = PicoQ('#app1010').animate({ top: '100px' }, 'swing');
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, "swing") to return this.', () => {
         expect(o5).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 400, easing: "swing", callback: null }.', () => {
@@ -87,8 +87,8 @@ module.exports = function(PicoQ) {
       });
 
       // with callback
-      const o6 = PicoQ('#app61').animate({ top: '100px' }, () => {});
-      it('Expects PicoQ("#app61").animate({top: "100px"}, function() {}) to return this.', () => {
+      const o6 = PicoQ('#app1010').animate({ top: '100px' }, () => {});
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, function() {}) to return this.', () => {
         expect(o6).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 400, easing: "swing", callback: "Function" }.', () => {
@@ -98,8 +98,8 @@ module.exports = function(PicoQ) {
       });
 
       // duration, easing
-      const o7 = PicoQ('#app61').animate({ top: '100px' }, 500, 'swing');
-      it('Expects PicoQ("#app61").animate({top: "100px"}, 500, "swing") to return this.', () => {
+      const o7 = PicoQ('#app1010').animate({ top: '100px' }, 500, 'swing');
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, 500, "swing") to return this.', () => {
         expect(o7).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: null }.', () => {
@@ -109,8 +109,8 @@ module.exports = function(PicoQ) {
       });
 
       // duration, callback
-      const o8 = PicoQ('#app61').animate({ top: '100px' }, 500, () => {});
-      it('Expects PicoQ("#app61").animate({top: "100px"}, 500, function() {}) to return this.', () => {
+      const o8 = PicoQ('#app1010').animate({ top: '100px' }, 500, () => {});
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, 500, function() {}) to return this.', () => {
         expect(o8).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: "function" }.', () => {
@@ -120,8 +120,8 @@ module.exports = function(PicoQ) {
       });
 
       // easing, callback
-      const o9 = PicoQ('#app61').animate({ top: '100px' }, 'swing', () => {});
-      it('Expects PicoQ("#app61").animate({top: "100px"}, "swing", function() {}) to return this.', () => {
+      const o9 = PicoQ('#app1010').animate({ top: '100px' }, 'swing', () => {});
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, "swing", function() {}) to return this.', () => {
         expect(o9).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 400, easing: "swing", callback: "function" }.', () => {
@@ -131,8 +131,8 @@ module.exports = function(PicoQ) {
       });
 
       // duration, easing, callback
-      const o10 = PicoQ('#app61').animate({ top: '100px' }, 500, 'swing', () => {});
-      it('Expects PicoQ("#app61").animate({top: "100px"}, 500, "swing", function() {}) to return this.', () => {
+      const o10 = PicoQ('#app1010').animate({ top: '100px' }, 500, 'swing', () => {});
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, 500, "swing", function() {}) to return this.', () => {
         expect(o10).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: "function" }.', () => {
@@ -142,8 +142,8 @@ module.exports = function(PicoQ) {
       });
 
       // duration, easing, callback
-      const o11 = PicoQ('#app61').animate({ top: '100px' }, 'fast', 'swing', () => {});
-      it('Expects PicoQ("#app61").animate({top: "100px"}, "fast", "swing", function() {}) to return this.', () => {
+      const o11 = PicoQ('#app1010').animate({ top: '100px' }, 'fast', 'swing', () => {});
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, "fast", "swing", function() {}) to return this.', () => {
         expect(o11).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 200, easing: "swing", callback: "function" }.', () => {
@@ -153,8 +153,8 @@ module.exports = function(PicoQ) {
       });
 
       // duration, easing, callback
-      const o12 = PicoQ('#app61').animate({ top: '100px' }, 'slow', 'swing', () => {});
-      it('Expects PicoQ("#app61").animate({top: "100px"}, "slow", "swing", function() {}) to return this.', () => {
+      const o12 = PicoQ('#app1010').animate({ top: '100px' }, 'slow', 'swing', () => {});
+      it('Expects PicoQ("#app1010").animate({top: "100px"}, "slow", "swing", function() {}) to return this.', () => {
         expect(o12).to.be.an('object');
       });
       it('Expects PicoQ()._probe to be {duration: 500, easing: "swing", callback: "function" }.', () => {
@@ -164,16 +164,16 @@ module.exports = function(PicoQ) {
       });
 
       // Test animate
-      it('Expects PicoQ("#app62").animate({ top: "100px" }) to set top to 100px.', (done) => {
-        const o20 = PicoQ('#app62').animate({ top: '100px' }, () => {
+      it('Expects PicoQ("#app1020").animate({ top: "100px" }) to set top to 100px.', (done) => {
+        const o20 = PicoQ('#app1020').animate({ top: '100px' }, () => {
           expect(o20[0].style.top).to.be.a('string').that.is.equal('100px');
           done();
         });
       });
 
       // Test animate
-      it('Expects PicoQ("#app63").animate({ top: "100px" }) to set top to 100px.', (done) => {
-        const o21 = PicoQ('#app63').animate({ top: '100px' }, () => {
+      it('Expects PicoQ("#app1030").animate({ top: "100px" }) to set top to 100px.', (done) => {
+        const o21 = PicoQ('#app1030').animate({ top: '100px' }, () => {
           expect(o21[0].style.top).to.be.a('string').that.is.equal('100px');
           done();
         });

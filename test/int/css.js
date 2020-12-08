@@ -20,27 +20,29 @@ const { expect } = require('chai')
 // -- Main
 
 module.exports = function(PicoQ) {
-  describe('Test css functions:', () => {
-    describe('Test PicoQ(selector).css():', () => {
-      it('Expects PicoQ("#app20").css() to return undefined', () => {
-        expect(PicoQ('#app20').css()).to.be.a('undefined');
-      });
+  describe('Test PicoQ().css():', () => {
+    it('Expects PicoQ("#zzz").css() to return null.', () => {
+      expect(PicoQ('#zzz').css()).to.be.a('null');
     });
 
-    describe('Test PicoQ(selector).css(property):', () => {
-      it('Expects PicoQ("#app20").css("font-size") to return an empty string.', () => {
-        expect(PicoQ('#app20').css('font-size')).to.be.a('string').that.has.lengthOf(0);
-      });
+    it('Expects PicoQ("#zzz").css("font-family", "arial") to return null.', () => {
+      expect(PicoQ('#zzz').css('font-family', 'arial')[0]).to.be.a('null');
     });
 
-    describe('Test PicoQ(selector).css(property, value):', () => {
-      it('Expects PicoQ("#app20").css("font-family", "arial") to return an object.', () => {
-        expect(PicoQ('#app20').css('font-family', 'arial')).to.be.an('object');
-      });
+    it('Expects PicoQ("#app700").css() to return undefined', () => {
+      expect(PicoQ('#app700').css()).to.be.a('undefined');
+    });
 
-      it('Expects PicoQ("#app20").css("font-family") to return the string "arial".', () => {
-        expect(PicoQ('#app20').css('font-family')).to.be.a('string').that.is.equal('arial');
-      });
+    it('Expects PicoQ("#app700").css("font-size") to return an empty string.', () => {
+      expect(PicoQ('#app700').css('font-size')).to.be.a('string').that.has.lengthOf(0);
+    });
+
+    it('Expects PicoQ("#app700").css("font-family", "arial") to return an object.', () => {
+      expect(PicoQ('#app700').css('font-family', 'arial')).to.be.an('object');
+    });
+
+    it('Expects PicoQ("#app700").css("font-family") to return the string "arial".', () => {
+      expect(PicoQ('#app700').css('font-family')).to.be.a('string').that.is.equal('arial');
     });
   });
 };

@@ -40,7 +40,6 @@
  *  . selectChild                 selects the nth child,
  *  . parent                      returns to the parent element,
  *  . firstParent                 returns to the root parent if defined,
- *
  *  . find                        returns the NodeList of the matching children,
  *  . tag                         returns the tag name of the selected element,
  *
@@ -58,6 +57,7 @@
  *  . after                       appends an HTML string after the current node,
  *  . before                      appends an HTML string before the current node,
  *  . replaceWith                 replaces the current node with the given DOMString,
+ *
  *  . diff                        updates the node to match the passed-in template,
  *
  *  . text                        gets/sets the text contents of the element,
@@ -180,7 +180,7 @@ PicoQ.VERSION = '{{lib:version}}';
  * @since 0.0.0
  */
 PicoQ._setTestMode = function() {
-  return [D];
+  return [F, D];
 };
 
 
@@ -384,10 +384,7 @@ methods = {
    * @since 0.0.0
    */
   tag() {
-    if (this[0]) {
-      return this[0].tagName;
-    }
-    return null;
+    return this[0] ? this[0].tagName : null;
   },
 
   /**
@@ -433,8 +430,10 @@ methods = {
    * @since 0.0.0
    */
   append(tagName) {
-    const element = document.createElement(tagName);
-    this[0] = this[0].appendChild(element);
+    if (this[0] && typeof tagName === 'string') {
+      const element = document.createElement(tagName);
+      this[0] = this[0].appendChild(element);
+    }
     return this;
   },
 
@@ -448,7 +447,9 @@ methods = {
    * @since 0.0.0
    */
   appendTextChild(text) {
-    this[0].appendChild(document.createTextNode(text));
+    if (this[0] && typeof text === 'string') {
+      this[0].appendChild(document.createTextNode(text));
+    }
     return this;
   },
 
@@ -463,12 +464,16 @@ methods = {
    * @since 0.0.0
    */
   appendBefore(tagName, node) {
-    const newChild = document.createElement(tagName)
-        , child = this[0].querySelector(node)
-        ;
+    if (this[0] && typeof tagName === 'string' && typeof node === 'string') {
+      const newChild = document.createElement(tagName)
+          , child = this[0].querySelector(node)
+          ;
 
-    this[0].insertBefore(newChild, child);
-    this[0] = newChild;
+      if (child) {
+        this[0].insertBefore(newChild, child);
+        this[0] = newChild;
+      }
+    }
     return this;
   },
 
@@ -483,12 +488,16 @@ methods = {
    * @since 0.0.0
    */
   appendAfter(tagName, node) {
-    const newChild = document.createElement(tagName)
-        , child = this[0].querySelector(node).nextElementSibling
-        ;
+    if (this[0] && typeof tagName === 'string' && typeof node === 'string') {
+      const newChild = document.createElement(tagName)
+          , child = this[0].querySelector(node)
+          ;
 
-    this[0].insertBefore(newChild, child);
-    this[0] = newChild;
+      if (child) {
+        this[0].insertBefore(newChild, child.nextElementSibling);
+        this[0] = newChild;
+      }
+    }
     return this;
   },
 
@@ -502,9 +511,11 @@ methods = {
    * @since 0.0.0
    */
   replace(tagName) {
-    const element = document.createElement(tagName);
-    this[0].parentNode.replaceChild(element, this[0]);
-    this[0] = element;
+    if (this[0] && typeof tagName === 'string') {
+      const element = document.createElement(tagName);
+      this[0].parentNode.replaceChild(element, this[0]);
+      this[0] = element;
+    }
     return this;
   },
 
@@ -518,7 +529,7 @@ methods = {
    * @since 0.0.0
    */
   appendHTML(xmlString) {
-    if (typeof xmlString === 'string') {
+    if (this[0] && typeof xmlString === 'string') {
       this[0].insertAdjacentHTML('beforeend', xmlString);
     }
     return this;
@@ -534,7 +545,7 @@ methods = {
    * @since 0.0.0
    */
   prepend(xmlString) {
-    if (typeof xmlString === 'string') {
+    if (this[0] && typeof xmlString === 'string') {
       this[0].insertAdjacentHTML('afterbegin', xmlString);
     }
     return this;
@@ -553,7 +564,7 @@ methods = {
    * @since 0.0.0
    */
   after(xmlString) {
-    if (typeof xmlString === 'string'
+    if (this[0] && typeof xmlString === 'string'
       && (!this._root || this[0].id !== this._root.id)) {
       this[0].insertAdjacentHTML('afterend', xmlString);
     }
@@ -573,24 +584,10 @@ methods = {
    * @since 0.0.0
    */
   before(xmlString) {
-    if (typeof xmlString === 'string'
+    if (this[0] && typeof xmlString === 'string'
       && (!this._root || this[0].id !== this._root.id)) {
       this[0].insertAdjacentHTML('beforebegin', xmlString);
     }
-    return this;
-  },
-
-  /**
-   * Updates the DOM node from the passed-in template.
-   *
-   * @method (arg1)
-   * @public
-   * @param {XMLString}     the template,
-   * @returns {Object}      returns this,
-   * @since 0.0.0
-   */
-  diff(XMLString) {
-    D.diff(D.stringToHTML(XMLString), this[0]);
     return this;
   },
 
@@ -607,9 +604,10 @@ methods = {
    * @since 0.0.0
    */
   replaceWith(xmlString) {
+    if (!this[0]) return this;
+
     const oldChild = this[0]
-        , parento   = oldChild.parentNode
-        // , index    =  Array.prototype.indexOf.call(parent.children, oldChild)
+        , parento  = oldChild.parentNode
         , wrapper  = document.createElement('div')
         ;
 
@@ -625,6 +623,22 @@ methods = {
   },
 
   /**
+   * Updates the DOM node from the passed-in template.
+   *
+   * @method (arg1)
+   * @public
+   * @param {XMLString}     the template,
+   * @returns {Object}      returns this,
+   * @since 0.0.0
+   */
+  diff(XMLString) {
+    if (this[0] && typeof XMLString === 'string') {
+      D.diff(D.stringToHTML(XMLString), this[0]);
+    }
+    return this;
+  },
+
+  /**
    * Gets/Sets the text contents of the element,
    *
    * @method (arg1)
@@ -634,11 +648,16 @@ methods = {
    * @since 0.0.0
    */
   text(texte) {
-    if (texte !== undefined) {
-      this[0].textContent = texte;
-      return this;
+    if (this[0]) {
+      if (typeof texte === 'string') {
+        this[0].textContent = texte;
+        return this;
+      }
+      if (texte === undefined) {
+        return this[0].textContent;
+      }
     }
-    return this[0].textContent;
+    return this;
   },
 
   /**
@@ -651,10 +670,9 @@ methods = {
    * @since 0.0.0
    */
   clone(deep) {
-    if (deep === true || deep === false) {
-      return this[0].cloneNode(deep);
-    }
-    return this[0].cloneNode(true);
+    return (deep === true || deep === false)
+      ? this[0].cloneNode(deep)
+      : this[0].cloneNode(true);
   },
 
   /**
@@ -667,7 +685,7 @@ methods = {
    * @since 0.0.0
    */
   firstChild() {
-    return this[0].firstElementChild;
+    return this[0] ? this[0].firstElementChild : this;
   },
 
   /**
@@ -681,7 +699,7 @@ methods = {
    * @since 0.0.0
    */
   insertChildBefore(newChild, child) {
-    if (newChild) {
+    if (this[0] && newChild) {
       this[0].insertBefore(newChild, child);
     }
     return this;
@@ -697,7 +715,7 @@ methods = {
    * @since 0.0.0
    */
   removeChild(child) {
-    if (child) {
+    if (this[0] && child) {
       this[0].removeChild(child);
     }
     return this;
@@ -714,7 +732,7 @@ methods = {
    * @since 0.0.0
    */
   replaceChild(newChild, child) {
-    if (newChild) {
+    if (this[0] && newChild) {
       this[0].replaceChild(newChild, child);
     }
     return this;
@@ -730,7 +748,7 @@ methods = {
    * @since 0.0.8
    */
   children() {
-    return this[0].children;
+    return this[0] ? this[0].children : null;
   },
 
   /**
@@ -792,11 +810,13 @@ methods = {
 
     if (!value) {
       // Get attribute:
-      return this[0].style[attr];
+      return this[0] ? this[0].style[attr] : null;
     }
 
     // Set attribute:
-    this[0].style[attr] = value;
+    if (this[0]) {
+      this[0].style[attr] = value;
+    }
     return this;
   },
 
@@ -810,7 +830,7 @@ methods = {
    * @since 0.0.0
    */
   getClassList() {
-    return this[0].classList;
+    return this[0] ? this[0].classList : null;
   },
 
   /**
@@ -823,7 +843,7 @@ methods = {
    * @since 0.0.0
    */
   addClass(className) {
-    if (Object.prototype.toString.call(className) === '[object String]') {
+    if (this[0] && Object.prototype.toString.call(className) === '[object String]') {
       this[0].classList.add(className);
     }
     return this;
@@ -839,7 +859,7 @@ methods = {
    * @since 0.0.8
    */
   addClasses(classes) {
-    if (Array.isArray(classes)) {
+    if (this[0] && Array.isArray(classes)) {
       for (let i = 0; i < classes.length; i++) {
         this[0].classList.add(classes[i]);
       }
@@ -857,7 +877,7 @@ methods = {
    * @since 0.0.0
    */
   removeClass(className) {
-    if (Object.prototype.toString.call(className) === '[object String]') {
+    if (this[0] && Object.prototype.toString.call(className) === '[object String]') {
       this[0].classList.remove(className);
     }
     return this;
@@ -873,7 +893,7 @@ methods = {
    * @since 0.0.8
    */
   removeClasses(classes) {
-    if (Array.isArray(classes)) {
+    if (this[0] && Array.isArray(classes)) {
       for (let i = 0; i < classes.length; i++) {
         this[0].classList.remove(classes[i]);
       }
@@ -891,7 +911,9 @@ methods = {
    * @since 0.0.0
    */
   toggleClass(className) {
-    this[0].classList.toggle(className);
+    if (this[0] && typeof className === 'string') {
+      this[0].classList.toggle(className);
+    }
     return this;
   },
 
@@ -905,12 +927,8 @@ methods = {
    * @since 0.0.8
    */
   hasClass(className) {
-    const list = this[0].classList.value.split(' ');
-
-    if (Object.prototype.toString.call(className) === '[object String]' && list.indexOf(className) !== -1) {
-      return true;
-    }
-    return false;
+    const list = this[0] ? this[0].classList.value.split(' ') : [];
+    return (Object.prototype.toString.call(className) === '[object String]' && list.indexOf(className) !== -1);
   },
 
   /**
@@ -924,11 +942,11 @@ methods = {
    * @since 0.0.0
    */
   attr(attribute, value) {
-    if (value) {
+    if (this[0] && attribute && value) {
       this[0].setAttribute(attribute, value);
       return this;
     }
-    return this[0].getAttribute(attribute);
+    return this[0] ? this[0].getAttribute(attribute) : null;
   },
 
   /**
@@ -941,7 +959,7 @@ methods = {
    * @since 0.0.0
    */
   removeAttr(attribute) {
-    if (attribute) {
+    if (this[0] && attribute) {
       this[0].removeAttribute(attribute);
     }
     return this;
@@ -1034,7 +1052,6 @@ methods = {
    * @since 0.0.0
    */
   load(...args) {
-    if (!this[0]) return this;
     return F.loadXML(this, ...args);
   },
 };

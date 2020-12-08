@@ -26,7 +26,7 @@ const { expect } = require('chai')
 module.exports = function(PicoQ) {
   describe('Test DOM insertion (next):', () => {
     describe('Test PicoQ().diff():', () => {
-      const [Diff] = PicoQ._setTestMode();
+      const [, Diff] = PicoQ._setTestMode();
 
       const template = `
             <div>
@@ -99,86 +99,104 @@ module.exports = function(PicoQ) {
       });
 
       it('Expects "diff(template, dom)" to add the child "<h1>My Todos</h1>".', () => {
-        const el = document.getElementById('app0DD1');
+        const el = document.getElementById('app400');
         Diff.diff(Diff.stringToHTML(template), el);
         expect(el.firstChild.outerHTML).to.be.a('string').that.is.equal('<h1>My Todos</h1>');
       });
 
       it('Expects "diff(template2, dom)" to replace the child "<h1>My Todos</h1>" by "<h2>My Todos</h2>".', () => {
-        const el = document.getElementById('app0DD1');
+        const el = document.getElementById('app400');
         Diff.diff(Diff.stringToHTML(template2), el);
         expect(el.firstChild.outerHTML).to.be.a('string').that.is.equal('<h2>My Todos</h2>');
       });
 
       it('Expects "diff(template3, dom)" to replace the child "<h2>My Todos</h2>" by "<h2>My Todosss</h2>".', () => {
-        const el = document.getElementById('app0DD1');
+        const el = document.getElementById('app400');
         Diff.diff(Diff.stringToHTML(template3), el);
         expect(el.firstChild.outerHTML).to.be.a('string').that.is.equal('<h2>My Todosss</h2>');
       });
 
       it('Expects "diff(template4, dom)" to replace the child "<h2>My Todos</h2>" by "<h2 class="aaa">My Todos</h2>".', () => {
-        const el = document.getElementById('app0DD1');
+        const el = document.getElementById('app400');
         Diff.diff(Diff.stringToHTML(template4), el);
         expect(el.firstChild.outerHTML).to.be.a('string').that.is.equal('<h2 class="aaa">My Todos</h2>');
       });
 
       it('Expects "diff(template4, dom)" to replace the child "<h2 class="aaa">My Todos</h2>" by "<h2 class="bbb">My Todos</h2>".', () => {
-        const el = document.getElementById('app0DD1');
+        const el = document.getElementById('app400');
         Diff.diff(Diff.stringToHTML(template5), el);
         expect(el.firstChild.outerHTML).to.be.a('string').that.is.equal('<h2 class="bbb">My Todos</h2>');
       });
 
       it('Expects "diff(template4, dom)" to keep the child "<h2 class="bbb">My Todos</h2>" unchanged.', () => {
-        const el = document.getElementById('app0DD1');
+        const el = document.getElementById('app400');
         Diff.diff(Diff.stringToHTML(template5), el);
         expect(el.firstChild.outerHTML).to.be.a('string').that.is.equal('<h2 class="bbb">My Todos</h2>');
       });
 
       it('Expects "diff(template2, dom)" to replace the child "<h2 class="aaa">My Todos</h2>" by "<h2>My Todos</h2>".', () => {
-        const el = document.getElementById('app0DD1');
+        const el = document.getElementById('app400');
         Diff.diff(Diff.stringToHTML(template2), el);
         expect(el.firstChild.outerHTML).to.be.a('string').that.is.equal('<h2>My Todos</h2>');
       });
 
       it('Expects "diff(template2, dom)" to replace the child "<h2 class="aaa">My Todos</h2>" by "<h2>My Todos</h2>".', () => {
-        const el = document.getElementById('app0DD1');
+        const el = document.getElementById('app400');
         Diff.diff(Diff.stringToHTML(template2), el);
         expect(el.firstChild.outerHTML).to.be.a('string').that.is.equal('<h2>My Todos</h2>');
       });
 
       it('Expects "diff(template, dom2)" to remove the extra childs.', () => {
-        const el = document.getElementById('app0DD2');
+        const el = document.getElementById('app401');
         Diff.diff(Diff.stringToHTML(template), el);
         expect(el.children.length).to.be.a('number').that.is.equal(1);
       });
 
       it('Expects "diff(template6, dom3)" to include 2 childs.', () => {
-        const el = document.getElementById('app0DD3');
+        const el = document.getElementById('app402');
         Diff.diff(Diff.stringToHTML(template6), el);
         expect(el.children.length).to.be.a('number').that.is.equal(2);
       });
 
       it('Expects the second child to be an "<ul>" tag.', () => {
-        const el = document.getElementById('app0DD3');
+        const el = document.getElementById('app402');
         expect(el.children.item(1).tagName).to.be.a('string').that.is.equal('UL');
       });
 
       it('Expects a new "diff(template6, dom3)" to change nothing.', () => {
-        const el = document.getElementById('app0DD3');
+        const el = document.getElementById('app402');
         Diff.diff(Diff.stringToHTML(template6), el);
         expect(el.children.length).to.be.a('number').that.is.equal(2);
       });
 
       it('Expects "diff(template7, dom4)" to remove "ul" childs.', () => {
-        const el = document.getElementById('app0DD4');
+        const el = document.getElementById('app403');
         Diff.diff(Diff.stringToHTML(template7), el);
         expect(el.children.length).to.be.a('number').that.is.equal(2);
       });
 
       it('Expects "diff(template6, dom5)" to fill "ul" childs using "fragment".', () => {
-        const el = document.getElementById('app0DD5');
+        const el = document.getElementById('app404');
         Diff.diff(Diff.stringToHTML(template6), el);
         expect(el.children.length).to.be.a('number').that.is.equal(2);
+      });
+
+      it('Expects PicoQ("#zzz").diff()[0] to return a null.', () => {
+        expect(PicoQ('#zzz').diff()[0]).to.be.a('null');
+      });
+
+      it('Expects PicoQ("#app405").diff()[0] not to alter the childs.', () => {
+        const childs = PicoQ('#app405').diff()[0].children;
+        expect(childs.length).to.be.a('number').that.is.equal(2);
+        expect(childs.item(0).outerHTML).to.be.a('string').that.is.equal('<h2>My Todos</h2>');
+        expect(childs.item(1).outerHTML).to.be.a('string').that.is.equal('<ul></ul>');
+      });
+
+      it('Expects PicoQ("#app405").diff("<div id="app405">...<ul><li></li></ul>...")[0] to add "<li></li>" to the second the child.', () => {
+        const childs = PicoQ('#app405').diff('<div id="app405"><h2>My Todos</h2><ul><li></li></ul></div>')[0].children;
+        expect(childs.length).to.be.a('number').that.is.equal(2);
+        expect(childs.item(0).outerHTML).to.be.a('string').that.is.equal('<h2>My Todos</h2>');
+        expect(childs.item(1).outerHTML).to.be.a('string').that.is.equal('<ul><li></li></ul>');
       });
     });
   });
