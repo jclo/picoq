@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.0.2 (January 28, 2021)
+
+  * Updated the project dependencies,
+  * ...,
+
+
 ### 1.0.1 (December 8, 2020)
 
   * Added the diff method,

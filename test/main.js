@@ -10,10 +10,9 @@ const { JSDOM } = require('jsdom')
 
 
 // -- Local Modules
-const PicoQ     = require('../src/picoq').default
-    // PicoQ    = require('../index')
+const // PicoQ    = require('../index')
     // , pack   = require('../package.json')
-    , testlib   = require('./int/lib')
+    testlib   = require('./int/lib')
 
     , fnfetch   = require('./int/fetch')
     , fnselect  = require('./int/select')
@@ -115,11 +114,13 @@ const HTML2 = `
 
 const dom = new JSDOM(HTML2);
 global.window = dom.window;
+global.root = dom.window;
 global.document = dom.window.document;
 global.DOMParser = dom.window.DOMParser;
 global.navigator = { userAgent: 'node.js' };
 global.fetch = fetch;
 
+const PicoQ = require('../src/picoq').default;
 
 describe('Test PicoQ:', () => {
   // Nota:

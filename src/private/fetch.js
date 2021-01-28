@@ -132,63 +132,6 @@ function _getArgs(...args) {
       }
       return [null, null, null, null];
   }
-
-/*
-  if (args.length === 1) {
-    if (typeof arg1 === 'string') {
-      return [arg1, null, null, null];
-    }
-    return [null, null, null, null];
-  }
-
-  if (args.length === 2) {
-    if (typeof arg1 === 'string') {
-      if (typeof arg2 === 'object' && arg2.method) {
-        return [arg1, arg2, null, null];
-      }
-      if (typeof arg2 === 'string') {
-        return [arg1, null, arg2, null];
-      }
-      if (typeof arg2 === 'function') {
-        return [arg1, null, null, arg2];
-      }
-    }
-    return [null, null, null, null];
-  }
-
-  if (args.length === 3) {
-    if (typeof arg1 === 'string') {
-      if (typeof arg2 === 'object' && arg2.method) {
-        if (typeof arg3 === 'string') {
-          return [arg1, arg2, arg3, null];
-        }
-        if (typeof arg3 === 'function') {
-          return [arg1, arg2, null, arg3];
-        }
-        return [arg1, arg2, null, null];
-      }
-
-      if (typeof arg2 === 'string') {
-        if (typeof arg3 === 'function') {
-          return [arg1, options, arg2, arg3];
-        }
-        return [arg1, null, arg2, null];
-      }
-    }
-    return [null, null, null, null];
-  }
-
-  if (args.length > 3) {
-    if (typeof arg1 === 'string') url = arg1;
-    if (typeof arg2 === 'object' && arg2.method) options = arg2;
-    if (typeof arg3 === 'string') type = arg3;
-    if (typeof arg4 === 'function') callback = arg4;
-    return [url, options, type, callback];
-  }
-
-  return [null, null, null, null];
-
-  */
 }
 
 /**
