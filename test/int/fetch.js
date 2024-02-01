@@ -12,15 +12,13 @@ const { expect } = require('chai')
 
 
 // -- Local Constants
-const server = 'http://localhost:8888'
-    ;
 
 
 // -- Local Variables
 
 
 // -- Main
-module.exports = function(PicoQ) {
+module.exports = function(PicoQ, server) {
   describe('Test Fetch functions:', () => {
     describe('Test PicoQ.fetch() _getArgs():', () => {
       const [F] = PicoQ._setTestMode();

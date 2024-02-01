@@ -5,15 +5,13 @@
 
 // -- Vendor Modules
 const { JSDOM } = require('jsdom')
-    , fetch     = require('node-fetch')
+    // , fetch     = require('node-fetch')
     ;
 
 
 // -- Local Modules
-const // PicoQ    = require('../index')
-    // , pack   = require('../package.json')
-    testlib   = require('./int/lib')
-
+const testlib = require('./int/lib')
+    // , pack    = require('../package.json')
     , fnfetch   = require('./int/fetch')
     , fnselect  = require('./int/select')
     , fndom     = require('./int/dom')
@@ -30,6 +28,8 @@ const // PicoQ    = require('../index')
 
 // -- Local Constants
 // const libname = 'PicoQ';
+const url = 'http://localhost:8080'
+    ;
 
 
 // -- Local Variables
@@ -118,23 +118,28 @@ global.root = dom.window;
 global.document = dom.window.document;
 global.DOMParser = dom.window.DOMParser;
 global.navigator = { userAgent: 'node.js' };
-global.fetch = fetch;
+// global.fetch = fetch;
+global.root = {};
+
+// Nota:
+// If you want that 'display-coverage' shows the coverage files by files,
+// you should set 'PicoQ' and 'testlib' like this:
+//  . const PicoQ = require('../src/<file>').default;
+//  . testlib(PicoQ, '{{lib:name}}', '{{lib:version}}', 'without new');
+//
+// But, if you want that 'display-coverage' shows the coverage in one file,
+// you should set 'PicoQ' and 'testlib' like this:
+//  . const PicoQ = require('../index');
+//  . testlib(PicoQ, libname, pack.version, 'without new');
 
 const PicoQ = require('../src/picoq').default;
+// const PicoQ = require('../index');
 
 describe('Test PicoQ:', () => {
-  // Nota:
-  // If you choose 'PicoQ = require('../index')', 'display-coverage' will
-  // show the coverage of all the library in one file.
-  //
-  // If you want to display the coverage file by file, you must choose
-  // 'PicoQ = require('../src/picoQ').default'. But, in this case,
-  // the build isn't done, so you should pass '{{lib:name}}' as libname and
-  // '{{lib:version}}' as the library version.
   testlib(PicoQ, '{{lib:name}}', '{{lib:version}}', 'without new');
   // testlib(PicoQ, libname, pack.version, 'without new');
 
-  fnfetch(PicoQ, 'app100');
+  fnfetch(PicoQ, url);
   fnselect(PicoQ, 'app200');
   fndom(PicoQ, 'app300');
   fndiff(PicoQ, 'app400');
@@ -146,3 +151,5 @@ describe('Test PicoQ:', () => {
   fnanimate(PicoQ, 'app1000');
   fnevents(PicoQ, 'app1100');
 });
+
+// - oOo --
