@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * PicoQ v1.0.2
+ * PicoQ v1.0.3
  *
  * A tiny Javascript library to interact with the DOM.
  * (you can download it from npm or github repositories)
@@ -195,7 +195,7 @@
       const obj = Object.create(methods);
       obj._library = {
         name: 'PicoQ',
-        version: '1.0.2',
+        version: '1.0.3',
       };
 
       obj._root = cid !== 'body' ? document.querySelector(cid) : undefined;
@@ -213,7 +213,7 @@
 
     // Attaches constants to PicoQ that provide name and version of the lib.
     PicoQ.NAME = 'PicoQ';
-    PicoQ.VERSION = '1.0.2';
+    PicoQ.VERSION = '1.0.3';
 
 
     // -- Private Static Methods -----------------------------------------------

@@ -4,7 +4,7 @@
 
   * Updated the project with ES6Kadoo v2.1 (no Gulp, Github Actions),
   * Replaced url http://localhost:8080 with http://127.0.0.1:8080,
-  * ...,
+  * Release.
 
 
 ### 1.0.2 (January 28, 2021)
